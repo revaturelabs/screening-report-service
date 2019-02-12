@@ -1,1 +1,1 @@
-# screening-report-service
+# screening-reports-service

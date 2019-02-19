@@ -14,7 +14,7 @@ import java.util.Objects;
 @ApiModel(value = "Question Score", description = "Object representing the score a candidate achieved on a question")
 @Entity
 @Table(name = "QUESTION_SCORE")
-public class SimpleQuestionScore {
+public class QuestionScore {
 
 	@ApiModelProperty(value = "Id of the Question Score")
 	@Id
@@ -49,7 +49,7 @@ public class SimpleQuestionScore {
 	@Column(name = "TIME")
 	private Date beginTime;
 
-	public SimpleQuestionScore(Integer questionId, Screening screeningId, Double score, String comment, Date beginTime) {
+	public QuestionScore(Integer questionId, Screening screeningId, Double score, String comment, Date beginTime) {
 		super();
 		this.questionId = questionId;
 		this.screening = screeningId;
@@ -58,7 +58,7 @@ public class SimpleQuestionScore {
 		this.beginTime = beginTime;
 	}
 
-	public SimpleQuestionScore() {
+	public QuestionScore() {
 		super();
 	}
 
@@ -122,7 +122,7 @@ public class SimpleQuestionScore {
 	public boolean equals(Object o) {
 		if (this == o) return true;
 		if (o == null || getClass() != o.getClass()) return false;
-		SimpleQuestionScore score1 = (SimpleQuestionScore) o;
+		QuestionScore score1 = (QuestionScore) o;
 		return getQuestionScoreId() == score1.getQuestionScoreId() &&
 				getQuestionId() == score1.getQuestionId() &&
 				getBucketId() == score1.getBucketId() &&

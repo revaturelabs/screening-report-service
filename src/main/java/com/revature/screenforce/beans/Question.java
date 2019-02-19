@@ -5,6 +5,7 @@ import io.swagger.annotations.ApiModelProperty;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -62,7 +63,19 @@ public class Question implements Serializable {
     @Column(name = "SAMPLE_ANSWER_5")
     private String sampleAnswer5;
 
-    public Question() {
+	@ApiModelProperty(value = "The Screening connected to the screening")
+	@OneToMany(fetch = FetchType.EAGER)
+	@JoinColumn(name = "QUESTION_ID")
+	private List<QuestionScore> questionScores;
+	
+    public List<QuestionScore> getQuestionScores() {
+		return questionScores;
+	}
+	public void setQuestionScores(List<QuestionScore> questionScores) {
+		this.questionScores = questionScores;
+	}
+
+	public Question() {
         super();
     }
 

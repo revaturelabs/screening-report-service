@@ -12,6 +12,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.JoinColumn;
@@ -28,9 +29,9 @@ import io.swagger.annotations.ApiModelProperty;
 @ApiModel(value = "SkillType", description = "SkillType corresponding to an overall training track, associated with a number of Buckets")
 @Entity
 @Table(name = "SKILL_TYPE")
-public class SkillType implements Serializable {
+public class SkillType /*implements Serializable*/ {
 
-	private static final long serialVersionUID = -6863562903787298483L;
+	//private static final long serialVersionUID = -6863562903787298483L;
 	
 	@ApiModelProperty(value = "Skill type id")
 	@Id
@@ -46,7 +47,7 @@ public class SkillType implements Serializable {
     @ApiModelProperty(value = "is the SkillType currently active")
     @Column(name = "is_active")
     private boolean isActive;
-	
+    
 	public SkillType() {
 		super();
 	}
@@ -59,10 +60,12 @@ public class SkillType implements Serializable {
 	/**
 	 * getters & setters
 	 */
+	/*
 	public static long getSerialVersionUID() {
 		return serialVersionUID;
 	}
-
+	 */
+	
 	public int getSkillTypeId() {
 		return skillTypeId;
 	}

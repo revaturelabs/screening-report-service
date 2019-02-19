@@ -20,7 +20,7 @@ public class SoftSkillViolation {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "SOFT_SKILL_VIOLATION_ID")
-	private int softViolationId;
+	private int softSkillViolationId;
 
 	@ApiModelProperty(value = "Id of the Screening the violation occurred in")
 	@ManyToOne(fetch = FetchType.EAGER)
@@ -31,6 +31,10 @@ public class SoftSkillViolation {
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "VIOLATION_TYPE_ID")
 	private ViolationType violationType;
+	
+	@ApiModelProperty(value = "Set Me!")
+	@Column(name="SCREENING_ID", insertable=false, updatable=false)
+	private int screeningId;
 
 	@ApiModelProperty(value = "Any comments regarding the violation")
 	@Column(name="COMMENT")
@@ -46,9 +50,9 @@ public class SoftSkillViolation {
 		super();
 	}
 
-	public SoftSkillViolation(int softViolationId, Screening screening, ViolationType violationType, String comment, Date time) {
+	public SoftSkillViolation(int softSkillViolationId, Screening screening, ViolationType violationType, String comment, Date time) {
 		super();
-		this.softViolationId = softViolationId;
+		this.softSkillViolationId = softSkillViolationId;
 		this.screening = screening;
 		this.violationType = violationType;
 		this.comment = comment;
@@ -63,12 +67,12 @@ public class SoftSkillViolation {
 		this.time = time;
 	}
 
-	public int getSoftViolationId() {
-		return softViolationId;
+	public int getSoftSkillViolationId() {
+		return softSkillViolationId;
 	}
 
-	public void setSoftViolationId(int softViolationId) {
-		this.softViolationId = softViolationId;
+	public void setSoftSkillViolationId(int softSkillViolationId) {
+		this.softSkillViolationId = softSkillViolationId;
 	}
 
 	public Screening getScreening() {
@@ -85,6 +89,10 @@ public class SoftSkillViolation {
 
 	public void setViolationType(ViolationType violationType) {
 		this.violationType = violationType;
+	}
+	
+	public boolean hasViolationType() {
+		return ((this.violationType == null) ? false : true);
 	}
 
 	public String getComment() {
@@ -108,7 +116,7 @@ public class SoftSkillViolation {
 		if (this == o) return true;
 		if (o == null || getClass() != o.getClass()) return false;
 		SoftSkillViolation violation = (SoftSkillViolation) o;
-		return getSoftViolationId() == violation.getSoftViolationId() &&
+		return getSoftSkillViolationId() == violation.getSoftSkillViolationId() &&
 				Objects.equals(getScreening(), violation.getScreening()) &&
 				Objects.equals(getViolationType(), violation.getViolationType()) &&
 				Objects.equals(getComment(), violation.getComment()) &&
@@ -117,17 +125,25 @@ public class SoftSkillViolation {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(getSoftViolationId(), getScreening(), getViolationType(), getComment(), getTime());
+		return Objects.hash(getSoftSkillViolationId(), getScreening(), getViolationType(), getComment(), getTime());
 	}
 
 	@Override
 	public String toString() {
 		return "SoftSkillViolation{" +
-				"softViolationId=" + softViolationId +
+				"softSkillViolationId=" + softSkillViolationId +
 				", screening=" + screening +
 				", violationType=" + violationType +
 				", comment='" + comment + '\'' +
 				", time=" + time +
 				'}';
+	}
+
+	public int getScreeningId() {
+		return screeningId;
+	}
+
+	public void setScreeningId(int screeningId) {
+		this.screeningId = screeningId;
 	}
 }

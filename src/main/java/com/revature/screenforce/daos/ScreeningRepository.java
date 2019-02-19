@@ -8,7 +8,6 @@ import com.revature.screenforce.beans.Screening;
 
 @Repository
 public interface ScreeningRepository extends JpaRepository<Screening, Integer> {
-	 // @author Jakob LaSorella | 1805-WVU-MAY29 | Richard Orr
-	
+
 }
 

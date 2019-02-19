@@ -35,4 +35,5 @@ public interface QuestionDAO extends JpaRepository<Question, Integer> {
 	 * @param bucketId ID of bucket to filter by
 	 */
 	void deleteByBucketBucketId(int bucketId);
+	Question getByQuestionId(int questionId);
 }

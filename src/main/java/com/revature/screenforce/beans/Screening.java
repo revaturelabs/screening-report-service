@@ -4,7 +4,10 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
 import javax.persistence.*;
+
+import java.time.LocalDate;
 import java.util.Date;
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -17,7 +20,7 @@ public class Screening {
 	@ApiModelProperty(value = "Id of the screening")
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name = "id")
+	@Column(name = "SCREENING_ID")
 	private int screeningId;
 
 	@ApiModelProperty(value = "The Scheduled Screening connected to the screening")
@@ -31,7 +34,7 @@ public class Screening {
 
 	@ApiModelProperty(value = "Id referencing a training track in the screening-admin-service")
 	@Column(name = "SKILL_TYPE_ID")
-	private int skillType;
+	private int skillTypeId;
 
 	@ApiModelProperty(value = "The total score the candidate recieved")
 	@Column(name = "COMPOSITE_SCORE")
@@ -51,11 +54,11 @@ public class Screening {
 
 	@ApiModelProperty(value = "Starting date and time of the screening")
 	@Column(name = "START_DATE")
-	private Date startDateTime;
+	private LocalDate startDateTime;
 
 	@ApiModelProperty(value = "Ending date and time of the screening")
 	@Column(name = "END_DATE")
-	private Date endDateTime;
+	private LocalDate endDateTime;
 
 	@ApiModelProperty(value = "Final verdict on the candidate's soft skills")
 	@Column(name = "SOFT_SKILL_VERDICT")
@@ -64,14 +67,30 @@ public class Screening {
 	@ApiModelProperty(value = "Enum denoting the current status of the screening")
 	@Column(name = "STATUS")
 	private String status;
+	
+	@ApiModelProperty(value = "The Screening connected to the screening")
+	@OneToMany(fetch = FetchType.EAGER)
+	@JoinColumn(name = "SCREENING_ID")
+	private List<Bucket> buckets;
 
-	public Screening() {
+	public List<Bucket> getBuckets() {
+		return buckets;
 	}
 
-	public Screening(ScheduledScreening scheduledScreening, int screenerId, int skillType, Double compositeScore, String aboutMeCommentary, String generalCommentary, String softSkillCommentary, Date startDateTime, Date endDateTime, Boolean softSkillsVerdict, String status) {
+	public void setBuckets(List<Bucket> buckets) {
+		this.buckets = buckets;
+	}
+
+	public Screening() {
+		super();
+	}
+	public Screening(ScheduledScreening scheduledScreening, int screenerId, 
+			int skillTypeId, Double compositeScore, String aboutMeCommentary, 
+			String generalCommentary, String softSkillCommentary, LocalDate startDateTime, 
+			LocalDate endDateTime, Boolean softSkillsVerdict, String status) {
 		this.scheduledScreening = scheduledScreening;
 		this.screenerId = screenerId;
-		this.skillType = skillType;
+		this.skillTypeId = skillTypeId;
 		this.compositeScore = compositeScore;
 		this.aboutMeCommentary = aboutMeCommentary;
 		this.generalCommentary = generalCommentary;
@@ -106,12 +125,12 @@ public class Screening {
 		this.screenerId = screenerId;
 	}
 
-	public int getSkillType() {
-		return skillType;
+	public int getSkillTypeId() {
+		return skillTypeId;
 	}
 
-	public void setSkillType(int skillType) {
-		this.skillType = skillType;
+	public void setSkillTypeId(int skillTypeId) {
+		this.skillTypeId = skillTypeId;
 	}
 
 	public Double getCompositeScore() {
@@ -146,19 +165,19 @@ public class Screening {
 		this.softSkillCommentary = softSkillCommentary;
 	}
 
-	public Date getStartDateTime() {
+	public LocalDate getStartDateTime() {
 		return startDateTime;
 	}
 
-	public void setStartDateTime(Date startDateTime) {
+	public void setStartDateTime(LocalDate startDateTime) {
 		this.startDateTime = startDateTime;
 	}
 
-	public Date getEndDateTime() {
+	public LocalDate getEndDateTime() {
 		return endDateTime;
 	}
 
-	public void setEndDateTime(Date endDateTime) {
+	public void setEndDateTime(LocalDate endDateTime) {
 		this.endDateTime = endDateTime;
 	}
 
@@ -185,7 +204,7 @@ public class Screening {
 		Screening screening = (Screening) o;
 		return getScreeningId() == screening.getScreeningId() &&
 				getScreenerId() == screening.getScreenerId() &&
-				getSkillType() == screening.getSkillType() &&
+				getSkillTypeId() == screening.getSkillTypeId() &&
 				Objects.equals(getScheduledScreening(), screening.getScheduledScreening()) &&
 				Objects.equals(getCompositeScore(), screening.getCompositeScore()) &&
 				Objects.equals(getAboutMeCommentary(), screening.getAboutMeCommentary()) &&
@@ -199,7 +218,7 @@ public class Screening {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(getScreeningId(), getScheduledScreening(), getScreenerId(), getSkillType(), getCompositeScore(), getAboutMeCommentary(), getGeneralCommentary(), getSoftSkillCommentary(), getStartDateTime(), getEndDateTime(), getSoftSkillsVerdict(), getStatus());
+		return Objects.hash(getScreeningId(), getScheduledScreening(), getScreenerId(), getSkillTypeId(), getCompositeScore(), getAboutMeCommentary(), getGeneralCommentary(), getSoftSkillCommentary(), getStartDateTime(), getEndDateTime(), getSoftSkillsVerdict(), getStatus());
 	}
 
 	@Override
@@ -208,7 +227,7 @@ public class Screening {
 				"screeningId=" + screeningId +
 				", scheduledScreening=" + scheduledScreening +
 				", screenerId=" + screenerId +
-				", skillType=" + skillType +
+				", skillType=" + skillTypeId +
 				", compositeScore=" + compositeScore +
 				", aboutMeCommentary='" + aboutMeCommentary + '\'' +
 				", generalCommentary='" + generalCommentary + '\'' +

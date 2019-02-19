@@ -5,6 +5,7 @@ import io.swagger.annotations.ApiModelProperty;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.List;
 import java.util.Objects;
 
 
@@ -30,22 +31,46 @@ public class Bucket implements Serializable {
     @SequenceGenerator(name = "BUCKET_SEQUENCE", sequenceName = "bucket_sequence", allocationSize = 1)
     @Column(name = "BUCKET_ID")
     private int bucketId;
+    
+    @ApiModelProperty(value = "set me!")
+    @Column(name="SCREENING_ID")
+    private int screeningId;
+    
+    public int getScreeningId() {
+		return screeningId;
+	}
+	public void setScreeningId(int screeningId) {
+		this.screeningId = screeningId;
+	}
 
-    @ApiModelProperty(value = "description of the Bucket")
+	@ApiModelProperty(value = "description of the Bucket")
     @Column(name = "BUCKET_DESCRIPTION")
     private String bucketDescription;
 
     @ApiModelProperty(value = "denotes whether Bucket is active or not")
     @Column(name = "IS_ACTIVE")
     private boolean isActive;
-
-    public Bucket() {
+    
+	@ApiModelProperty(value = "The Screening connected to the screening")
+	@OneToMany(fetch = FetchType.EAGER)
+	@JoinColumn(name = "BUCKET_ID")
+	private List<Question> questions;
+    
+	public List<Question> getQuestions() {
+		return questions;
+	}
+	public void setQuestions(List<Question> questions) {
+		this.questions = questions;
+	}
+	
+	public Bucket() {
         super();
     }
 
-    public Bucket(Integer bucketId, String bucketDescription, Boolean isActive) {
+    public Bucket(Integer bucketId, Integer screeningId, String bucketDescription, Boolean isActive) {
         super();
         this.bucketId = bucketId;
+        this.screeningId = screeningId;
         this.bucketDescription = bucketDescription;
         this.isActive = isActive;
     }
@@ -89,13 +114,14 @@ public class Bucket implements Serializable {
 
     @Override
     public int hashCode() {
-        return Objects.hash(getBucketId(), getBucketDescription(), isActive);
+        return Objects.hash(getBucketId(), getScreeningId(), getBucketDescription(), isActive);
     }
 
     @Override
     public String toString() {
         return "Bucket{" +
                 "bucketId=" + bucketId +
+                "screeningId=" + screeningId +
                 ", bucketDescription='" + bucketDescription + '\'' +
                 ", isActive=" + isActive +
                 '}';

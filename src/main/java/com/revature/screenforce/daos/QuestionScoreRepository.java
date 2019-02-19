@@ -3,7 +3,7 @@ package com.revature.screenforce.daos;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import com.revature.screenforce.beans.SimpleQuestionScore;
+import com.revature.screenforce.beans.QuestionScore;
 
 import java.util.List;
 
@@ -15,7 +15,7 @@ import java.util.List;
  */
 
 @Repository
-public interface QuestionScoreRepository extends JpaRepository<SimpleQuestionScore, Integer> {
+public interface QuestionScoreRepository extends JpaRepository<QuestionScore, Integer> {
 
 	/**
 	 * Finds question scores containing given screening id
@@ -23,6 +23,6 @@ public interface QuestionScoreRepository extends JpaRepository<SimpleQuestionSco
 	 * @param screeningId Id of Screening
 	 * @return List of question scores
 	 */
-	List<SimpleQuestionScore> findAllByScreeningScreeningId(int screeningId);
-
+	List<QuestionScore> findAllByScreeningScreeningId(int screeningId);
+	List<QuestionScore> findAllByBucketId(int bucketId);
 }

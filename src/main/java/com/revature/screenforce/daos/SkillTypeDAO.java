@@ -17,7 +17,6 @@ import com.revature.screenforce.beans.SkillType;
  */
 @Repository
 public interface SkillTypeDAO extends JpaRepository<SkillType, Integer> {
-	
 	/**
 	 * Gets all active or inactive SkillType objects
 	 * 
@@ -29,4 +28,6 @@ public interface SkillTypeDAO extends JpaRepository<SkillType, Integer> {
     @Modifying
     @Query("update SkillType s set s.title = ?2, s.isActive = ?3 where s.skillTypeId = ?1")
     public void saveOnly(int id, String title, Boolean b);
+    
+    SkillType getBySkillTypeId(int skillTypeId);
 }

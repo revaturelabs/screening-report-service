@@ -1,15 +1,11 @@
 package com.revature.screenforce.models;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.TreeMap;
-
-public class ReportByEmailAndWeeksModel {
+public class ScreenerInfoModel {
 	Integer screenerId;
 	String email;
 	String name;
 	
-	public ReportByEmailAndWeeksModel(
+	public ScreenerInfoModel(
 			Integer screenerId, 
 			String email,
 			String name) {

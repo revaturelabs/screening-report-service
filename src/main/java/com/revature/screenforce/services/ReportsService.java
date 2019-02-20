@@ -31,8 +31,8 @@ import com.revature.screenforce.daos.SkillTypeDAO;
 import com.revature.screenforce.daos.SoftSkillViolationRepository;
 import com.revature.screenforce.daos.ViolationTypeRepository;
 import com.revature.screenforce.daos.WeightDAO;
-import com.revature.screenforce.models.ReportByEmailAndWeeksModel;
-import com.revature.screenforce.models.ReportByWeeksModel;
+import com.revature.screenforce.models.ScreenerInfoModel;
+import com.revature.screenforce.models.FullReportModel;
 import com.revature.screenforce.util.Time;
 
 @Service
@@ -71,7 +71,7 @@ public class ReportsService {
 		return emailList;
 	}
 	
-	public ReportByEmailAndWeeksModel getJsonReportForEmailAndWeeks(String email, String weeks) {
+	public ScreenerInfoModel getJsonReportForEmailAndWeeks(String email, String weeks) {
 		Time time = new Time();
 		LocalDate startDate = time.getWeekToDate(Integer.parseInt(weeks));
 		LocalDate endDate = LocalDate.now(ZoneOffset.UTC);
@@ -153,7 +153,7 @@ public class ReportsService {
 			}
 		}
 		
-		return new ReportByEmailAndWeeksModel(
+		return new ScreenerInfoModel(
 				screener.getScreenerId(),
 				screener.getEmail(),
 				screener.getName());
@@ -161,7 +161,7 @@ public class ReportsService {
 
 	public String getReport(String email, String weeks) {
 		reset();
-		List<ReportByEmailAndWeeksModel> reports = new ArrayList<>();
+		List<ScreenerInfoModel> reports = new ArrayList<>();
 		if (email == null || email.isEmpty() || email.equals("null")) {
 			List<Screener> screeners = screenerRepository.findAll();
 			for (Screener s : screeners) {
@@ -208,7 +208,7 @@ public class ReportsService {
 			}
 		}
 		
-		ReportByWeeksModel reportByWeeksModel = new ReportByWeeksModel(
+		FullReportModel reportByWeeksModel = new FullReportModel(
 				reports, 
 				scoresByDescription, 
 				scoresBySkillType, 

@@ -32,12 +32,11 @@ import com.revature.screenforce.daos.BucketDAO;
 import com.revature.screenforce.daos.QuestionDAO;
 import com.revature.screenforce.daos.QuestionScoreRepository;
 import com.revature.screenforce.daos.ScreenerRepository;
+import com.revature.screenforce.daos.ScreeningRepository;
 import com.revature.screenforce.daos.SkillTypeDAO;
 import com.revature.screenforce.daos.SoftSkillViolationRepository;
 import com.revature.screenforce.daos.ViolationTypeRepository;
 import com.revature.screenforce.daos.WeightDAO;
-import com.revature.screenforce.models.ReportByEmailAndWeeksModel;
-import com.revature.screenforce.models.ReportByWeeksModel;
 import com.revature.screenforce.models.ReportData;
 import com.revature.screenforce.models.ReportData.BarChartData;
 import com.revature.screenforce.util.Time;
@@ -52,23 +51,7 @@ public class ReportsService {
 	@Autowired ViolationTypeRepository violationTypeRepository;
 	@Autowired WeightDAO weightDAO;
 	@Autowired BucketDAO bucketDAO;
-	
-	private Map<String, Double> scoresByQuestion = new HashMap<>();
-	private Map<String, Integer> numScoresPerQuestion = new HashMap<>();
-	private Map<String, Double> top5HardestQuestions = new TreeMap<>();
-	private ArrayList<String> questionKeys = new ArrayList<>();
-	private List<SoftSkillViolation> softSkillViolations = new ArrayList<>();
-	private List<ViolationType> violationTypes = new ArrayList<>();
-	
-	private Map<String, List<Bucket>> bucketsBySkillType = new HashMap<>();
-	private Map<String, Double> scoresByDescription = new HashMap<>();
-	private Map<String, Integer> numScoresPerDescription = new HashMap<>();
-	private Map<String, Double> scoresBySkillType = new HashMap<>();
-	private Map<String, Integer> numScoresPerSkillType = new HashMap<>();
-	
-	private Map<String, Integer> numViolationsByType = new HashMap<>();
-	
-	int numScheduledScreenings = 0;
+	@Autowired ScreeningRepository screeningRepository;
 	
 	public List<String> getAllEmails(String email){
 		List<Screener> screenerList = screenerRepository.findAllByEmailContainingIgnoreCase(email);
@@ -77,6 +60,11 @@ public class ReportsService {
 				emailList.add(screener.getEmail());
 		}
 		return emailList;
+	}
+	
+	public Integer getIdFromEmail(String email) {
+		Screener screener = screenerRepository.getByEmail(email);
+		return screener.getScreenerId();
 	}
 	
 	public void printDAOOutputs() {
@@ -96,27 +84,65 @@ public class ReportsService {
 		System.out.println(weightDAO.findAll());
 	}
 	
-	public String getTestReport(String weeks, Integer screenerId) {
+	public String getReport(String weeks, Integer screenerId) {
+		/*
+		 * Big dang report generation.  Generates ReportData that matches ReportData in screening-ui and
+		 * works with angular to display charts/info.  Null values for weeks or screenerId will remove
+		 * that restriction, so getReport(null, null) returns a report for all screens all time.
+		 * 
+		 * This used to be two separate functions, neither of which worked.
+		 * It's essentially a total rewrite.  It's been split up into some functions but could use more
+		 * refactoring.  
+		 */
 		
 		Time time = new Time();
-		LocalDate startDate = time.getWeekToDate(Integer.parseInt(weeks));
-		LocalDate endDate = LocalDate.now(ZoneOffset.UTC);
+		LocalDate startDate = null;
+		LocalDate endDate = null;
+		if (weeks != null) {
+			startDate = time.getWeekToDate(Integer.parseInt(weeks));
+			endDate = LocalDate.now(ZoneOffset.UTC);
+		}
 		
 		// sample data.  Testing one piece at a time!
 		List<String> hardestQuestions = Arrays.asList("Q1", "Q2", "Q3", "Q4", "Q5");
 		List<ReportData.BarChartData> avgSkillTypeScore = new ArrayList();
-		avgSkillTypeScore.add(new ReportData.BarChartData("skill_test", 10.5));
+		//avgSkillTypeScore.add(new ReportData.BarChartData("skill_test", 10.5));
 		
 		List<ReportData.BarChartData> avgBucketTypeScore = new ArrayList();
-		avgBucketTypeScore.add(new ReportData.BarChartData("bucket_test", 12.5));
+		//avgBucketTypeScore.add(new ReportData.BarChartData("bucket_test", 12.5));
 		
 		List<ReportData.BarChartData> violationsByType = new ArrayList();
-		violationsByType.add(new ReportData.BarChartData("violation_test", 4));
+		//violationsByType.add(new ReportData.BarChartData("violation_test", 4));
 		
 		Integer numApplicantsPassed = 1337;
 		Integer numApplicantsFailed = 1337;
 		ReportData.Screener screener = new ReportData.Screener("Adam", "adking@mail.com");
 		
+		// generation of real data beings here, with screenings
+		List<Screening> screenings = getScreenings(startDate, endDate, screenerId);
+		
+		//count the soft skill violations in our screenings using a Map:
+		Map<String, Integer> countSoftSkillViolation = new HashMap<>();
+		for (Screening s : screenings) {
+			List<SoftSkillViolation> ssvs = softSkillViolationRepository.findAllByScreeningId(s.getScreeningId());
+			for (SoftSkillViolation ssv : ssvs) {
+				String key = ssv.getViolationType().getViolationTypeText();
+				if (!countSoftSkillViolation.containsKey(key)) {
+					countSoftSkillViolation.put(key, 0);
+				}
+				countSoftSkillViolation.replace(key, countSoftSkillViolation.get(key) + 1);
+			}
+		}
+		
+		// convert count of violations to BarChartData, prep for output
+		for (String ssv : countSoftSkillViolation.keySet()) {
+			violationsByType.add(new ReportData.BarChartData(
+					ssv,
+					countSoftSkillViolation.get(ssv)
+					));
+		}
+		
+		//get question scores in the range and use them to produce more BarChartData.
 		List<QuestionScore> questionScores = getQuestionScores(startDate, endDate, screenerId);
 		
 		Tallies tallies = tallyScores(questionScores);
@@ -161,6 +187,24 @@ public class ReportsService {
 			hardestQuestions = tempHardestQuestions;
 		}
 		
+		//grab screener info for display, if it exists
+		if (screenerId != null) {
+			Screener tempScreener = screenerRepository.findById(screenerId).get();
+			screener.setName(tempScreener.getName());
+			screener.setEmail(tempScreener.getEmail());
+		} else {
+			screener = null;
+		}
+		
+		//get numApplicants stuff
+//		for (Screening s : screenings) {
+//			System.out.println(s.getScheduledScreening().getScheduledStatus());
+//		}
+		//turns out numApplicants doesn't exist.  neat!  We can only get pending v completed, not passed v failed.
+		numApplicantsPassed = null;
+		numApplicantsFailed = null;
+		
+		//produce final report; serve it as json
 		ReportData reportData = new ReportData(
 				hardestQuestions,
 				avgSkillTypeScore,
@@ -261,195 +305,38 @@ public class ReportsService {
 		return out;
 	}
 	
-	public ReportByEmailAndWeeksModel getJsonReportForEmailAndWeeks(String email, String weeks) {
-		Time time = new Time();
-		LocalDate startDate = time.getWeekToDate(Integer.parseInt(weeks));
-		LocalDate endDate = LocalDate.now(ZoneOffset.UTC);
+	private List<Screening> getScreenings(LocalDate startDate, LocalDate endDate, Integer screenerId) {
+		/*
+		 * Returns a list of screenings associated with a screener and a date range.
+		 * null inputs mean that constraint is ignored.
+		 * Similar to getQuestionScores().
+		 */
+		boolean useDateRange = (startDate != null && endDate != null);
+		boolean useScreenerId = (screenerId != null);
 		
-		Screener screener = screenerRepository.getByEmail(email);
-
-		if (screener.getScreenings() == null) return null;
-		List<Screening> screenings = screener.getScreenings();
-		List<ScheduledScreening> scheduledScreenings = new ArrayList<>();
+		List<Screening> screenings;
+		List<Screening> out = new ArrayList<Screening>();
 		
-		if (screenings != null) {
-			for (Screening s : screenings) {
-				if(s.getEndDateTime().isAfter(startDate) && s.getEndDateTime().isBefore(endDate)) {
-				
-				ScheduledScreening ss = s.getScheduledScreening();
-				scheduledScreenings.add(ss);
-				
-				SkillType st = skillTypeDAO.getBySkillTypeId(s.getSkillTypeId());
-				bucketsBySkillType.put(st.getTitle(), s.getBuckets());
-				
-				if (softSkillViolationRepository.existsByScreeningId(s.getScreeningId())) {
-					SoftSkillViolation softSkillViolation = softSkillViolationRepository.getByScreeningId(s.getScreeningId());
-					softSkillViolations.add(softSkillViolation);
-					
-					if (softSkillViolation.hasViolationType())
-						violationTypes.add(softSkillViolation.getViolationType());
-				}
-				
-				numScheduledScreenings += scheduledScreenings.size();
-			}
-			}
-
-			Set<String> skillTypeTypes = bucketsBySkillType.keySet();
-			for (String st : skillTypeTypes) {
-				List<Bucket> bl = bucketsBySkillType.get(st);
-				for (Bucket b : bl) {
-					String bucketKey = b.getBucketDescription();
-					for (Question q : b.getQuestions()) {
-						String questionText = q.getQuestionText();
-						for (QuestionScore qs : q.getQuestionScores()) {
-							Double value = qs.getScore();
-							if (value == null) break;
-							if (!scoresBySkillType.containsKey(st)) {
-								scoresBySkillType.put(st, value);
-								numScoresPerSkillType.put(st, 1);
-							} else {
-								if (st == null) {
-									bucketsBySkillType.remove(st);
-								} else {
-									double currentSkillSum = scoresBySkillType.get(st);
-									double newSkillSum = currentSkillSum + value;
-									scoresBySkillType.put(st, newSkillSum);
-									numScoresPerSkillType.put(st, numScoresPerSkillType.get(st) + 1);
-								}
-							}
-							
-							if (bucketKey != null && !scoresByDescription.containsKey(bucketKey)) {
-								scoresByDescription.put(bucketKey, value);
-								numScoresPerDescription.put(bucketKey, 1);
-							} else {
-								double currentBucketSum = scoresByDescription.get(bucketKey);
-								double newBucketVal = currentBucketSum + value;
-								scoresByDescription.put(bucketKey, newBucketVal);
-								numScoresPerDescription.put(bucketKey, numScoresPerDescription.get(bucketKey) + 1);
-							}
-						
-							if (questionText != null && !scoresByQuestion.containsKey(questionText)) {
-								scoresByQuestion.put(questionText, value);
-								numScoresPerQuestion.put(questionText, 1);
-							} else {
-								double currentQuestionSum = scoresByQuestion.get(questionText);
-								double newQuestionSum = currentQuestionSum + value;
-								scoresByQuestion.put(questionText, newQuestionSum);
-								numScoresPerQuestion.put(questionText, numScoresPerQuestion.get(questionText) + 1);
-							}
-						}
-					}
-				}
-			}
+		if (useScreenerId) {
+			Screener screener = screenerRepository.findById(screenerId).get();
+			screenings = screener.getScreenings();
+		} else {
+			screenings = screeningRepository.findAll();
 		}
 		
-		return new ReportByEmailAndWeeksModel(
-				screener.getScreenerId(),
-				screener.getEmail(),
-				screener.getName());
-	}
-
-	public String getReport(String email, String weeks) {
-		reset();
-		List<ReportByEmailAndWeeksModel> reports = new ArrayList<>();
-		if (email == null || email.isEmpty() || email.equals("null")) {
-			List<Screener> screeners = screenerRepository.findAll();
-			for (Screener s : screeners) {
-				if (s.hasScreenings())
-					reports.add(getJsonReportForEmailAndWeeks(s.getEmail(), weeks));
+		if (useDateRange) {
+			for (Screening s : screenings) {
+				if (s.getEndDateTime().isAfter(startDate) && s.getEndDateTime().isBefore(endDate)) {
+					out.add(s);
+				}
 			}
 		} else {
-			reports.add(getJsonReportForEmailAndWeeks(email, weeks));
+			out = screenings;
 		}
 		
-		Set<String> keyset = scoresByDescription.keySet();
-		Iterator<String> iter = keyset.iterator();
-		while (iter.hasNext()) {
-			String key = iter.next();
-			if (scoresByDescription.get(key) != 0) {
-				double scoreByDescription = scoresByDescription.get(key) / (double) numScoresPerDescription.get(key);
-				scoresByDescription.put(key, scoreByDescription);
-			}
-		}
-		
-		iter = scoresBySkillType.keySet().iterator();
-		while (iter.hasNext()) {
-			String key = iter.next();
-			double scoreBySkillType = scoresBySkillType.get(key) / (double) numScoresPerSkillType.get(key);
-			scoresBySkillType.put(key,  scoreBySkillType);
-		}
-		
-		iter = scoresByQuestion.keySet().iterator();
-		while (iter.hasNext()) {
-			String key = iter.next();
-			double scoreByQuestion = scoresByQuestion.get(key) / (double) numScoresPerQuestion.get(key);
-			scoresByQuestion.put(key,  scoreByQuestion);
-			questionKeys.add(key);
-		}
-		System.out.println(questionKeys);
-		top5HardestQuestions = top5HardestSort(scoresByQuestion, questionKeys);
-		
-		for (ViolationType v : violationTypes) {
-			String key = v.getViolationTypeText();
-			if (!numViolationsByType.containsKey(key)) {
-				numViolationsByType.put(key, 1);
-			} else if (numViolationsByType.containsKey(key)) {
-				numViolationsByType.put(key, numViolationsByType.get(key) + 1);
-			}
-		}
-		
-		ReportByWeeksModel reportByWeeksModel = new ReportByWeeksModel(
-				reports, 
-				scoresByDescription, 
-				scoresBySkillType, 
-				top5HardestQuestions,
-				numViolationsByType,
-				numScheduledScreenings);
-		Gson gson = new Gson();
-		String json = gson.toJson(reportByWeeksModel);
-		return json;
+		return out;
 	}
 	
-	public TreeMap<String, Double> top5HardestSort(
-			Map<String, 
-			Double> mapToSort, 
-			ArrayList<String> keys){
-		
-		TreeMap<String, Double> sortedTreeMap = new TreeMap<>();
-		TreeSet<String> keysAndValues = new TreeSet<>();
-		
-		for(String key : keys) {
-			keysAndValues.add(String.valueOf(mapToSort.get(key)) + ";" + key);
-		}
-		
-		int count = 1;
-		
-		for(String keyAndValue : keysAndValues) {
-			if(count < 6) {
-				String key = keyAndValue.substring(keyAndValue.indexOf(";") + 1, keyAndValue.length());
-				Double value = Double.parseDouble(keyAndValue.substring(0, keyAndValue.indexOf(";")));
-				sortedTreeMap.put(String.valueOf(count) + ". " + key, value);
-			}
-			count++;
-		}
-		
-		return sortedTreeMap;
-	}
-	public void reset() {
-		numScheduledScreenings = 0;
-		if (!scoresByQuestion.isEmpty()) scoresByQuestion.clear();
-		if (!numScoresPerQuestion.isEmpty()) numScoresPerQuestion.clear();
-		if (!top5HardestQuestions.isEmpty()) top5HardestQuestions.clear();
-		if (!questionKeys.isEmpty()) questionKeys.clear();
-		if (!softSkillViolations.isEmpty()) softSkillViolations.clear();
-		if (!violationTypes.isEmpty()) violationTypes.clear();
-		if (!bucketsBySkillType.isEmpty()) bucketsBySkillType.clear();
-		if (!scoresByDescription.isEmpty()) scoresByDescription.clear();
-		if (!numScoresPerDescription.isEmpty()) numScoresPerDescription.clear();
-		if (!scoresBySkillType.isEmpty()) scoresBySkillType.clear();
-		if (!numScoresPerSkillType.isEmpty()) numScoresPerSkillType.clear();
-		if (!numViolationsByType.isEmpty()) numViolationsByType.clear();
-	}
 }
 
 

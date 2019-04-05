@@ -29,9 +29,19 @@ public class ReportsController {
 	@GetMapping(value = "/data", produces = MediaType.APPLICATION_JSON_VALUE)
 	public String getReports(
 			@RequestParam(name="weeks") 
-			String weeks, 
+			String weeks,
 			@RequestParam(name="email", required=false)
 			String email) {
 		return reportsService.getReport(email, weeks);
+	}
+	
+	@GetMapping(value="/printDAOs")
+	public void printDAOOutputs() {
+		reportsService.printDAOOutputs();
+	}
+	
+	@GetMapping(value="/getReport")
+	public String getTestReport(@RequestParam(name="weeks") String weeks) {
+		return reportsService.getTestReport(weeks, 1);
 	}
 }

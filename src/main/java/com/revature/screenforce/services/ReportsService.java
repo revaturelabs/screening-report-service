@@ -104,7 +104,7 @@ public class ReportsService {
 		}
 		
 		// sample data.  Testing one piece at a time!
-		List<String> hardestQuestions = Arrays.asList("Q1", "Q2", "Q3", "Q4", "Q5");
+		List<String> hardestQuestions = Arrays.asList("N/A", "N/A", "N/A", "N/A", "N/A");
 		List<ReportData.BarChartData> avgSkillTypeScore = new ArrayList();
 		//avgSkillTypeScore.add(new ReportData.BarChartData("skill_test", 10.5));
 		

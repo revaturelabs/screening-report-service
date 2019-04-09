@@ -62,6 +62,18 @@ public class ReportsService {
 		return emailList;
 	}
 	
+	public List<Screening> getAllScreenings() {
+		return this.screeningRepository.findAll();
+	}
+	
+	public List<SoftSkillViolation> getAllSoftSkillViolations() {
+		return this.softSkillViolationRepository.findAll();
+	}
+	
+	public List<QuestionScore> getAllQuestionScores() {
+		return this.questionScoreRepository.findAll();
+	}
+ 	
 	public Integer getIdFromEmail(String email) {
 		Screener screener = screenerRepository.getByEmail(email);
 		return screener.getScreenerId();

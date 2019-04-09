@@ -84,7 +84,7 @@ public class ReportsService {
 		System.out.println(weightDAO.findAll());
 	}
 	
-	public String getReport(String weeks, Integer screenerId) {
+	public String getReport(String[] weeks, Integer screenerId) {
 		/*
 		 * Big dang report generation.  Generates ReportData that matches ReportData in screening-ui and
 		 * works with angular to display charts/info.  Null values for weeks or screenerId will remove
@@ -99,12 +99,12 @@ public class ReportsService {
 		LocalDate startDate = null;
 		LocalDate endDate = null;
 		if (weeks != null) {
-			startDate = time.getWeekToDate(Integer.parseInt(weeks));
-			endDate = LocalDate.now(ZoneOffset.UTC);
+			startDate = time.getWeekToDate(Integer.parseInt(weeks[1]));
+			endDate = time.getWeekToDate(Integer.parseInt(weeks[0]));
 		}
 		
 		// sample data.  Testing one piece at a time!
-		List<String> hardestQuestions = Arrays.asList("Q1", "Q2", "Q3", "Q4", "Q5");
+		List<String> hardestQuestions = Arrays.asList("N/A", "N/A", "N/A", "N/A", "N/A");
 		List<ReportData.BarChartData> avgSkillTypeScore = new ArrayList();
 		//avgSkillTypeScore.add(new ReportData.BarChartData("skill_test", 10.5));
 		

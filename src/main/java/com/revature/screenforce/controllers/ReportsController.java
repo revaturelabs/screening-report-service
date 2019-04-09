@@ -40,12 +40,12 @@ public class ReportsController {
 	}
 	
 	@GetMapping(value="/getReport")
-	public String getReport(@RequestParam(name="weeks") String weeks, @RequestParam(name="screenerId") Integer screenerId) {
+	public String getReport(@RequestParam(name="weeks") String[] weeks, @RequestParam(name="screenerId") Integer screenerId) {
 		return reportsService.getReport(weeks, screenerId);
 	}
 
 	@GetMapping(value="/getWeeksReport")
-	public String getWeeksReport(@RequestParam(name="weeks") String weeks) {
+	public String getWeeksReport(@RequestParam(name="weeks") String[] weeks) {
 		return reportsService.getReport(weeks, null);
 	}
 	
@@ -61,7 +61,7 @@ public class ReportsController {
 	
 	//to make use of prior group's work -- they used emails rather than id
 	@GetMapping(value="/getReportWithEmail")
-	public String getReportWithEmail(@RequestParam(name="weeks") String weeks, @RequestParam(name="email") String email) {
+	public String getReportWithEmail(@RequestParam(name="weeks") String[] weeks, @RequestParam(name="email") String email) {
 		Integer screenerId = reportsService.getIdFromEmail(email);
 		return reportsService.getReport(weeks, screenerId);
 	}

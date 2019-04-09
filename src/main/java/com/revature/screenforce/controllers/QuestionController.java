@@ -34,10 +34,10 @@ public class QuestionController {
 			jn = mapper.readTree(s);
 			q.setQuestionText(jn.get("questionText").asText());
 			q.setSampleAnswer1(jn.get("sampleAnswer1").asText());
-			q.setSampleAnswer2(jn.get("sampleAnswer1").asText());
-			q.setSampleAnswer3(jn.get("sampleAnswer1").asText());
-			q.setSampleAnswer4(jn.get("sampleAnswer1").asText());
-			q.setSampleAnswer5(jn.get("sampleAnswer1").asText());
+			q.setSampleAnswer2(jn.get("sampleAnswer2").asText());
+			q.setSampleAnswer3(jn.get("sampleAnswer3").asText());
+			q.setSampleAnswer4(jn.get("sampleAnswer4").asText());
+			q.setSampleAnswer5(jn.get("sampleAnswer5").asText());
 			q.setQuestionId(0);
 			q.setBucket(bService.getBucket(jn.get("bucket").asInt()));
 			q.setIsActive(false);

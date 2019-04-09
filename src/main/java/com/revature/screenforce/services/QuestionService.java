@@ -21,7 +21,7 @@ public class QuestionService {
 	// (such as buckets and screeners)
 	public void postQuestion(Question q)
 	{
-		System.out.println(q);
+		System.out.println(q.toString());
 		question.save(q);
 	}
 	public Question[] getQuestions() {

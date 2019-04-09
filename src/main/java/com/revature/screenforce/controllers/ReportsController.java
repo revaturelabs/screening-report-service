@@ -12,6 +12,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.revature.screenforce.beans.QuestionScore;
+import com.revature.screenforce.beans.Screening;
+import com.revature.screenforce.beans.SoftSkillViolation;
 import com.revature.screenforce.services.ReportsService;
 
 @RestController
@@ -29,6 +32,21 @@ public class ReportsController {
 	public @ResponseBody List<String> getAllEmails(@RequestParam(value = "email") String email){
 		List<String> emails = this.reportsService.getAllEmails(email);
 		return emails;
+	}
+	
+	@GetMapping(value="/screenings")
+	public List<Screening> getAllScreenings() {
+		return this.reportsService.getAllScreenings();
+	} 
+	
+	@GetMapping(value="/softskillviolations")
+	public List<SoftSkillViolation> getAllSoftSkillViolations() {
+		return this.reportsService.getAllSoftSkillViolations();
+	}
+	
+	@GetMapping(value="/questionscores")
+	public List<QuestionScore> getAllQuestionScores() {
+		return this.reportsService.getAllQuestionScores();
 	}
 	
 	@GetMapping(value="/printDAOs")

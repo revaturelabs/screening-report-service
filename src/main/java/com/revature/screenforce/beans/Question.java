@@ -4,6 +4,9 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
 import javax.persistence.*;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.io.Serializable;
 import java.util.List;
 import java.util.Objects;
@@ -33,6 +36,7 @@ public class Question implements Serializable {
     @ApiModelProperty(value = "Bucket id")
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "BUCKET_ID")
+   
     private Bucket bucket;
 
     @ApiModelProperty(value = "Boolean as to whether or not Question is active")

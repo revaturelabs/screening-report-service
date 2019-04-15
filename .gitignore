@@ -13,6 +13,7 @@ package-lock.json
 *.userprefs
 
 # Build results
+target/
 [Dd]ebug/
 [Dd]ebugPublic/
 [Rr]elease/

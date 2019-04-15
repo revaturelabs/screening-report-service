@@ -5,6 +5,8 @@ import io.swagger.annotations.ApiModelProperty;
 
 import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
@@ -70,6 +72,7 @@ public class Screening {
 	@ApiModelProperty(value = "The Screening connected to the screening")
 	@OneToMany(fetch = FetchType.EAGER)
 	@JoinColumn(name = "SCREENING_ID")
+	@JsonIgnore
 	private List<Bucket> buckets;
 
 	public List<Bucket> getBuckets() {

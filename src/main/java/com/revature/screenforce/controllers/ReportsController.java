@@ -12,26 +12,75 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.revature.screenforce.beans.QuestionScore;
+import com.revature.screenforce.beans.Screening;
+import com.revature.screenforce.beans.SoftSkillViolation;
 import com.revature.screenforce.services.ReportsService;
 
 @RestController
 @CrossOrigin
 public class ReportsController {
+	/*
+	 * This controller is built to work with screening-ui, generating reports for the Reports tab there.
+	 * Screeners are identified by email on the client side, but Id on the backend, so we have a special
+	 * function to handle emails.
+	 */
 
 	@Autowired ReportsService reportsService;
 
-	@GetMapping(value="/email", produces= MediaType.APPLICATION_JSON_VALUE)
+	@GetMapping(value="/getEmails", produces= MediaType.APPLICATION_JSON_VALUE)
 	public @ResponseBody List<String> getAllEmails(@RequestParam(value = "email") String email){
 		List<String> emails = this.reportsService.getAllEmails(email);
 		return emails;
 	}
+	
+	@GetMapping(value="/screenings")
+	public List<Screening> getAllScreenings() {
+		return this.reportsService.getAllScreenings();
+	} 
+	
+	@GetMapping(value="/softskillviolations")
+	public List<SoftSkillViolation> getAllSoftSkillViolations() {
+		return this.reportsService.getAllSoftSkillViolations();
+	}
+	
+	@GetMapping(value="/questionscores")
+	public List<QuestionScore> getAllQuestionScores() {
+		return this.reportsService.getAllQuestionScores();
+	}
+	
+	@GetMapping(value="/printDAOs")
+	public void printDAOOutputs() {
+		/*
+		 * Prints DAO information to the console for debugging purposes.
+		 */
+		reportsService.printDAOOutputs();
+	}
+	
+	@GetMapping(value="/getReport")
+	public String getReport(@RequestParam(name="weeks") String[] weeks, @RequestParam(name="screenerId") Integer screenerId) {
+		return reportsService.getReport(weeks, screenerId);
+	}
 
-	@GetMapping(value = "/data", produces = MediaType.APPLICATION_JSON_VALUE)
-	public String getReports(
-			@RequestParam(name="weeks") 
-			String weeks, 
-			@RequestParam(name="email", required=false)
-			String email) {
-		return reportsService.getReport(email, weeks);
+	@GetMapping(value="/getWeeksReport")
+	public String getWeeksReport(@RequestParam(name="weeks") String[] weeks) {
+		return reportsService.getReport(weeks, null);
+	}
+	
+	@GetMapping(value="/getScreenerReport")
+	public String getScreenerReport(@RequestParam(name="screenerId") Integer screenerId) {
+		return reportsService.getReport(null, screenerId);
+	}
+	
+	@GetMapping(value="/getTotalReport")
+	public String getTotalReport() {
+		return reportsService.getReport(null, null);
+	}
+	
+	//to make use of prior group's work -- they used emails rather than id
+	@GetMapping(value="/getReportWithEmail")
+	public String getReportWithEmail(@RequestParam(name="weeks") String[] weeks, @RequestParam(name="email") String email) {
+		Integer screenerId = reportsService.getIdFromEmail(email);
+		return reportsService.getReport(weeks, screenerId);
 	}
 }

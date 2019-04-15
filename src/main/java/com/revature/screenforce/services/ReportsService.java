@@ -37,13 +37,8 @@ import com.revature.screenforce.daos.SkillTypeDAO;
 import com.revature.screenforce.daos.SoftSkillViolationRepository;
 import com.revature.screenforce.daos.ViolationTypeRepository;
 import com.revature.screenforce.daos.WeightDAO;
-<<<<<<< HEAD
-import com.revature.screenforce.models.ScreenerInfoModel;
-import com.revature.screenforce.models.FullReportModel;
-=======
 import com.revature.screenforce.models.ReportData;
 import com.revature.screenforce.models.ReportData.BarChartData;
->>>>>>> 5843f01f19c443dbbe87b5bad3d7f4a5151cea0d
 import com.revature.screenforce.util.Time;
 
 @Service
@@ -67,9 +62,6 @@ public class ReportsService {
 		return emailList;
 	}
 	
-<<<<<<< HEAD
-	public ScreenerInfoModel getJsonReportForEmailAndWeeks(String email, String weeks) {
-=======
 	public List<Screening> getAllScreenings() {
 		return this.screeningRepository.findAll();
 	}
@@ -114,8 +106,7 @@ public class ReportsService {
 		 * It's essentially a total rewrite.  It's been split up into some functions but could use more
 		 * refactoring.  
 		 */
-		
->>>>>>> 5843f01f19c443dbbe87b5bad3d7f4a5151cea0d
+
 		Time time = new Time();
 		LocalDate startDate = null;
 		LocalDate endDate = null;
@@ -155,32 +146,12 @@ public class ReportsService {
 			}
 		}
 		
-<<<<<<< HEAD
-		return new ScreenerInfoModel(
-				screener.getScreenerId(),
-				screener.getEmail(),
-				screener.getName());
-	}
-
-	public String getReport(String email, String weeks) {
-		reset();
-		List<ScreenerInfoModel> reports = new ArrayList<>();
-		if (email == null || email.isEmpty() || email.equals("null")) {
-			List<Screener> screeners = screenerRepository.findAll();
-			for (Screener s : screeners) {
-				if (s.hasScreenings())
-					reports.add(getJsonReportForEmailAndWeeks(s.getEmail(), weeks));
-			}
-		} else {
-			reports.add(getJsonReportForEmailAndWeeks(email, weeks));
-=======
 		// convert count of violations to BarChartData, prep for output
 		for (String ssv : countSoftSkillViolation.keySet()) {
 			violationsByType.add(new ReportData.BarChartData(
 					ssv,
 					countSoftSkillViolation.get(ssv)
 					));
->>>>>>> 5843f01f19c443dbbe87b5bad3d7f4a5151cea0d
 		}
 		
 		//get question scores in the range and use them to produce more BarChartData.
@@ -237,15 +208,6 @@ public class ReportsService {
 			screener = null;
 		}
 		
-<<<<<<< HEAD
-		FullReportModel reportByWeeksModel = new FullReportModel(
-				reports, 
-				scoresByDescription, 
-				scoresBySkillType, 
-				top5HardestQuestions,
-				numViolationsByType,
-				numScheduledScreenings);
-=======
 		//get numApplicants stuff
 //		for (Screening s : screenings) {
 //			System.out.println(s.getScheduledScreening().getScheduledStatus());
@@ -263,8 +225,6 @@ public class ReportsService {
 				numApplicantsPassed,
 				numApplicantsFailed,
 				screener);
-				
->>>>>>> 5843f01f19c443dbbe87b5bad3d7f4a5151cea0d
 		Gson gson = new Gson();
 		String json = gson.toJson(reportData);
 		return json;

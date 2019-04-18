@@ -50,3 +50,12 @@ The DAOs include:
 - ScreeningRepository: DAO Repository utilizing JpaReposity & CrudRepositry interface methods used to fetch Screening id
 - SoftSkillViolationRepository: DAO Repository utilizing JpaReposity & CrudRepositry interface methods used to fetch Soft Skill Violation type
 - ViolationTypeRepository: DAO Repository utilizing JpaReposity & CrudRepositry interface methods used to fetch Violation type
+
+##YML
+The convention I found to be the most clear and readable for the YML files:
+- The document begins with the Spring declaration to begin with a uniform starting point, with no white space
+- All other main lines of the YML file begin with no white space 
+- From this intial main line, all following lines will get four additional white spaces
+- This process continues for as many additional lines as needed, with each getting an additional four white spaces
+- If any comments are added to the YML file then the # should be at the third white space
+- Any information for the comment should follow the line spacing listed above, so the # can be removed but the convention remains the same

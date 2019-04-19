@@ -91,6 +91,13 @@
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-config-client</artifactId>
 		</dependency>
+		
+		<!--  Rest Assured -->
+		<dependency>
+      		<groupId>io.rest-assured</groupId>
+      		<artifactId>rest-assured</artifactId>
+      		<scope>test</scope>
+		</dependency>
 
 		<!-- H2 Database (In-Memory) -->
 		<dependency>

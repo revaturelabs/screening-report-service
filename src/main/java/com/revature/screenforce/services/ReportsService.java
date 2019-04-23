@@ -96,7 +96,6 @@ public class ReportsService {
 		System.out.println(weightDAO.findAll());
 	}
 	
-	//public String getReport(String starDate, String endDate, Integer screenerId) {
 	public String getReport(LocalDate startDate, LocalDate endDate, Integer screenerId) {
 		/*
 		 * Big dang report generation.  Generates ReportData that matches ReportData in screening-ui and
@@ -107,17 +106,6 @@ public class ReportsService {
 		 * It's essentially a total rewrite.  It's been split up into some functions but could use more
 		 * refactoring.  
 		 */
-
-		
-		/*
-		LocalDate startDate = null;
-		LocalDate endDate = null;
-		if (startDate != null) {
-			Time time = new Time();
-			startDate = time.getWeekToDate(Integer.parseInt(weeks[1]));
-			endDate = time.getWeekToDate(Integer.parseInt(weeks[0]));
-		}
-		*/
 		
 		// sample data.  Testing one piece at a time!
 		//List<String> hardestQuestions = Arrays.asList("N/A", "N/A", "N/A", "N/A", "N/A");
@@ -167,22 +155,9 @@ public class ReportsService {
 		List<ReportData.BarChartData> avgSkillTypeScore = avgSkillTypeScore(tallies);
 		
 		// get average of Question scores in new Map
-		Map<Integer, Double> avgScoreQuestion = new HashMap<>();
-		for (Integer qid : tallies.sumScoresQuestion.keySet()) {
-			avgScoreQuestion.put(qid, tallies.sumScoresQuestion.get(qid) / (double) tallies.countQuestion.get(qid));
-		}
-		// sort, get top 5
-		Set<Integer> keySet = avgScoreQuestion.keySet();
-		List<Integer> keyList = new ArrayList<Integer>(keySet);
+
 		
-		Collections.sort(keyList, new Comparator<Integer>() {
-			@Override
-			public int compare(Integer i1, Integer i2) {
-				return Double.compare(avgScoreQuestion.get(i1), avgScoreQuestion.get(i2));
-			}
-		});
-		
-		List<String> hardestQuestions = hardestQuestions(keyList);
+		List<String> hardestQuestions = hardestQuestions(tallies);
 		
 		//grab screener info for display, if it exists
 		if (screenerId != null) {
@@ -215,7 +190,22 @@ public class ReportsService {
 		return json;
 	}
 	
-	private List<String> hardestQuestions(List<Integer> keyList){
+	private List<String> hardestQuestions(Tallies tallies){
+		Map<Integer, Double> avgScoreQuestion = new HashMap<>();
+		for (Integer qid : tallies.sumScoresQuestion.keySet()) {
+			avgScoreQuestion.put(qid, tallies.sumScoresQuestion.get(qid) / (double) tallies.countQuestion.get(qid));
+		}
+		// sort, get top 5
+		Set<Integer> keySet = avgScoreQuestion.keySet();
+		List<Integer> keyList = new ArrayList<Integer>(keySet);
+		
+		Collections.sort(keyList, new Comparator<Integer>() {
+			@Override
+			public int compare(Integer i1, Integer i2) {
+				return Double.compare(avgScoreQuestion.get(i1), avgScoreQuestion.get(i2));
+			}
+		});
+		
 		List<String> hardestQuestions = Arrays.asList("N/A", "N/A", "N/A", "N/A", "N/A");
 		if (keyList.size() > 5) {
 			List<String> tempHardestQuestions = new ArrayList<String>();
@@ -257,8 +247,9 @@ public class ReportsService {
 					));
 		}
 		
-		return null;
+		return violationsByType;
 	}
+	
 	private Integer numApplicantsPassed() {
 		//these dont do anything yet - josh is working on this
 		return null;
@@ -267,7 +258,6 @@ public class ReportsService {
 		//these dont do anthing yet - josh is working on this
 		return null;
 	}
-	
 	
 	private class Tallies {
 		// contains an entry for each question, skilltype, and bucket.  Keys are Ids.  Sum of scores for each for value.

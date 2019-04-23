@@ -66,7 +66,7 @@ public class ReportsController {
 	}
 	
 	@GetMapping(value="/getTotalReport")
-	public String getTotalReport() {
+	public String getTotalReport(	) {
 		return reportsService.getReport(null, null, null);
 	}
 	

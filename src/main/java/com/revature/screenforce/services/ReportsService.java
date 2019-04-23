@@ -30,6 +30,7 @@ import com.revature.screenforce.beans.SoftSkillViolation;
 import com.revature.screenforce.beans.ViolationType;
 import com.revature.screenforce.daos.BucketDAO;
 import com.revature.screenforce.daos.QuestionDAO;
+//import com.revature.screenforce.daos.QuestionDAO;
 import com.revature.screenforce.daos.QuestionScoreRepository;
 import com.revature.screenforce.daos.ScreenerRepository;
 import com.revature.screenforce.daos.ScreeningRepository;
@@ -79,22 +80,22 @@ public class ReportsService {
 		return screener.getScreenerId();
 	}
 	
-	public void printDAOOutputs() {
-		System.out.println("Screener Repository findAll");
-		System.out.println(screenerRepository.findAll());
-		System.out.println("SkillType DAO findAll");
-		System.out.println(skillTypeDAO.findAll());
-		System.out.println("QuestionScoreRepository findAll");
-		System.out.println(questionScoreRepository.findAll());
-		System.out.println("Question DAO findAll");
-		System.out.println(questionDAO.findAll());
-		System.out.println("Soft Skill Violation Repository findAll");
-		System.out.println(softSkillViolationRepository.findAll());
-		System.out.println("Violation Type Repository findAll");
-		System.out.println(violationTypeRepository.findAll());
-		System.out.println("Weight DAO findAll");
-		System.out.println(weightDAO.findAll());
-	}
+//	public void printDAOOutputs() {
+//		System.out.println("Screener Repository findAll");
+//		System.out.println(screenerRepository.findAll());
+//		System.out.println("SkillType DAO findAll");
+//		System.out.println(skillTypeDAO.findAll());
+//		System.out.println("QuestionScoreRepository findAll");
+//		System.out.println(questionScoreRepository.findAll());
+//		System.out.println("Question DAO findAll");
+//		System.out.println(questionDAO.findAll());
+//		System.out.println("Soft Skill Violation Repository findAll");
+//		System.out.println(softSkillViolationRepository.findAll());
+//		System.out.println("Violation Type Repository findAll");
+//		System.out.println(violationTypeRepository.findAll());
+//		System.out.println("Weight DAO findAll");
+//		System.out.println(weightDAO.findAll());
+//	}
 	
 	public String getReport(String[] weeks, Integer screenerId) {
 		/*
@@ -194,7 +195,7 @@ public class ReportsService {
 		if (keyList.size() > 5) {
 			List<String> tempHardestQuestions = new ArrayList<String>();
 			for (Integer qid : keyList.subList(0, 5)) {
-				tempHardestQuestions.add(questionDAO.findById(qid).get().getQuestionText());
+				//tempHardestQuestions.add(questionDAO.findById(qid).get().getQuestionText());
 			}
 			hardestQuestions = tempHardestQuestions;
 		}

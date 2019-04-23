@@ -1,4 +1,6 @@
 spring:
+ application:
+   name: report-screening-service
 #Configure Test H2 Database
  datasource:
    driver-class-name: org.h2.Driver

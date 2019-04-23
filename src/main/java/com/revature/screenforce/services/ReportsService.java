@@ -21,6 +21,7 @@ import com.revature.screenforce.beans.Screening;
 import com.revature.screenforce.beans.SoftSkillViolation;
 import com.revature.screenforce.daos.BucketDAO;
 import com.revature.screenforce.daos.QuestionDAO;
+//import com.revature.screenforce.daos.QuestionDAO;
 import com.revature.screenforce.daos.QuestionScoreRepository;
 import com.revature.screenforce.daos.ScreenerRepository;
 import com.revature.screenforce.daos.ScreeningRepository;
@@ -68,8 +69,7 @@ public class ReportsService {
 		Screener screener = screenerRepository.getByEmail(email);
 		return screener.getScreenerId();
 	}
-
-	//getReport
+	
 	public String getReport(LocalDate startDate, LocalDate endDate, Integer screenerId) {
 		Integer numApplicantsPassed;
 		Integer numApplicantsFailed;

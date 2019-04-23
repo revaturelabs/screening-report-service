@@ -88,6 +88,22 @@
 			<artifactId>spring-cloud-config-client</artifactId>
 		</dependency>
 
+		<dependency>
+			<groupId>io.github.openfeign</groupId>
+			<artifactId>feign-okhttp</artifactId>
+			<version>9.3.1</version>
+		</dependency>
+		<dependency>
+			<groupId>io.github.openfeign</groupId>
+			<artifactId>feign-gson</artifactId>
+			<version>9.3.1</version>
+		</dependency>
+		<dependency>
+			<groupId>io.github.openfeign</groupId>
+			<artifactId>feign-slf4j</artifactId>
+			<version>9.3.1</version>
+		</dependency>
+
 		<!-- H2 Database (In-Memory) -->
 		<dependency>
 			<groupId>com.h2database</groupId>
@@ -139,11 +155,8 @@
 			<artifactId>log4j</artifactId>
 			<version>1.2.17</version>
 		</dependency>
-
 	</dependencies>
-
-
-
+	
 	<build>
 		<plugins>
 			<plugin>
@@ -152,5 +165,4 @@
 			</plugin>
 		</plugins>
 	</build>
-
 </project>

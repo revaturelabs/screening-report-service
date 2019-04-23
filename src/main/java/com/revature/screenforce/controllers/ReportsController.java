@@ -1,7 +1,8 @@
 package com.revature.screenforce.controllers;
 
-
 import java.time.LocalDate;
+
+
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -56,6 +57,7 @@ public class ReportsController {
 		LocalDate end = LocalDate.parse(endDate);
 		return reportsService.getReport(start, end, screenerId);
 	}
+
 	
 	@GetMapping(value="/getTotalReport")
 	public String getTotalReport() {

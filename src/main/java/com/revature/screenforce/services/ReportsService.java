@@ -79,23 +79,6 @@ public class ReportsService {
 		return screener.getScreenerId();
 	}
 	
-	public void printDAOOutputs() {
-		System.out.println("Screener Repository findAll");
-		System.out.println(screenerRepository.findAll());
-		System.out.println("SkillType DAO findAll");
-		System.out.println(skillTypeDAO.findAll());
-		System.out.println("QuestionScoreRepository findAll");
-		System.out.println(questionScoreRepository.findAll());
-		System.out.println("Question DAO findAll");
-		System.out.println(questionDAO.findAll());
-		System.out.println("Soft Skill Violation Repository findAll");
-		System.out.println(softSkillViolationRepository.findAll());
-		System.out.println("Violation Type Repository findAll");
-		System.out.println(violationTypeRepository.findAll());
-		System.out.println("Weight DAO findAll");
-		System.out.println(weightDAO.findAll());
-	}
-	
 	public String getReport(String[] weeks, Integer screenerId) {
 		/*
 		 * Big dang report generation.  Generates ReportData that matches ReportData in screening-ui and
@@ -118,13 +101,10 @@ public class ReportsService {
 		// sample data.  Testing one piece at a time!
 		List<String> hardestQuestions = Arrays.asList("N/A", "N/A", "N/A", "N/A", "N/A");
 		List<ReportData.BarChartData> avgSkillTypeScore = new ArrayList();
-		//avgSkillTypeScore.add(new ReportData.BarChartData("skill_test", 10.5));
 		
 		List<ReportData.BarChartData> avgBucketTypeScore = new ArrayList();
-		//avgBucketTypeScore.add(new ReportData.BarChartData("bucket_test", 12.5));
 		
 		List<ReportData.BarChartData> violationsByType = new ArrayList();
-		//violationsByType.add(new ReportData.BarChartData("violation_test", 4));
 		
 		Integer numApplicantsPassed = 1337;
 		Integer numApplicantsFailed = 1337;

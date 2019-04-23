@@ -49,14 +49,6 @@ public class ReportsController {
 		return this.reportsService.getAllQuestionScores();
 	}
 	
-	@GetMapping(value="/printDAOs")
-	public void printDAOOutputs() {
-		/*
-		 * Prints DAO information to the console for debugging purposes.
-		 */
-		reportsService.printDAOOutputs();
-	}
-	
 	@GetMapping(value="/getReport")
 	public String getReport(@RequestParam(name="weeks") String[] weeks, @RequestParam(name="screenerId") Integer screenerId) {
 		return reportsService.getReport(weeks, screenerId);

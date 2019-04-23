@@ -73,7 +73,7 @@ public class ReportsController {
 	public String getScreenerReport(@RequestParam(name="screenerId") Integer screenerId) {
 		return reportsService.getReport(screenerId);
 	}
-	
+	 
 	
 	//to make use of prior group's work -- they used emails rather than id
 	@GetMapping(value="/getReportWithEmail")

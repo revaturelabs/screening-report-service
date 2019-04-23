@@ -96,7 +96,8 @@ public class ReportsService {
 		System.out.println(weightDAO.findAll());
 	}
 	
-	public String getReport(String[] weeks, Integer screenerId) {
+	//public String getReport(String starDate, String endDate, Integer screenerId) {
+	public String getReport(LocalDate startDate, LocalDate endDate, Integer screenerId) {
 		/*
 		 * Big dang report generation.  Generates ReportData that matches ReportData in screening-ui and
 		 * works with angular to display charts/info.  Null values for weeks or screenerId will remove
@@ -107,27 +108,31 @@ public class ReportsService {
 		 * refactoring.  
 		 */
 
-		Time time = new Time();
+		
+		/*
 		LocalDate startDate = null;
 		LocalDate endDate = null;
-		if (weeks != null) {
+		if (startDate != null) {
+			Time time = new Time();
 			startDate = time.getWeekToDate(Integer.parseInt(weeks[1]));
 			endDate = time.getWeekToDate(Integer.parseInt(weeks[0]));
 		}
+		*/
 		
 		// sample data.  Testing one piece at a time!
-		List<String> hardestQuestions = Arrays.asList("N/A", "N/A", "N/A", "N/A", "N/A");
-		List<ReportData.BarChartData> avgSkillTypeScore = new ArrayList();
+		//List<String> hardestQuestions = Arrays.asList("N/A", "N/A", "N/A", "N/A", "N/A");
 		//avgSkillTypeScore.add(new ReportData.BarChartData("skill_test", 10.5));
 		
-		List<ReportData.BarChartData> avgBucketTypeScore = new ArrayList();
+		//List<ReportData.BarChartData> avgSkillTypeScore = new ArrayList<BarChartData>();
+		//List<ReportData.BarChartData> avgBucketTypeScore = new ArrayList();
 		//avgBucketTypeScore.add(new ReportData.BarChartData("bucket_test", 12.5));
 		
-		List<ReportData.BarChartData> violationsByType = new ArrayList();
+		//List<ReportData.BarChartData> violationsByType = new ArrayList();
 		//violationsByType.add(new ReportData.BarChartData("violation_test", 4));
 		
 		Integer numApplicantsPassed = 1337;
 		Integer numApplicantsFailed = 1337;
+		
 		ReportData.Screener screener = new ReportData.Screener("Adam", "adking@mail.com");
 		
 		// generation of real data beings here, with screenings
@@ -147,12 +152,7 @@ public class ReportsService {
 		}
 		
 		// convert count of violations to BarChartData, prep for output
-		for (String ssv : countSoftSkillViolation.keySet()) {
-			violationsByType.add(new ReportData.BarChartData(
-					ssv,
-					countSoftSkillViolation.get(ssv)
-					));
-		}
+		List<ReportData.BarChartData> violationsByType = violationsByType(countSoftSkillViolation);
 		
 		//get question scores in the range and use them to produce more BarChartData.
 		List<QuestionScore> questionScores = getQuestionScores(startDate, endDate, screenerId);
@@ -160,20 +160,11 @@ public class ReportsService {
 		Tallies tallies = tallyScores(questionScores);
 		
 		// get average of bucket scores as BarChartData
-		for (Integer bid : tallies.sumScoresBucket.keySet()) {
-			avgBucketTypeScore.add(new ReportData.BarChartData(
-					bucketDAO.findById(bid).get().getBucketDescription(),
-					tallies.sumScoresBucket.get(bid) / (double) tallies.countBucket.get(bid)
-					));
-		}
+		List<ReportData.BarChartData> avgBucketTypeScore = avgBucketTypeScore(tallies);
 
 		// get average of Skill Types scores as BarChartData
-		for (Integer stid : tallies.sumScoresSkillType.keySet()) {
-			avgSkillTypeScore.add(new ReportData.BarChartData(
-					skillTypeDAO.findById(stid).get().getTitle(),
-					tallies.sumScoresSkillType.get(stid) / (double) tallies.countSkillType.get(stid)
-					));
-		}
+		
+		List<ReportData.BarChartData> avgSkillTypeScore = avgSkillTypeScore(tallies);
 		
 		// get average of Question scores in new Map
 		Map<Integer, Double> avgScoreQuestion = new HashMap<>();
@@ -191,13 +182,7 @@ public class ReportsService {
 			}
 		});
 		
-		if (keyList.size() > 5) {
-			List<String> tempHardestQuestions = new ArrayList<String>();
-			for (Integer qid : keyList.subList(0, 5)) {
-				tempHardestQuestions.add(questionDAO.findById(qid).get().getQuestionText());
-			}
-			hardestQuestions = tempHardestQuestions;
-		}
+		List<String> hardestQuestions = hardestQuestions(keyList);
 		
 		//grab screener info for display, if it exists
 		if (screenerId != null) {
@@ -229,6 +214,60 @@ public class ReportsService {
 		String json = gson.toJson(reportData);
 		return json;
 	}
+	
+	private List<String> hardestQuestions(List<Integer> keyList){
+		List<String> hardestQuestions = Arrays.asList("N/A", "N/A", "N/A", "N/A", "N/A");
+		if (keyList.size() > 5) {
+			List<String> tempHardestQuestions = new ArrayList<String>();
+			for (Integer qid : keyList.subList(0, 5)) {
+				tempHardestQuestions.add(questionDAO.findById(qid).get().getQuestionText());
+			}
+			hardestQuestions = tempHardestQuestions;
+		}
+		return hardestQuestions;	
+	}
+	
+	private List<ReportData.BarChartData> avgSkillTypeScore(Tallies tallies ){
+		List<ReportData.BarChartData> avgSkillTypeScore = new ArrayList<BarChartData>();
+		for (Integer stid : tallies.sumScoresSkillType.keySet()) {
+			avgSkillTypeScore.add(new ReportData.BarChartData(
+					skillTypeDAO.findById(stid).get().getTitle(),
+					tallies.sumScoresSkillType.get(stid) / (double) tallies.countSkillType.get(stid)
+					));
+		}
+		return avgSkillTypeScore;	
+	}
+	
+	private List<ReportData.BarChartData> avgBucketTypeScore(Tallies tallies){
+		List<ReportData.BarChartData> avgBucketTypeScore = new ArrayList<BarChartData>();
+		for (Integer bid : tallies.sumScoresBucket.keySet()) {
+			avgBucketTypeScore.add(new ReportData.BarChartData(
+					bucketDAO.findById(bid).get().getBucketDescription(),
+					tallies.sumScoresBucket.get(bid) / (double) tallies.countBucket.get(bid)
+					));
+		}
+		return avgBucketTypeScore;
+	}
+	private List<ReportData.BarChartData> violationsByType(Map<String, Integer> countSoftSkillViolation){
+		List<ReportData.BarChartData> violationsByType = new ArrayList<BarChartData>();
+		for (String ssv : countSoftSkillViolation.keySet()) {
+			violationsByType.add(new ReportData.BarChartData(
+					ssv,
+					countSoftSkillViolation.get(ssv)
+					));
+		}
+		
+		return null;
+	}
+	private Integer numApplicantsPassed() {
+		//these dont do anything yet - josh is working on this
+		return null;
+	}
+	private Integer numApplicantsFailed() {
+		//these dont do anthing yet - josh is working on this
+		return null;
+	}
+	
 	
 	private class Tallies {
 		// contains an entry for each question, skilltype, and bucket.  Keys are Ids.  Sum of scores for each for value.

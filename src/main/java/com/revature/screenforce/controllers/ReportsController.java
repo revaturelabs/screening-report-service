@@ -50,14 +50,6 @@ public class ReportsController {
 		return this.reportsService.getAllQuestionScores();
 	}
 	
-	@GetMapping(value="/printDAOs")
-	public void printDAOOutputs() {
-		/*
-		 * Prints DAO information to the console for debugging purposes.
-		 */
-		reportsService.printDAOOutputs();
-	}
-	
 	@GetMapping(value="/getReport")
 	public String getReport(@RequestParam(name="startDate") String startDate, @RequestParam(name = "endDate") String endDate, @RequestParam(name="screenerId") Integer screenerId) {
 		LocalDate start = LocalDate.parse(startDate);
@@ -66,20 +58,20 @@ public class ReportsController {
 	}
 	
 	@GetMapping(value="/getTotalReport")
-	public String getTotalReport(	) {
-		return reportsService.getReport(null, null, null);
+	public String getTotalReport() {
+		return reportsService.getReport();
 	}
 	
 	@GetMapping(value="/getWeeksReport")
 	public String getWeeksReport2(@RequestParam(name="startDate") String startDate, @RequestParam(name = "endDate") String endDate) {
 		LocalDate start = LocalDate.parse(startDate);
 		LocalDate end = LocalDate.parse(endDate);
-		return reportsService.getReport(start, end, null);
+		return reportsService.getReport(start, end);
 	}
 	
 	@GetMapping(value="/getScreenerReport")
 	public String getScreenerReport(@RequestParam(name="screenerId") Integer screenerId) {
-		return reportsService.getReport(null, null, screenerId);
+		return reportsService.getReport(screenerId);
 	}
 	
 	

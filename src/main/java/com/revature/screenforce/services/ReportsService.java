@@ -32,6 +32,13 @@ import com.revature.screenforce.daos.WeightDAO;
 import com.revature.screenforce.models.ReportData;
 import com.revature.screenforce.models.ReportData.BarChartData;
 
+import feign.Feign;
+import feign.Logger;
+import feign.gson.GsonDecoder;
+import feign.gson.GsonEncoder;
+import feign.okhttp.OkHttpClient;
+import feign.slf4j.Slf4jLogger;
+
 @Service
 public class ReportsService {
 	@Autowired ScreenerRepository screenerRepository;
@@ -43,6 +50,14 @@ public class ReportsService {
 	@Autowired WeightDAO weightDAO;
 	@Autowired BucketDAO bucketDAO;
 	@Autowired ScreeningRepository screeningRepository;
+	
+	QuestionClient questionClient = Feign.builder()
+			  .client(new OkHttpClient())
+			  .encoder(new GsonEncoder())
+			  .decoder(new GsonDecoder())
+			  .logger(new Slf4jLogger(QuestionClient.class))
+			  .logLevel(Logger.Level.FULL)
+			  .target(QuestionClient.class, "http://localhost:8080/admin/question");
 	
 	public List<String> getAllEmails(String email){
 		List<Screener> screenerList = screenerRepository.findAllByEmailContainingIgnoreCase(email);
@@ -217,7 +232,9 @@ public class ReportsService {
 		if (keyList.size() > 5) {
 			List<String> tempHardestQuestions = new ArrayList<String>();
 			for (Integer qid : keyList.subList(0, 5)) {
-				tempHardestQuestions.add(questionDAO.findById(qid).get().getQuestionText());
+				//tempHardestQuestions.add(questionDAO.findById(qid).get().getQuestionText());
+				tempHardestQuestions.add(questionClient.getQuestionById(qid).getQuestionText());
+				
 			}
 			hardestQuestions = tempHardestQuestions;
 		}

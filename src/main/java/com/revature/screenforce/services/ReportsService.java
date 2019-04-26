@@ -328,7 +328,7 @@ public class ReportsService {
 		Integer numApplicantsPassed = 0;
 		for (Screening s : screenings) {
             double compScore = s.getCompositeScore();
-            if (compScore > 70) {
+            if (compScore >= 70) {
                 numApplicantsPassed +=1;
             }
         }

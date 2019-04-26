@@ -2,7 +2,6 @@ package com.revature.screenforce.controllers;
 
 import java.time.LocalDate;
 
-
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,7 +49,6 @@ public class ReportsController {
 	public List<QuestionScore> getAllQuestionScores() {
 		return this.reportsService.getAllQuestionScores();
 	}
-	
 	@GetMapping(value="/getReport")
 	public String getReport(@RequestParam(name="startDate") String startDate, @RequestParam(name = "endDate") String endDate, @RequestParam(name="screenerId") Integer screenerId) {
 		LocalDate start = LocalDate.parse(startDate);

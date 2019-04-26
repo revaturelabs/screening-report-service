@@ -21,7 +21,6 @@ import com.revature.screenforce.beans.Screening;
 import com.revature.screenforce.beans.SoftSkillViolation;
 import com.revature.screenforce.daos.BucketDAO;
 import com.revature.screenforce.daos.QuestionDAO;
-//import com.revature.screenforce.daos.QuestionDAO;
 import com.revature.screenforce.daos.QuestionScoreRepository;
 import com.revature.screenforce.daos.ScreenerRepository;
 import com.revature.screenforce.daos.ScreeningRepository;
@@ -71,6 +70,7 @@ public class ReportsService {
 	}
 	
 	public String getReport(LocalDate startDate, LocalDate endDate, Integer screenerId) {
+
 		/*
 		 * Overloaded getReport() method to get a specific week for a specific screener,
 		 * mapped by /getReport. Returns a reportData via a String of json.
@@ -245,8 +245,10 @@ public class ReportsService {
 		List<String> hardestQuestions = Arrays.asList("N/A", "N/A", "N/A", "N/A", "N/A");
 		if (keyList.size() > 5) {
 			List<String> tempHardestQuestions = new ArrayList<String>();
+
 			for (Integer questionId : keyList.subList(0, 5)) {
 				tempHardestQuestions.add(questionDAO.findById(questionId).get().getQuestionText());
+
 			}
 			hardestQuestions = tempHardestQuestions;
 		}

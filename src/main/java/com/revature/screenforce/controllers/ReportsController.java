@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import static io.restassured.RestAssured.*;
 import static org.hamcrest.Matchers.*;
 
 import com.revature.screenforce.beans.QuestionScore;

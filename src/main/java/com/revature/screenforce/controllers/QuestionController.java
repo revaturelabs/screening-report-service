@@ -52,7 +52,7 @@ public class QuestionController {
 	@GetMapping(value = "/question")
 	public Question[] getQuestions()
 	{
-		System.out.println(service.getQuestions());
+		//System.out.println(service.getQuestions());
 		Question[] q = service.getQuestions();
 		System.out.println(q);
 		return q;

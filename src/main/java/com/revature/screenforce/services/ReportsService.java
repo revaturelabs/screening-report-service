@@ -73,12 +73,48 @@ public class ReportsService {
 	public String getReport(LocalDate startDate, LocalDate endDate, Integer screenerId) {
 		return null;
 	}
+	
 	public String getReport(LocalDate startDate, LocalDate endDate) {
-		return null;
+		/*
+		 * Overloaded getReport() method to get a report of screenings 
+		 * in a specific week, mapped by /getWeeksReport. Returns a 
+		 * reportData via a String of json.
+		 * @param startDate Screening period begin date.
+		 * @param endDate Screening period end date.
+		 * @return json value of a reportData object
+		 */
+		Integer numApplicantsPassed;
+		Integer numApplicantsFailed;
+		ReportData.Screener screener = null;
+		
+		List<Screening> screenings = getScreenings(startDate, endDate);
+		List<ReportData.BarChartData> violationsByType = violationsByType(screenings);
+		List<QuestionScore> questionScores = getQuestionScores(startDate, endDate);
+		Tallies tallies = tallyScores(questionScores);
+		List<ReportData.BarChartData> avgBucketTypeScore = avgBucketTypeScore(tallies);
+		List<ReportData.BarChartData> avgSkillTypeScore = avgSkillTypeScore(tallies);
+		List<String> hardestQuestions = hardestQuestions(tallies);
+			
+		numApplicantsPassed = numApplicantsPassed(screenings);
+		numApplicantsFailed = numApplicantsFailed(screenings);
+		
+		ReportData reportData = new ReportData(
+				hardestQuestions,
+				avgSkillTypeScore,
+				avgBucketTypeScore,
+				violationsByType,
+				numApplicantsPassed,
+				numApplicantsFailed,
+				screener);
+		Gson gson = new Gson();
+		String json = gson.toJson(reportData);
+		return json;
 	}
+	
 	public String getReport( Integer screenerId) {
 		return null;
 	}
+	
 	public String getReport() {
 		/*
 		 * Overloaded getReport() method to get a report of all of the screenings,
@@ -290,6 +326,42 @@ public class ReportsService {
 			}
 		
 		return tallies;
+	}
+	
+	private List<QuestionScore> getQuestionScores(LocalDate startDate, LocalDate endDate) {
+		/*
+		 * Overloaded for /getWeeksReport. Returns all question scores in a date range.
+		 * @return List<QuestionScore>
+		 */
+		Date startDateAsDate = Date.from(startDate.atStartOfDay().toInstant(ZoneOffset.UTC));
+		Date endDateAsDate = Date.from(endDate.atStartOfDay().toInstant(ZoneOffset.UTC));
+		
+		List<QuestionScore> out = new ArrayList<QuestionScore>();
+		
+		for (QuestionScore qs : questionScoreRepository.findAll()) {
+			if ((qs.getBeginTime().after(startDateAsDate) && qs.getBeginTime().before(endDateAsDate))) {
+				out.add(qs);
+			}
+		}
+		return out;
+	}
+	
+	private List<Screening> getScreenings(LocalDate startDate, LocalDate endDate) {
+		/*
+		 * Overloaded for /getWeeksReport. Returns all screenings scores in a date range.
+		 * @return List<QuestionScore>
+		 */
+		List<Screening> screenings;
+		List<Screening> out = new ArrayList<Screening>();
+		
+		screenings = screeningRepository.findAll();
+		
+		for (Screening s : screenings) {
+			if (s.getEndDateTime().isAfter(startDate) && s.getEndDateTime().isBefore(endDate)) {
+				out.add(s);
+			}
+		}
+		return out;
 	}
 	
 	private List<QuestionScore> getQuestionScores() {

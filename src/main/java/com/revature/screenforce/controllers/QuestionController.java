@@ -57,7 +57,7 @@ public class QuestionController {
 			  .target(QuestionClient.class, "http://localhost:8080/admin/question");
 	
 	@PostMapping(value = "/new")
-	public void postQuestion(@RequestBody String s)
+	public Question postQuestion(@RequestBody String s)
 	{
 		ObjectMapper mapper = new ObjectMapper();
 		Question q = new Question();
@@ -79,7 +79,7 @@ public class QuestionController {
 		{
 			e.printStackTrace(System.out);
 		}
-		questionClient.createQuestion(q);
+		return questionClient.createQuestion(q);
 	}
 	
 	@GetMapping()

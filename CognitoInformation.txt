@@ -1,40 +1,31 @@
 Caliber, which previously held role information and user login, was deleted. So, the Cognito information and user roles had to be made from scratch.
 
 User Pool=
-Pool Name: 1902-Richard-Cognito-Screenforce
-Region: us-east-2
-Pool Id: us-east-2_Nv5CbdfXW
-Pool ARN: arn:aws:cognito-idp:us-east-2:802705557250:userpool/us-east-2_Nv5CbdfXW
-Domain Name: 1902richardscreenforce.auth.us-east-2.amazoncognito.com
 Required Attributes: email
 Minimum password length: 6
 Password policy: uppercase letters, lowercase letters
-User sign ups allowed: Users can sign themselves up
-FROM email address: Default
-Email Delivery through Amazon SES: Yes
 MFA Enable MFA: This is turned off as phone verification is not required
-Verifications: Email
+Verifications: Email or phone number
+Cognito Role for SMS messages: 1902RichardCognitoScreenforce-SMS-Role
+Advanced Security: Off
+Message customization: Default
+Email Delivery through Amazon SES: Yes (gordontravi@gmail.com)
 Tags: None
-App clients: 1902-Richard-Cognito-Screenforce-Client
-App client details: 62bqmamg880buch1h6qsjup9cc
+Devices: No
+App Client: 1902-Richard-Cognito-Screenforce-Client
 Triggers: None
-Enabled Identity Provider: Cognito User Pool
-IAM users sign-in link: https://802705557250.signin.aws.amazon.com/console 
-
-AWS Access Key Id:AKIAIAQ5CJGAVCXSAKOA
-AWS Secret Key:aUILRwFFdxm/3TK4ILv8XgyGFTP8YHMBgTmAWbCi0
+Domain: 1902richardscreenforce/..
 
 IAM Root User is gordontr, thus I have full administrative access
-MFA: Virtual, arn:aws:iam::802705557250:mfa/root-account-mfa-device
+MFA: Virtual (based on Google authenticator)
 
 1902-Richard-Screenforce-Admin:
 IAM Administrator Access:
-User- Travis, Pass- GordonPass
-User- Dan, Pass- ArdayPass
+User- Travis
+User- Dan
 
 IAM Test Access:
 Username to all TestUsers: Test(their position)
-Password to all TestUsers: PassWord
 
 Role names were established in AWS prior to being imported here
 For future reference make role names all capital to retain the previously established convention.
@@ -46,7 +37,7 @@ Identity Pool id: Role_Screener
 Screeners are the tech screeners, who will have access to the screening process portal. 
 Cognito-
 Username: Karl
-Password: PassWord
+
 
 Role_Reporting:
 Identity Provider: Amazon Cognito
@@ -55,7 +46,7 @@ Identity Pool id: Role_Reporting
 The reporting role is read-only on the reporting view.
 Cognito-
 Username: Josh
-Password: PassWord
+
 
 Role_Admin:
 Identity Provider: Amazon Cognito
@@ -64,7 +55,7 @@ Identity Pool id: Role_Admin
 Admins have access to the configuration portal, the screening portal, and the reporting view.
 Cognito-
 Username: Michael
-Password: PassWord
+
 
 
 

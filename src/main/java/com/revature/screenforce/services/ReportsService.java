@@ -80,9 +80,172 @@ public class ReportsService {
 		return null;
 	}
 	public String getReport() {
-		return null;
+		/*
+		 * Overloaded getReport() method to get a report of all of the screenings,
+		 * mapped by /getTotalReport. Returns a reportData via a String of json.
+		 * @return json value of a reportData object
+		 */
+		Integer numApplicantsPassed = 0;
+		Integer numApplicantsFailed = 0;
+		
+		List<Screening> screenings = getScreenings();
+		List<ReportData.BarChartData> violationsByType = violationsByType(screenings);
+		List<QuestionScore> questionScores = getQuestionScores();
+		Tallies tallies = tallyScores(questionScores);
+		List<ReportData.BarChartData> avgBucketTypeScore = avgBucketTypeScore(tallies);
+		List<ReportData.BarChartData> avgSkillTypeScore = avgSkillTypeScore(tallies);
+		List<String> hardestQuestions = hardestQuestions(tallies);
+		
+		ReportData.Screener screener = null;
+			
+		numApplicantsPassed = numApplicantsPassed(screenings);
+		numApplicantsFailed = numApplicantsFailed(screenings);
+		
+		ReportData reportData = new ReportData(
+				hardestQuestions,
+				avgSkillTypeScore,
+				avgBucketTypeScore,
+				violationsByType,
+				numApplicantsPassed,
+				numApplicantsFailed,
+				screener);
+		Gson gson = new Gson();
+		String json = gson.toJson(reportData);
+		return json;
 	}
 
+	
+	private List<String> hardestQuestions(Tallies tallies){
+		/*
+		 * Returns a List containing the five hardest questions asked
+		 * by screeners. Creates a Map, sorts it by difficulty, then 
+		 * pulls out the first five questions and returns it.
+		 * @param tallies Class of Maps with questions, skill types,
+		 * 				  and buckets. Contains the sum of scores per
+		 * 				  value. Used to instantiate avgScoreQuestion.
+		 * @return List of the five hardest questions asked.
+		 */
+		Map<Integer, Double> avgScoreQuestion = new HashMap<>();
+		for (Integer questionId : tallies.sumScoresQuestion.keySet()) {
+			avgScoreQuestion.put(questionId, tallies.sumScoresQuestion.get(questionId) / (double) tallies.countQuestion.get(questionId));
+		}
+		List<Integer> keyList = new ArrayList<Integer>(avgScoreQuestion.keySet());
+		
+		Collections.sort(keyList, new Comparator<Integer>() {
+			@Override
+			public int compare(Integer i1, Integer i2) {
+				return Double.compare(avgScoreQuestion.get(i1), avgScoreQuestion.get(i2));
+			}
+		});
+		
+		List<String> hardestQuestions = Arrays.asList("N/A", "N/A", "N/A", "N/A", "N/A");
+		if (keyList.size() > 5) {
+			List<String> tempHardestQuestions = new ArrayList<String>();
+			for (Integer questionId : keyList.subList(0, 5)) {
+				tempHardestQuestions.add(questionDAO.findById(questionId).get().getQuestionText());
+			}
+			hardestQuestions = tempHardestQuestions;
+		}
+		return hardestQuestions;	
+	}
+	
+	
+	private List<ReportData.BarChartData> avgSkillTypeScore(Tallies tallies ){/*
+		 * Returns a List of bar chart data to display in the front end.
+		 * @param tallies Class of Maps with questions, skill types,
+		 * 				  and buckets. Contains the sum of scores per
+		 * 				  value.
+		 * @return List of average scores per skill type formatted for a bar chart.
+		 */
+		List<ReportData.BarChartData> avgSkillTypeScore = new ArrayList<BarChartData>();
+		for (Integer skillTypeId : tallies.sumScoresSkillType.keySet()) {
+			avgSkillTypeScore.add(new ReportData.BarChartData(
+					skillTypeDAO.findById(skillTypeId).get().getTitle(),
+					tallies.sumScoresSkillType.get(skillTypeId) / (double) tallies.countSkillType.get(skillTypeId)
+					));
+		}
+		return avgSkillTypeScore;	
+	}
+	
+	private List<ReportData.BarChartData> avgBucketTypeScore(Tallies tallies){
+		/*
+		 * Returns a List of bar chart data to display in the front end.
+		 * @param tallies Class of Maps with questions, skill types,
+		 * 				  and buckets. Contains the sum of scores per
+		 * 				  value.
+		 * @return List of average scores per bucket type formatted for a bar chart.
+		 */
+		List<ReportData.BarChartData> avgBucketTypeScore = new ArrayList<BarChartData>();
+		for (Integer bid : tallies.sumScoresBucket.keySet()) {
+			avgBucketTypeScore.add(new ReportData.BarChartData(
+					bucketDAO.findById(bid).get().getBucketDescription(),
+					tallies.sumScoresBucket.get(bid) / (double) tallies.countBucket.get(bid)
+					));
+		}
+		return avgBucketTypeScore;
+	}
+	
+	private List<ReportData.BarChartData> violationsByType(List<Screening> screenings){
+		/*
+		 * Gets all violations from each screening and returns a List of 
+		 * bar chart data to display in the front end.
+		 * @param screenings List of screenings from specified time period.
+		 * @return List of violations committed, formatted for a bar chart.
+		 */
+		Map<String, Integer> countSoftSkillViolation = new HashMap<>();
+		for (Screening s : screenings) {
+			List<SoftSkillViolation> softSkillsViolations = softSkillViolationRepository.findAllByScreeningId(s.getScreeningId());
+			for (SoftSkillViolation softSkillsViolation : softSkillsViolations) {
+				String key = softSkillsViolation.getViolationType().getViolationTypeText();
+				if (!countSoftSkillViolation.containsKey(key)) {
+					countSoftSkillViolation.put(key, 0);
+				}
+				countSoftSkillViolation.replace(key, countSoftSkillViolation.get(key) + 1);
+			}
+		}
+		
+		List<ReportData.BarChartData> violationsByType = new ArrayList<BarChartData>();
+		for (String ssv : countSoftSkillViolation.keySet()) {
+			violationsByType.add(new ReportData.BarChartData(
+					ssv,
+					countSoftSkillViolation.get(ssv)
+					));
+		}
+		
+		return violationsByType;
+	}
+	
+	private Integer numApplicantsPassed(List<Screening> screenings) {
+		/*
+		 * Returns an integer amount of applicants with a passing composite score above 70 .
+		 * @param  screenings List of screenings according to the given date range.
+		 * @return numApplicantsPassed from screenings
+		 */
+		Integer numApplicantsPassed = 0;
+		for (Screening s : screenings) {
+            double compScore = s.getCompositeScore();
+            if (compScore >= 70) {
+                numApplicantsPassed +=1;
+            }
+        }
+		return numApplicantsPassed;
+	}
+	
+	private Integer numApplicantsFailed(List<Screening> screenings) {
+		/*
+		 * Returns an integer amount of applicants with a failing composite score below 70 .
+		 * @param  screenings List of screenings according to the given date range.
+		 * @return numApplicantsFailed from screenings
+		 */
+		Integer numApplicantsFailed = 0;
+		for (Screening s : screenings) {
+            double compScore = s.getCompositeScore();
+            if (compScore < 70) {
+                numApplicantsFailed +=1;
+            }
+        }
+		return numApplicantsFailed;
+	}
 	
 	private class Tallies {
 		// contains an entry for each question, skilltype, and bucket.  Keys are Ids.  Sum of scores for each for value.
@@ -129,7 +292,33 @@ public class ReportsService {
 		return tallies;
 	}
 	
+	private List<QuestionScore> getQuestionScores() {
+		/*
+		 * Overloaded for /getTotalReport. Returns all question scores.
+		 * @return List<QuestionScore>
+		 */
+		
+		List<QuestionScore> out = new ArrayList<QuestionScore>();
+		
+		for (QuestionScore qs : questionScoreRepository.findAll()) {
+			out.add(qs);
+		}
+		return out;
+	}
 	
+	private List<Screening> getScreenings() {
+		/*
+		 * Overloaded for /getTotalReport. Returns all screenings.
+		 * @return List<QuestionScore>
+		 */
+		List<Screening> screenings;
+		List<Screening> out = new ArrayList<Screening>();
+		screenings = screeningRepository.findAll();
+	
+		out = screenings;
+		
+		return out;
+	}
 	
 }
 

@@ -50,14 +50,13 @@ public class ReportsController {
 		return this.reportsService.getAllQuestionScores();
 	}
 	
-	/*Date format = yyyy-mm-dd */
+	//Date format = yyyy-mm-dd
     @GetMapping(value="/getReport")
     public String getReport(@RequestParam(name="startDate") String startDate, @RequestParam(name = "endDate") String endDate, @RequestParam(name="screenerId") Integer screenerId) {
         LocalDate start = LocalDate.parse(startDate);
         LocalDate end = LocalDate.parse(endDate);
         return reportsService.getReport(start, end, screenerId);
     }
-
     
     @GetMapping(value="/getTotalReport")
     public String getTotalReport() {

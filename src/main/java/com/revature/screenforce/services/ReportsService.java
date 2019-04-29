@@ -111,8 +111,42 @@ public class ReportsService {
 		return json;
 	}
 	
-	public String getReport( Integer screenerId) {
-		return null;
+	public String getReport(Integer screenerId) {
+		/*
+		 * Overloaded getReport() method to get a report of screenings performed 
+		 * by a specific screener, mapped by /getScreenerReport. Returns a 
+		 * reportData via a String of json.
+		 * @param screenerId Id of screener that performed screening.
+		 * @return json value of a reportData object
+		 */
+		Integer numApplicantsPassed;
+		Integer numApplicantsFailed;
+		
+		List<Screening> screenings = getScreenings(screenerId);
+		List<ReportData.BarChartData> violationsByType = violationsByType(screenings);
+		List<QuestionScore> questionScores = getQuestionScores(screenerId);
+		Tallies tallies = tallyScores(questionScores);
+		List<ReportData.BarChartData> avgBucketTypeScore = avgBucketTypeScore(tallies);
+		List<ReportData.BarChartData> avgSkillTypeScore = avgSkillTypeScore(tallies);
+		List<String> hardestQuestions = hardestQuestions(tallies);
+		
+		Screener tempScreener = screenerRepository.findById(screenerId).get();
+		ReportData.Screener screener = new ReportData.Screener(tempScreener.getName(), tempScreener.getEmail());
+			
+		numApplicantsPassed = numApplicantsPassed(screenings);
+		numApplicantsFailed = numApplicantsFailed(screenings);
+		
+		ReportData reportData = new ReportData(
+				hardestQuestions,
+				avgSkillTypeScore,
+				avgBucketTypeScore,
+				violationsByType,
+				numApplicantsPassed,
+				numApplicantsFailed,
+				screener);
+		Gson gson = new Gson();
+		String json = gson.toJson(reportData);
+		return json;
 	}
 	
 	public String getReport() {
@@ -361,6 +395,37 @@ public class ReportsService {
 				out.add(s);
 			}
 		}
+		return out;
+	}
+	
+	private List<QuestionScore> getQuestionScores(Integer screenerId) {
+		/*
+		 * Overloaded for /getScreenerReport. Returns all question scores associated with an individual screener.
+		 * @return List<QuestionScore>
+		 */
+		
+		List<QuestionScore> out = new ArrayList<QuestionScore>();
+		
+		for (QuestionScore qs : questionScoreRepository.findAll()) {
+			if ((qs.getScreening().getScreenerId() == screenerId)) {
+				out.add(qs);
+			}
+		}
+		return out;
+	}
+	
+	private List<Screening> getScreenings(Integer screenerId) {
+		/*
+		 * Overloaded for /getScreenerReport. Returns all screenings associated with an individual screener.
+		 * @return List<QuestionScore>
+		 */
+		List<Screening> screenings;
+		List<Screening> out = new ArrayList<Screening>();
+		
+		Screener screener = screenerRepository.findById(screenerId).get();
+		screenings = screener.getScreenings();
+		out = screenings;
+		
 		return out;
 	}
 	

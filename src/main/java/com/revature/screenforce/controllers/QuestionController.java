@@ -55,7 +55,7 @@ public class QuestionController {
 			  .logLevel(Logger.Level.FULL)
 			  .target(QuestionClient.class, "http://localhost:8080/admin/question");
 	
-	@PostMapping(value = "/new")
+	@PostMapping//(value = "/new")
 	public Question postQuestion(@RequestBody String s)
 	{
 		ObjectMapper mapper = new ObjectMapper();

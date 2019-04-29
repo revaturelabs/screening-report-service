@@ -1,5 +1,7 @@
 package com.revature.screenforce.controllers;
 
+import java.time.LocalDate;
+
 
 import java.util.List;
 
@@ -49,38 +51,38 @@ public class ReportsController {
 		return this.reportsService.getAllQuestionScores();
 	}
 	
-	@GetMapping(value="/printDAOs")
-	public void printDAOOutputs() {
-		/*
-		 * Prints DAO information to the console for debugging purposes.
-		 */
-		reportsService.printDAOOutputs();
-	}
-	
 	@GetMapping(value="/getReport")
-	public String getReport(@RequestParam(name="weeks") String[] weeks, @RequestParam(name="screenerId") Integer screenerId) {
-		return reportsService.getReport(weeks, screenerId);
+	public String getReport(@RequestParam(name="startDate") String startDate, @RequestParam(name = "endDate") String endDate, @RequestParam(name="screenerId") Integer screenerId) {
+		LocalDate start = LocalDate.parse(startDate);
+		LocalDate end = LocalDate.parse(endDate);
+		return reportsService.getReport(start, end, screenerId);
 	}
 
+	
+	@GetMapping(value="/getTotalReport")
+	public String getTotalReport() {
+		return reportsService.getReport();
+	}
+	
 	@GetMapping(value="/getWeeksReport")
-	public String getWeeksReport(@RequestParam(name="weeks") String[] weeks) {
-		return reportsService.getReport(weeks, null);
+	public String getWeeksReport2(@RequestParam(name="startDate") String startDate, @RequestParam(name = "endDate") String endDate) {
+		LocalDate start = LocalDate.parse(startDate);
+		LocalDate end = LocalDate.parse(endDate);
+		return reportsService.getReport(start, end);
 	}
 	
 	@GetMapping(value="/getScreenerReport")
 	public String getScreenerReport(@RequestParam(name="screenerId") Integer screenerId) {
-		return reportsService.getReport(null, screenerId);
+		return reportsService.getReport(screenerId);
 	}
-	
-	@GetMapping(value="/getTotalReport")
-	public String getTotalReport() {
-		return reportsService.getReport(null, null);
-	}
+	 
 	
 	//to make use of prior group's work -- they used emails rather than id
 	@GetMapping(value="/getReportWithEmail")
-	public String getReportWithEmail(@RequestParam(name="weeks") String[] weeks, @RequestParam(name="email") String email) {
+	public String getReportWithEmail(@RequestParam(name="startDate") String startDate, @RequestParam(name = "endDate") String endDate, @RequestParam(name="email") String email) {
 		Integer screenerId = reportsService.getIdFromEmail(email);
-		return reportsService.getReport(weeks, screenerId);
+		LocalDate start = LocalDate.parse(startDate);
+		LocalDate end = LocalDate.parse(endDate);
+		return reportsService.getReport(start, end, screenerId);
 	}
 }

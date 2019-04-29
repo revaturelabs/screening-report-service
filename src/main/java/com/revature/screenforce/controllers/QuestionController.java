@@ -21,7 +21,6 @@ import com.revature.screenforce.beans.Question;
 import com.revature.screenforce.services.BucketClient;
 import com.revature.screenforce.services.BucketService;
 import com.revature.screenforce.services.QuestionClient;
-import com.revature.screenforce.models.QuestionModel;
 import com.revature.screenforce.beans.Question;
 
 import feign.Feign;

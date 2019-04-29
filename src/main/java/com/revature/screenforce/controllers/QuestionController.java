@@ -54,7 +54,11 @@ public class QuestionController {
 			  .logger(new Slf4jLogger(QuestionClient.class))
 			  .logLevel(Logger.Level.FULL)
 			  .target(QuestionClient.class, "http://localhost:8080/admin/question");
-	
+	/**
+	 * Post method to add a new question to the database
+	 * @param s String
+	 * @return new Question
+	 */
 	@PostMapping//(value = "/new")
 	public Question postQuestion(@RequestBody String s)
 	{
@@ -81,6 +85,10 @@ public class QuestionController {
 		return questionClient.createQuestion(q);
 	}
 	
+	/**
+	 * Get method to retrieve all questions from database
+	 * @return Question List
+	 */
 	@GetMapping()
 	public List<Question> getQuestions()
 	{

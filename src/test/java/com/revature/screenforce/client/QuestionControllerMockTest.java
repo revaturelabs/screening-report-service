@@ -41,11 +41,6 @@ public class QuestionControllerMockTest {
 	@InjectMocks
 	QuestionController qc;
 	
-	@Mock
-	QuestionClient qsClient;
-	@InjectMocks
-	ReportsService rs;
-	
 //    @Mock
 //    QuestionServiceImpl questionService;
 
@@ -72,16 +67,5 @@ public class QuestionControllerMockTest {
 		System.out.println(question+"ttttt");
 		assertTrue(question != null);
 	}
-
-	@Test
-	public void testGetHardestQuestions() {
-		when(qsClient.getQuestionById(0)).thenReturn(new Question());
-		
-		//List<Question> hardestQuestions = rs.hardestQuestions().;
-//		when(qClient.createQuestion(new Question())).thenReturn(new Question());
-		
-		//assertTrue(question != null);
-	}
-
 
 }

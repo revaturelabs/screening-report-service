@@ -86,8 +86,153 @@ public class ReportsService {
 	}
 	
 	public String getReport(LocalDate startDate, LocalDate endDate, Integer screenerId) {
+		/*
+		 * Overloaded getReport() method to get a specific week for a specific screener,
+		 * mapped by /getReport. Returns a reportData via a String of json.
+		 * @param startDate Screening period begin date.
+		 * @param endDate Screening period end date.
+		 * @param screenerId Id of screener that performed screening.
+		 * @return json value of a reportData object
+		 */
 		Integer numApplicantsPassed;
 		Integer numApplicantsFailed;
+		
+		List<Screening> screenings = getScreenings(startDate, endDate, screenerId);
+		List<ReportData.BarChartData> violationsByType = violationsByType(screenings);
+		List<QuestionScore> questionScores = getQuestionScores(startDate, endDate, screenerId);
+		Tallies tallies = tallyScores(questionScores);
+		List<ReportData.BarChartData> avgBucketTypeScore = avgBucketTypeScore(tallies);
+		List<ReportData.BarChartData> avgSkillTypeScore = avgSkillTypeScore(tallies);
+		List<String> hardestQuestions = hardestQuestions(tallies);
+		
+		Screener tempScreener = screenerRepository.findById(screenerId).get();
+		ReportData.Screener screener = new ReportData.Screener(tempScreener.getName(), tempScreener.getEmail());
+			
+		numApplicantsPassed = numApplicantsPassed(screenings);
+		numApplicantsFailed = numApplicantsFailed(screenings);
+		
+		ReportData reportData = new ReportData(
+				hardestQuestions,
+				avgSkillTypeScore,
+				avgBucketTypeScore,
+				violationsByType,
+				numApplicantsPassed,
+				numApplicantsFailed,
+				screener);
+		Gson gson = new Gson();
+		String json = gson.toJson(reportData);
+		return json;
+	}
+	
+	public String getReport(LocalDate startDate, LocalDate endDate) {
+		/*
+		 * Overloaded getReport() method to get a report of screenings 
+		 * in a specific week, mapped by /getWeeksReport. Returns a 
+		 * reportData via a String of json.
+		 * @param startDate Screening period begin date.
+		 * @param endDate Screening period end date.
+		 * @return json value of a reportData object
+		 */
+		Integer numApplicantsPassed;
+		Integer numApplicantsFailed;
+		ReportData.Screener screener = null;
+		
+		List<Screening> screenings = getScreenings(startDate, endDate);
+		List<ReportData.BarChartData> violationsByType = violationsByType(screenings);
+		List<QuestionScore> questionScores = getQuestionScores(startDate, endDate);
+		Tallies tallies = tallyScores(questionScores);
+		List<ReportData.BarChartData> avgBucketTypeScore = avgBucketTypeScore(tallies);
+		List<ReportData.BarChartData> avgSkillTypeScore = avgSkillTypeScore(tallies);
+		List<String> hardestQuestions = hardestQuestions(tallies);
+			
+		numApplicantsPassed = numApplicantsPassed(screenings);
+		numApplicantsFailed = numApplicantsFailed(screenings);
+		
+		ReportData reportData = new ReportData(
+				hardestQuestions,
+				avgSkillTypeScore,
+				avgBucketTypeScore,
+				violationsByType,
+				numApplicantsPassed,
+				numApplicantsFailed,
+				screener);
+		Gson gson = new Gson();
+		String json = gson.toJson(reportData);
+		return json;
+	}
+	
+	public String getReport(Integer screenerId) {
+		/*
+		 * Overloaded getReport() method to get a report of screenings performed 
+		 * by a specific screener, mapped by /getScreenerReport. Returns a 
+		 * reportData via a String of json.
+		 * @param screenerId Id of screener that performed screening.
+		 * @return json value of a reportData object
+		 */
+		Integer numApplicantsPassed;
+		Integer numApplicantsFailed;
+		
+		List<Screening> screenings = getScreenings(screenerId);
+		List<ReportData.BarChartData> violationsByType = violationsByType(screenings);
+		List<QuestionScore> questionScores = getQuestionScores(screenerId);
+		Tallies tallies = tallyScores(questionScores);
+		List<ReportData.BarChartData> avgBucketTypeScore = avgBucketTypeScore(tallies);
+		List<ReportData.BarChartData> avgSkillTypeScore = avgSkillTypeScore(tallies);
+		List<String> hardestQuestions = hardestQuestions(tallies);
+		
+		Screener tempScreener = screenerRepository.findById(screenerId).get();
+		ReportData.Screener screener = new ReportData.Screener(tempScreener.getName(), tempScreener.getEmail());
+			
+		numApplicantsPassed = numApplicantsPassed(screenings);
+		numApplicantsFailed = numApplicantsFailed(screenings);
+		
+		ReportData reportData = new ReportData(
+				hardestQuestions,
+				avgSkillTypeScore,
+				avgBucketTypeScore,
+				violationsByType,
+				numApplicantsPassed,
+				numApplicantsFailed,
+				screener);
+		Gson gson = new Gson();
+		String json = gson.toJson(reportData);
+		return json;
+	}
+	
+	public String getReport() {
+		/*
+		 * Big dang report generation.  Generates ReportData that matches ReportData in screening-ui and
+		 * works with angular to display charts/info.  Null values for weeks or screenerId will remove
+		 * that restriction, so getReport(null, null) returns a report for all screens all time.
+		 * 
+		 * This used to be two separate functions, neither of which worked.
+		 * It's essentially a total rewrite.  It's been split up into some functions but could use more
+		 * refactoring.  
+		 */
+
+		Time time = new Time();
+		LocalDate startDate = null;
+		LocalDate endDate = null;
+		if (weeks != null) {
+			startDate = time.getWeekToDate(Integer.parseInt(weeks[1]));
+			endDate = time.getWeekToDate(Integer.parseInt(weeks[0]));
+		}
+		
+		// sample data.  Testing one piece at a time!
+		List<String> hardestQuestions = Arrays.asList("N/A", "N/A", "N/A", "N/A", "N/A");
+		List<ReportData.BarChartData> avgSkillTypeScore = new ArrayList();
+		//avgSkillTypeScore.add(new ReportData.BarChartData("skill_test", 10.5));
+		
+		List<ReportData.BarChartData> avgBucketTypeScore = new ArrayList();
+		//avgBucketTypeScore.add(new ReportData.BarChartData("bucket_test", 12.5));
+		
+		List<ReportData.BarChartData> violationsByType = new ArrayList();
+		//violationsByType.add(new ReportData.BarChartData("violation_test", 4));
+		
+		Integer numApplicantsPassed = 1337;
+		Integer numApplicantsFailed = 1337;
+		ReportData.Screener screener = new ReportData.Screener("Adam", "adking@mail.com");
+
 		
 		List<Screening> screenings = getScreenings(startDate, endDate, screenerId);
 		List<ReportData.BarChartData> violationsByType = violationsByType(screenings);
@@ -354,9 +499,112 @@ public class ReportsService {
 	
 	private List<QuestionScore> getQuestionScores(LocalDate startDate, LocalDate endDate, Integer screenerId) {
 		/*
-		 * Returns all question scores in a date range associated with an individual screener.
-		 * Setting screener or date params to null will ignore that constraint.  Note that setting either
-		 * date param to null means date is ignored completely.
+		 * Overloaded for /getReport. Returns all question scores in a date range associated with an individual screener.
+		 * @return List<QuestionScore>
+		 */
+		Date startDateAsDate = Date.from(startDate.atStartOfDay().toInstant(ZoneOffset.UTC));
+		Date endDateAsDate = Date.from(endDate.atStartOfDay().toInstant(ZoneOffset.UTC));
+		
+		List<QuestionScore> out = new ArrayList<QuestionScore>();
+		
+		for (QuestionScore qs : questionScoreRepository.findAll()) {
+			if (qs.getBeginTime().after(startDateAsDate) && qs.getBeginTime().before(endDateAsDate)) {
+				if (qs.getScreening().getScreenerId() == screenerId) {
+					out.add(qs);
+				}
+			}
+		}
+		return out;
+	}
+	
+	private List<Screening> getScreenings(LocalDate startDate, LocalDate endDate, Integer screenerId) {
+		/*
+		 * Overloaded for /getReport. Returns all screenings in a date range associated with an individual screener.
+		 * @return List<QuestionScore>
+		 */
+		List<Screening> screenings;
+		List<Screening> out = new ArrayList<Screening>();
+		
+		Screener screener = screenerRepository.findById(screenerId).get();
+		screenings = screener.getScreenings();
+		for (Screening s : screenings) {
+			if (s.getEndDateTime().isAfter(startDate) && s.getEndDateTime().isBefore(endDate)) {
+				out.add(s);
+			}
+		}
+		return out;
+	}
+	
+	private List<QuestionScore> getQuestionScores(LocalDate startDate, LocalDate endDate) {
+		/*
+		 * Overloaded for /getWeeksReport. Returns all question scores in a date range.
+		 * @return List<QuestionScore>
+		 */
+		Date startDateAsDate = Date.from(startDate.atStartOfDay().toInstant(ZoneOffset.UTC));
+		Date endDateAsDate = Date.from(endDate.atStartOfDay().toInstant(ZoneOffset.UTC));
+		
+		List<QuestionScore> out = new ArrayList<QuestionScore>();
+		
+		for (QuestionScore qs : questionScoreRepository.findAll()) {
+			if ((qs.getBeginTime().after(startDateAsDate) && qs.getBeginTime().before(endDateAsDate))) {
+				out.add(qs);
+			}
+		}
+		return out;
+	}
+	
+	private List<Screening> getScreenings(LocalDate startDate, LocalDate endDate) {
+		/*
+		 * Overloaded for /getWeeksReport. Returns all screenings scores in a date range.
+		 * @return List<QuestionScore>
+		 */
+		List<Screening> screenings;
+		List<Screening> out = new ArrayList<Screening>();
+		
+		screenings = screeningRepository.findAll();
+		
+		for (Screening s : screenings) {
+			if (s.getEndDateTime().isAfter(startDate) && s.getEndDateTime().isBefore(endDate)) {
+				out.add(s);
+			}
+		}
+		return out;
+	}
+	
+	private List<QuestionScore> getQuestionScores(Integer screenerId) {
+		/*
+		 * Overloaded for /getScreenerReport. Returns all question scores associated with an individual screener.
+		 * @return List<QuestionScore>
+		 */
+		
+		List<QuestionScore> out = new ArrayList<QuestionScore>();
+		
+		for (QuestionScore qs : questionScoreRepository.findAll()) {
+			if ((qs.getScreening().getScreenerId() == screenerId)) {
+				out.add(qs);
+			}
+		}
+		return out;
+	}
+	
+	private List<Screening> getScreenings(Integer screenerId) {
+		/*
+		 * Overloaded for /getScreenerReport. Returns all screenings associated with an individual screener.
+		 * @return List<QuestionScore>
+		 */
+		List<Screening> screenings;
+		List<Screening> out = new ArrayList<Screening>();
+		
+		Screener screener = screenerRepository.findById(screenerId).get();
+		screenings = screener.getScreenings();
+		out = screenings;
+		
+		return out;
+	}
+	
+	private List<QuestionScore> getQuestionScores() {
+		/* 
+		 * Returns all question scores
 		 * @return List<QuestionScore>
 		 */
 		

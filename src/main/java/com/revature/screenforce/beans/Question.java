@@ -18,6 +18,10 @@ import java.util.Objects;
  * @author Isaac Pawling | 1085-WVU | Richard Orr
  * @author Jeremy Straus | 1807-QC | Emily Higgins
  */
+
+import com.revature.screenforce.beans.Bucket;
+import com.revature.screenforce.beans.QuestionScore;
+
 @ApiModel(value = "Question", description = "a question to ask a candidate, along with 5 sample answers "
         + "of varying correctness")
 @Entity

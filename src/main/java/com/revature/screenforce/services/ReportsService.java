@@ -85,10 +85,9 @@ public class ReportsService {
 		List<Screening> screenings = getScreenings(startDate, endDate, screenerId);
 		List<ReportData.BarChartData> violationsByType = violationsByType(screenings);
 		List<QuestionScore> questionScores = getQuestionScores(startDate, endDate, screenerId);
-		Tallies tallies = tallyScores(questionScores);
-		List<ReportData.BarChartData> avgBucketTypeScore = avgBucketTypeScore(tallies);
-		List<ReportData.BarChartData> avgSkillTypeScore = avgSkillTypeScore(tallies);
-		List<String> hardestQuestions = hardestQuestions(tallies);
+		List<ReportData.BarChartData> avgBucketTypeScore = avgBucketTypeScore(questionScores);
+		List<ReportData.BarChartData> avgSkillTypeScore = avgSkillTypeScore(questionScores);
+		List<String> hardestQuestions = hardestQuestions(questionScores);
 		
 		Screener tempScreener = screenerRepository.findById(screenerId).get();
 		ReportData.Screener screener = new ReportData.Screener(tempScreener.getName(), tempScreener.getEmail());
@@ -125,10 +124,9 @@ public class ReportsService {
 		List<Screening> screenings = getScreenings(startDate, endDate);
 		List<ReportData.BarChartData> violationsByType = violationsByType(screenings);
 		List<QuestionScore> questionScores = getQuestionScores(startDate, endDate);
-		Tallies tallies = tallyScores(questionScores);
-		List<ReportData.BarChartData> avgBucketTypeScore = avgBucketTypeScore(tallies);
-		List<ReportData.BarChartData> avgSkillTypeScore = avgSkillTypeScore(tallies);
-		List<String> hardestQuestions = hardestQuestions(tallies);
+		List<ReportData.BarChartData> avgBucketTypeScore = avgBucketTypeScore(questionScores);
+		List<ReportData.BarChartData> avgSkillTypeScore = avgSkillTypeScore(questionScores);
+		List<String> hardestQuestions = hardestQuestions(questionScores);
 			
 		numApplicantsPassed = numApplicantsPassed(screenings);
 		numApplicantsFailed = numApplicantsFailed(screenings);
@@ -160,10 +158,9 @@ public class ReportsService {
 		List<Screening> screenings = getScreenings(screenerId);
 		List<ReportData.BarChartData> violationsByType = violationsByType(screenings);
 		List<QuestionScore> questionScores = getQuestionScores(screenerId);
-		Tallies tallies = tallyScores(questionScores);
-		List<ReportData.BarChartData> avgBucketTypeScore = avgBucketTypeScore(tallies);
-		List<ReportData.BarChartData> avgSkillTypeScore = avgSkillTypeScore(tallies);
-		List<String> hardestQuestions = hardestQuestions(tallies);
+		List<ReportData.BarChartData> avgBucketTypeScore = avgBucketTypeScore(questionScores);
+		List<ReportData.BarChartData> avgSkillTypeScore = avgSkillTypeScore(questionScores);
+		List<String> hardestQuestions = hardestQuestions(questionScores);
 		
 		Screener tempScreener = screenerRepository.findById(screenerId).get();
 		ReportData.Screener screener = new ReportData.Screener(tempScreener.getName(), tempScreener.getEmail());
@@ -196,10 +193,9 @@ public class ReportsService {
 		List<Screening> screenings = getScreenings();
 		List<ReportData.BarChartData> violationsByType = violationsByType(screenings);
 		List<QuestionScore> questionScores = getQuestionScores();
-		Tallies tallies = tallyScores(questionScores);
-		List<ReportData.BarChartData> avgBucketTypeScore = avgBucketTypeScore(tallies);
-		List<ReportData.BarChartData> avgSkillTypeScore = avgSkillTypeScore(tallies);
-		List<String> hardestQuestions = hardestQuestions(tallies);
+		List<ReportData.BarChartData> avgBucketTypeScore = avgBucketTypeScore(questionScores);
+		List<ReportData.BarChartData> avgSkillTypeScore = avgSkillTypeScore(questionScores);
+		List<String> hardestQuestions = hardestQuestions(questionScores);
 		
 		ReportData.Screener screener = null;
 			
@@ -220,19 +216,32 @@ public class ReportsService {
 	}
 
 	
-	private List<String> hardestQuestions(Tallies tallies){
+	private List<String> hardestQuestions(List<QuestionScore> questionScores){
 		/*
 		 * Returns a List containing the five hardest questions asked
 		 * by screeners. Creates a Map, sorts it by difficulty, then 
 		 * pulls out the first five questions and returns it.
-		 * @param tallies Class of Maps with questions, skill types,
-		 * 				  and buckets. Contains the sum of scores per
-		 * 				  value. Used to instantiate avgScoreQuestion.
+		 * @param questionScores Collection of scores for questions, skill types,
+		 * 				  		and buckets.
 		 * @return List of the five hardest questions asked.
 		 */
+		Map<Integer, Double> sumScoresQuestion = new HashMap<>();
+        Map<Integer, Integer> countQuestion = new HashMap<>();
+        
+        for (QuestionScore qs: questionScores) {
+            Integer QuestionId = qs.getQuestionId();
+            Double score = qs.getScore();
+            
+            if (!sumScoresQuestion.containsKey(QuestionId)) sumScoresQuestion.put(QuestionId, 0.0);
+            if (!countQuestion.containsKey(QuestionId)) countQuestion.put(QuestionId, 0);
+            
+            sumScoresQuestion.replace(QuestionId, sumScoresQuestion.get(QuestionId) + score);
+            countQuestion.replace(QuestionId,  countQuestion.get(QuestionId) + 1);
+        }
+        
 		Map<Integer, Double> avgScoreQuestion = new HashMap<>();
-		for (Integer questionId : tallies.sumScoresQuestion.keySet()) {
-			avgScoreQuestion.put(questionId, tallies.sumScoresQuestion.get(questionId) / (double) tallies.countQuestion.get(questionId));
+		for (Integer questionId : sumScoresQuestion.keySet()) {
+			avgScoreQuestion.put(questionId, sumScoresQuestion.get(questionId) / (double) countQuestion.get(questionId));
 		}
 		List<Integer> keyList = new ArrayList<Integer>(avgScoreQuestion.keySet());
 		
@@ -255,39 +264,66 @@ public class ReportsService {
 	}
 	
 	
-	private List<ReportData.BarChartData> avgSkillTypeScore(Tallies tallies ){/*
+	private List<ReportData.BarChartData> avgSkillTypeScore(List<QuestionScore> questionScores){
+		/*
 		 * Returns a List of bar chart data to display in the front end.
-		 * @param tallies Class of Maps with questions, skill types,
-		 * 				  and buckets. Contains the sum of scores per
-		 * 				  value.
+		 * @param questionScores Collection of scores for questions, skill types,
+		 * 				  		and buckets.
 		 * @return List of average scores per skill type formatted for a bar chart.
 		 */
+		Map<Integer, Double> sumScoresSkillType = new HashMap<>();
+        Map<Integer, Integer> countSkillType = new HashMap<>();
+        
+        for (QuestionScore qs: questionScores) {
+            Integer skillTypeId = qs.getScreening().getSkillTypeId();
+            Double score = qs.getScore();
+            
+            if (!sumScoresSkillType.containsKey(skillTypeId)) sumScoresSkillType.put(skillTypeId, 0.0);
+            if (!countSkillType.containsKey(skillTypeId)) countSkillType.put(skillTypeId, 0);
+            
+            sumScoresSkillType.replace(skillTypeId, sumScoresSkillType.get(skillTypeId) + score);
+            countSkillType.replace(skillTypeId,  countSkillType.get(skillTypeId) + 1);
+        }
+		
 		List<ReportData.BarChartData> avgSkillTypeScore = new ArrayList<BarChartData>();
-		for (Integer skillTypeId : tallies.sumScoresSkillType.keySet()) {
+		for (Integer skillTypeId : sumScoresSkillType.keySet()) {
 			avgSkillTypeScore.add(new ReportData.BarChartData(
 					skillTypeDAO.findById(skillTypeId).get().getTitle(),
-					tallies.sumScoresSkillType.get(skillTypeId) / (double) tallies.countSkillType.get(skillTypeId)
+					sumScoresSkillType.get(skillTypeId) / (double) countSkillType.get(skillTypeId)
 					));
 		}
 		return avgSkillTypeScore;	
 	}
 	
-	private List<ReportData.BarChartData> avgBucketTypeScore(Tallies tallies){
+	private List<ReportData.BarChartData> avgBucketTypeScore(List<QuestionScore> questionScores){
 		/*
 		 * Returns a List of bar chart data to display in the front end.
-		 * @param tallies Class of Maps with questions, skill types,
-		 * 				  and buckets. Contains the sum of scores per
-		 * 				  value.
+		 * @param questionScores Collection of scores for questions, skill types,
+		 * 				  		and buckets.
 		 * @return List of average scores per bucket type formatted for a bar chart.
 		 */
-		List<ReportData.BarChartData> avgBucketTypeScore = new ArrayList<BarChartData>();
-		for (Integer bid : tallies.sumScoresBucket.keySet()) {
-			avgBucketTypeScore.add(new ReportData.BarChartData(
-					bucketDAO.findById(bid).get().getBucketDescription(),
-					tallies.sumScoresBucket.get(bid) / (double) tallies.countBucket.get(bid)
-					));
-		}
-		return avgBucketTypeScore;
+		Map<Integer, Double> sumScoresBucket = new HashMap<>();
+        Map<Integer, Integer> countBucket = new HashMap<>();
+        
+        for (QuestionScore qs: questionScores) {
+            Integer bucketId = qs.getBucketId();
+            Double score = qs.getScore();
+            
+            if (!sumScoresBucket.containsKey(bucketId)) sumScoresBucket.put(bucketId, 0.0);
+            if (!countBucket.containsKey(bucketId)) countBucket.put(bucketId, 0);
+            
+            sumScoresBucket.replace(bucketId, sumScoresBucket.get(bucketId) + score);
+            countBucket.replace(bucketId,  countBucket.get(bucketId) + 1);
+        }
+		
+        List<ReportData.BarChartData> avgBucketTypeScore = new ArrayList<BarChartData>();
+        for (Integer bid : sumScoresBucket.keySet()) {
+            avgBucketTypeScore.add(new ReportData.BarChartData(
+                    bucketDAO.findById(bid).get().getBucketDescription(),
+                    sumScoresBucket.get(bid) / (double) countBucket.get(bid)
+                    ));
+        }
+        return avgBucketTypeScore;
 	}
 	
 	private List<ReportData.BarChartData> violationsByType(List<Screening> screenings){
@@ -350,51 +386,6 @@ public class ReportsService {
             }
         }
 		return numApplicantsFailed;
-	}
-	
-	private class Tallies {
-		// contains an entry for each question, skilltype, and bucket.  Keys are Ids.  Sum of scores for each for value.
-		Map<Integer, Double> sumScoresQuestion = new HashMap<>();
-		Map<Integer, Double> sumScoresSkillType = new HashMap<>();
-		Map<Integer, Double> sumScoresBucket = new HashMap<>();
-		// contains an entry for each question, skilltype, and bucket.  Keys are Ids.  Count of questions for each for value.
-		Map<Integer, Integer> countQuestion = new HashMap<>();
-		Map<Integer, Integer> countSkillType = new HashMap<>();
-		Map<Integer, Integer> countBucket = new HashMap<>();
-		
-	}
-	
-	private Tallies tallyScores(List<QuestionScore> questionScores) {
-		/*
-		 * Returns a Tallies object, that sums question scores and counts for question, bucket, and skilltype
-		 */
-		
-		Tallies tallies = new Tallies();
-		
-		for (QuestionScore qs: questionScores) {
-			Integer qid = qs.getQuestionId();
-			Integer stid = qs.getScreening().getSkillTypeId();
-			Integer bid = qs.getBucketId();
-			Double score = qs.getScore();
-			
-			// initialize entries if they don't exist
-			if (!tallies.sumScoresQuestion.containsKey(qid)) tallies.sumScoresQuestion.put(qid, 0.0);
-			if (!tallies.sumScoresSkillType.containsKey(stid)) tallies.sumScoresSkillType.put(stid, 0.0);
-			if (!tallies.sumScoresBucket.containsKey(bid)) tallies.sumScoresBucket.put(bid, 0.0);
-			if (!tallies.countQuestion.containsKey(qid)) tallies.countQuestion.put(qid, 0);
-			if (!tallies.countSkillType.containsKey(stid)) tallies.countSkillType.put(stid, 0);
-			if (!tallies.countBucket.containsKey(bid)) tallies.countBucket.put(bid, 0);
-			
-			// add scores and counts
-			tallies.sumScoresQuestion.replace(qid, tallies.sumScoresQuestion.get(qid) + score);
-			tallies.sumScoresSkillType.replace(stid, tallies.sumScoresSkillType.get(stid) + score);
-			tallies.sumScoresBucket.replace(bid, tallies.sumScoresBucket.get(bid) + score);
-			tallies.countQuestion.replace(qid,  tallies.countQuestion.get(qid) + 1);
-			tallies.countSkillType.replace(stid,  tallies.countSkillType.get(stid) + 1);
-			tallies.countBucket.replace(bid,  tallies.countBucket.get(bid) + 1);
-			}
-		
-		return tallies;
 	}
 	
 	private List<QuestionScore> getQuestionScores(LocalDate startDate, LocalDate endDate, Integer screenerId) {

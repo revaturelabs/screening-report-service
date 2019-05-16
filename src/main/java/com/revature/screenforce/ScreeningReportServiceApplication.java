@@ -5,7 +5,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 //import feign.FeignClient;
 
 @SpringBootApplication
-//t@EnableFeignClients
+//@EnableFeignClients
 public class ScreeningReportServiceApplication {
 
 	public static void main(String[] args) {

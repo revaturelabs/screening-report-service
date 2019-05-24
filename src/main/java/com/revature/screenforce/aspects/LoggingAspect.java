@@ -28,27 +28,4 @@ public class LoggingAspect {
     }
 	
 	
-//	
-	
-//	private Logger log;
-//	@Around("everything()")
-//	public Object log(ProceedingJoinPoint pjp) {
-//		Object obj = null;
-//		log = Logger.getLogger(pjp.getTarget().getClass());
-//		log.trace("Method with signature: "+pjp.getSignature());
-//		log.trace("with arguments: "+Arrays.toString(pjp.getArgs()));
-//		try {
-//			obj = pjp.proceed();
-//		} catch (Throwable t) {
-//			log.error(t.getMessage());
-//			for(StackTraceElement s : t.getStackTrace()) {
-//				log.warn(s);
-//			}
-//		}
-//		log.info(pjp.getSignature()+" returned: "+obj);
-//		return obj;
-//	}
-//	
-//	@Pointcut("execution(* com.revature..*(..))")
-//	private void everything() { /* Empty method for hook */ }
 }

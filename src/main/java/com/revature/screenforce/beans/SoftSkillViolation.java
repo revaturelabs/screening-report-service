@@ -16,6 +16,7 @@ import java.util.Objects;
 @Table(name="SOFT_SKILL_VIOLATION")
 public class SoftSkillViolation {
 
+	//variables 
 	@ApiModelProperty(value = "Id of the violation")
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -26,15 +27,15 @@ public class SoftSkillViolation {
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "SCREENING_ID")
 	private Screening screening;
+	
+	@ApiModelProperty(value = "Set Me!")
+	@Column(name="SCREENING_ID", insertable=false, updatable=false)
+	private int screeningId;
 
 	@ApiModelProperty(value = "Id of the ViolationType that occurred in the screening")
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "VIOLATION_TYPE_ID")
 	private ViolationType violationType;
-	
-	@ApiModelProperty(value = "Set Me!")
-	@Column(name="SCREENING_ID", insertable=false, updatable=false)
-	private int screeningId;
 
 	@ApiModelProperty(value = "Any comments regarding the violation")
 	@Column(name="COMMENT")
@@ -46,6 +47,7 @@ public class SoftSkillViolation {
 	@Column(name="TIME")
 	private Date time;
 
+	//constructors
 	public SoftSkillViolation() {
 		super();
 	}
@@ -67,6 +69,7 @@ public class SoftSkillViolation {
 		this.time = time;
 	}
 
+	//getters and setters 
 	public int getSoftSkillViolationId() {
 		return softSkillViolationId;
 	}
@@ -110,7 +113,16 @@ public class SoftSkillViolation {
 	public void setTime(Date time) {
 		this.time = time;
 	}
+	
+	public int getScreeningId() {
+		return screeningId;
+	}
 
+	public void setScreeningId(int screeningId) {
+		this.screeningId = screeningId;
+	}
+	
+	//equals and hashcode 
 	@Override
 	public boolean equals(Object o) {
 		if (this == o) return true;
@@ -122,12 +134,12 @@ public class SoftSkillViolation {
 				Objects.equals(getComment(), violation.getComment()) &&
 				Objects.equals(getTime(), violation.getTime());
 	}
-
 	@Override
 	public int hashCode() {
 		return Objects.hash(getSoftSkillViolationId(), getScreening(), getViolationType(), getComment(), getTime());
 	}
 
+	//toString
 	@Override
 	public String toString() {
 		return "SoftSkillViolation{" +
@@ -138,12 +150,5 @@ public class SoftSkillViolation {
 				", time=" + time +
 				'}';
 	}
-
-	public int getScreeningId() {
-		return screeningId;
-	}
-
-	public void setScreeningId(int screeningId) {
-		this.screeningId = screeningId;
-	}
+	
 }

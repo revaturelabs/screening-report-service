@@ -18,6 +18,8 @@ import java.util.Objects;
 @Entity
 @Table(name = "SCREENING")
 public class Screening {
+	
+	//variables 
 	@ApiModelProperty(value = "Id of the screening")
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -75,14 +77,7 @@ public class Screening {
 	@JsonIgnore
 	private List<Bucket> buckets;
 
-	public List<Bucket> getBuckets() {
-		return buckets;
-	}
-
-	public void setBuckets(List<Bucket> buckets) {
-		this.buckets = buckets;
-	}
-
+	//constructors
 	public Screening() {
 		super();
 	}
@@ -102,103 +97,88 @@ public class Screening {
 		this.softSkillsVerdict = softSkillsVerdict;
 		this.status = status;
 	}
-
+	
+	//getters and setters 
+	public List<Bucket> getBuckets() {
+		return buckets;
+	}
+	public void setBuckets(List<Bucket> buckets) {
+		this.buckets = buckets;
+	}
 	public int getScreeningId() {
 		return screeningId;
 	}
-
 	public void setScreeningId(int screeningId) {
 		this.screeningId = screeningId;
 	}
-
 	public ScheduledScreening getScheduledScreening() {
 		return scheduledScreening;
 	}
-
 	public void setScheduledScreening(ScheduledScreening scheduledScreening) {
 		this.scheduledScreening = scheduledScreening;
 	}
-
 	public int getScreenerId() {
 		return screenerId;
 	}
-
 	public void setScreenerId(int screenerId) {
 		this.screenerId = screenerId;
 	}
-
 	public int getSkillTypeId() {
 		return skillTypeId;
 	}
-
 	public void setSkillTypeId(int skillTypeId) {
 		this.skillTypeId = skillTypeId;
 	}
-
 	public Double getCompositeScore() {
 		return compositeScore;
 	}
-
 	public void setCompositeScore(Double compositeScore) {
 		this.compositeScore = compositeScore;
 	}
-
 	public String getAboutMeCommentary() {
 		return aboutMeCommentary;
 	}
-
 	public void setAboutMeCommentary(String aboutMeCommentary) {
 		this.aboutMeCommentary = aboutMeCommentary;
 	}
-
 	public String getGeneralCommentary() {
 		return generalCommentary;
 	}
-
 	public void setGeneralCommentary(String generalCommentary) {
 		this.generalCommentary = generalCommentary;
 	}
-
 	public String getSoftSkillCommentary() {
 		return softSkillCommentary;
 	}
-
 	public void setSoftSkillCommentary(String softSkillCommentary) {
 		this.softSkillCommentary = softSkillCommentary;
 	}
-
 	public LocalDate getStartDateTime() {
 		return startDateTime;
 	}
-
 	public void setStartDateTime(LocalDate startDateTime) {
 		this.startDateTime = startDateTime;
 	}
-
 	public LocalDate getEndDateTime() {
 		return endDateTime;
 	}
-
 	public void setEndDateTime(LocalDate endDateTime) {
 		this.endDateTime = endDateTime;
 	}
-
 	public Boolean getSoftSkillsVerdict() {
 		return softSkillsVerdict;
 	}
-
 	public void setSoftSkillsVerdict(Boolean softSkillsVerdict) {
 		this.softSkillsVerdict = softSkillsVerdict;
 	}
-
 	public String getStatus() {
 		return status;
 	}
-
 	public void setStatus(String status) {
 		this.status = status;
 	}
 
+	//equals and hashcode
 	@Override
 	public boolean equals(Object o) {
 		if (this == o) return true;
@@ -217,12 +197,12 @@ public class Screening {
 				Objects.equals(getSoftSkillsVerdict(), screening.getSoftSkillsVerdict()) &&
 				Objects.equals(getStatus(), screening.getStatus());
 	}
-
 	@Override
 	public int hashCode() {
 		return Objects.hash(getScreeningId(), getScheduledScreening(), getScreenerId(), getSkillTypeId(), getCompositeScore(), getAboutMeCommentary(), getGeneralCommentary(), getSoftSkillCommentary(), getStartDateTime(), getEndDateTime(), getSoftSkillsVerdict(), getStatus());
 	}
 
+	//toString
 	@Override
 	public String toString() {
 		return "Screening{" +

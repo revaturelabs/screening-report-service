@@ -6,7 +6,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-
+import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,11 +16,17 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.revature.screenforce.beans.QuestionScore;
 import com.revature.screenforce.beans.Screening;
+import com.revature.screenforce.beans.SimpleQuestionScore;
 import com.revature.screenforce.beans.SoftSkillViolation;
+import com.revature.screenforce.beans.ViolationType;
 import com.revature.screenforce.services.ReportsService;
+import com.revature.screenforce.services.ScreeningQuestionScoreClient;
+import com.revature.screenforce.services.ScreeningScreeningClient;
+import com.revature.screenforce.services.ScreeningViolationClient;
 
 @RestController
 @CrossOrigin
+@EnableFeignClients //JU
 public class ReportsController {
 	/*
 	 * This controller is built to work with screening-ui, generating reports for the Reports tab there.
@@ -28,27 +34,52 @@ public class ReportsController {
 	 * function to handle emails.
 	 */
 
+	//variables - service to be injected in methods 
 	@Autowired ReportsService reportsService;
+	@Autowired ScreeningViolationClient screeningVClient; 
+	@Autowired ScreeningQuestionScoreClient screeningQSClient; 
+	@Autowired ScreeningScreeningClient screeningSClient; 
 
+	//methods
 	@GetMapping(value="/getEmails", produces= MediaType.APPLICATION_JSON_VALUE)
 	public @ResponseBody List<String> getAllEmails(@RequestParam(value = "email") String email){
 		List<String> emails = this.reportsService.getAllEmails(email);
 		return emails;
 	}
 	
+	/*
 	@GetMapping(value="/screenings")
 	public List<Screening> getAllScreenings() {
 		return this.reportsService.getAllScreenings();
 	} 
+	*/
+	
+	//5/26 JU Adding this. This one is not working. 
+	@GetMapping(value="/screenings")
+	public List<Screening> getAllScreenings() {
+		return screeningSClient.getScreenings();
+	}
 	
 	@GetMapping(value="/softskillviolations")
 	public List<SoftSkillViolation> getAllSoftSkillViolations() {
 		return this.reportsService.getAllSoftSkillViolations();
 	}
 	
+	//5/26 JU Adding this. Works to pull from screening service w/ feign client. 
+	@GetMapping(value="/violationTypes")
+	public List<ViolationType> getAllViolationTypes() {
+		return screeningVClient.getViolationTypes();
+	}
+	
 	@GetMapping(value="/questionscores")
 	public List<QuestionScore> getAllQuestionScores() {
 		return this.reportsService.getAllQuestionScores();
+	}
+	
+	//5/26 JU Adding this to pull from screening service w/ feign client. Needs to be tested.
+	@GetMapping(value="/scores")
+	public List<SimpleQuestionScore> getScoresByScreeningId() {
+		return screeningQSClient.getScoresByScreeningId();
 	}
 	
 	@GetMapping(value="/getReport")

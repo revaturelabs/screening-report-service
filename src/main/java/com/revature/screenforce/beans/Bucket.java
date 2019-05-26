@@ -8,7 +8,6 @@ import java.io.Serializable;
 import java.util.List;
 import java.util.Objects;
 
-
 /**
  * Define bucket POJO
  *
@@ -23,6 +22,7 @@ import java.util.Objects;
 @Table(name = "bucket")
 public class Bucket implements Serializable {
 
+	//variables 
     private static final long serialVersionUID = 2435095816452768808L;
 
     @ApiModelProperty(value = "id of the Bucket")
@@ -36,13 +36,6 @@ public class Bucket implements Serializable {
     @Column(name="SCREENING_ID")
     private int screeningId;
     
-    public int getScreeningId() {
-		return screeningId;
-	}
-	public void setScreeningId(int screeningId) {
-		this.screeningId = screeningId;
-	}
-
 	@ApiModelProperty(value = "description of the Bucket")
     @Column(name = "BUCKET_DESCRIPTION")
     private String bucketDescription;
@@ -56,17 +49,10 @@ public class Bucket implements Serializable {
 	@JoinColumn(name = "BUCKET_ID")
 	private List<Question> questions;
     
-	public List<Question> getQuestions() {
-		return questions;
-	}
-	public void setQuestions(List<Question> questions) {
-		this.questions = questions;
-	}
-	
+	//constructors
 	public Bucket() {
         super();
     }
-
     public Bucket(Integer bucketId, Integer screeningId, String bucketDescription, Boolean isActive) {
         super();
         this.bucketId = bucketId;
@@ -74,10 +60,22 @@ public class Bucket implements Serializable {
         this.bucketDescription = bucketDescription;
         this.isActive = isActive;
     }
-
-    /**
-     * Getters & Setters
-     */
+	
+	//getters and setters 
+    public int getScreeningId() {
+		return screeningId;
+	}
+	public void setScreeningId(int screeningId) {
+		this.screeningId = screeningId;
+	}
+	
+	public List<Question> getQuestions() {
+		return questions;
+	}
+	public void setQuestions(List<Question> questions) {
+		this.questions = questions;
+	}
+	
     public int getBucketId() {
         return bucketId;
     }
@@ -102,6 +100,7 @@ public class Bucket implements Serializable {
         this.isActive = isActive;
     }
 
+    //equals and hashcode
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -111,12 +110,12 @@ public class Bucket implements Serializable {
                 isActive == bucket.isActive &&
                 Objects.equals(getBucketDescription(), bucket.getBucketDescription());
     }
-
     @Override
     public int hashCode() {
         return Objects.hash(getBucketId(), getScreeningId(), getBucketDescription(), isActive);
     }
 
+    //toString
     @Override
     public String toString() {
         return "Bucket{" +

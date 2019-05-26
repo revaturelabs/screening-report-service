@@ -81,7 +81,7 @@ public class ReportsService {
 		 */
 		Integer numApplicantsPassed;
 		Integer numApplicantsFailed;
-		
+	
 		List<Screening> screenings = getScreenings(startDate, endDate, screenerId);
 		List<ReportData.BarChartData> violationsByType = violationsByType(screenings);
 		List<QuestionScore> questionScores = getQuestionScores(startDate, endDate, screenerId);

@@ -76,11 +76,13 @@ public class ReportsController {
 		return screeningVClient.getViolationTypes();
 	}
 	
+	
 	//5/28 JU  - working on this one.
 	@GetMapping(value="/questionscores")
-	public List<QuestionScore> getAllQuestionScores() {
+	public List<SimpleQuestionScore> getAllQuestionScores() {
 		return this.reportsService.getAllQuestionScores();
 	}
+
 	
 	//5/26 JU Adding this to pull from screening service w/ feign client. For testing only. Needs to be tested.
 	@GetMapping(value="/scores/{screeningId}")

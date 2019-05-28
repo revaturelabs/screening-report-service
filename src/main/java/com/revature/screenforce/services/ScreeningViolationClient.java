@@ -16,8 +16,7 @@ public interface ScreeningViolationClient {
 	@RequestMapping(method = RequestMethod.GET)
 	List<com.revature.screenforce.dtos.ViolationType> getViolationTypes(); 
 	
-	//
-	
+	//JU
 	@RequestMapping(value = "/all", method = RequestMethod.GET)
 	List<com.revature.screenforce.dtos.SoftSkillViolation> getSoftSkillViolations(); 
 	

@@ -21,6 +21,7 @@ import com.revature.screenforce.dtos.Screening;
 import com.revature.screenforce.dtos.SimpleQuestionScore;
 import com.revature.screenforce.dtos.SoftSkillViolation;
 import com.revature.screenforce.dtos.ViolationType;
+import com.revature.screenforce.services.ReportsService;
 //import com.revature.screenforce.beans.SimpleQuestionScore;
 //import com.revature.screenforce.beans.SoftSkillViolation;
 //import com.revature.screenforce.beans.ViolationType;
@@ -41,15 +42,16 @@ public class ReportsController {
 
 	//variables - services to be injected in methods 
 	//services for interanal data
-	/*
+	
 	@Autowired ReportsService reportsService;
-	*/
+	
 	//services for external data 
 	@Autowired ScreeningViolationClient screeningVClient; 
 	@Autowired ScreeningQuestionScoreClient screeningQSClient; 
 	@Autowired ScreeningScreeningClient screeningSClient; 
 
 	//methods
+	
 	/*
 	@GetMapping(value="/getEmails", produces= MediaType.APPLICATION_JSON_VALUE)
 	public @ResponseBody List<String> getAllEmails(@RequestParam(value = "email") String email){
@@ -58,18 +60,19 @@ public class ReportsController {
 	}
 	*/
 	
-	/*
+	
 	@GetMapping(value="/screenings")
 	public List<Screening> getAllScreenings() {
 		return this.reportsService.getAllScreenings();
 	} 
-	*/
 	
-	//5/26 JU Adding this. This one is not working. 
+	//5/28 JU - this works.
+	/*
 	@GetMapping(value="/screenings")
 	public List<Screening> getAllScreenings() {
 		return screeningSClient.getScreenings();
 	}
+	*/
 	
 //	@GetMapping(value="/softskillviolations")
 //	public List<SoftSkillViolation> getAllSoftSkillViolations() {

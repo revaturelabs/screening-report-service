@@ -26,7 +26,6 @@ public class SkillType /*implements Serializable*/ {
 
 	//private static final long serialVersionUID = -6863562903787298483L;
 	
-	//variables 
 	@ApiModelProperty(value = "Skill type id")
 	@Id
 	@SequenceGenerator(name = "skillSeq", sequenceName = "SKILL_TYPE_SEQUENCE", allocationSize=1)
@@ -42,23 +41,24 @@ public class SkillType /*implements Serializable*/ {
     @Column(name = "is_active")
     private boolean isActive;
     
-    //constructors 
 	public SkillType() {
 		super();
 	}
+
 	public SkillType(String title, boolean isActive) {
 		this.title = title;
 		this.isActive = isActive;
 	}
 
-	
+	/**
+	 * getters & setters
+	 */
 	/*
 	public static long getSerialVersionUID() {
 		return serialVersionUID;
 	}
 	 */
 	
-	//getters and setters 
 	public int getSkillTypeId() {
 		return skillTypeId;
 	}
@@ -83,7 +83,6 @@ public class SkillType /*implements Serializable*/ {
 		isActive = active;
 	}
 
-	//equals and hashcode
 	@Override
 	public boolean equals(Object o) {
 		if (this == o) return true;
@@ -99,7 +98,6 @@ public class SkillType /*implements Serializable*/ {
 		return Objects.hash(getSkillTypeId(), getTitle(), isActive());
 	}
 
-	//toString
 	@Override
 	public String toString() {
 		return "SkillType{" +

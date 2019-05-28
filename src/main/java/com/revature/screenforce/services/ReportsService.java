@@ -32,6 +32,7 @@ import com.revature.screenforce.daos.SkillTypeDAO;
 import com.revature.screenforce.daos.SoftSkillViolationRepository;
 import com.revature.screenforce.daos.ViolationTypeRepository;
 import com.revature.screenforce.daos.WeightDAO;
+import com.revature.screenforce.dtos.SimpleQuestionScore;
 import com.revature.screenforce.models.ReportData;
 import com.revature.screenforce.models.ReportData.BarChartData;
 
@@ -75,16 +76,17 @@ public class ReportsService {
 		return screeningSClient.getScreenings();
 	}
 	
-	//5/28 JU - adding mehtod (implements Feign. Calls newly added end pt.)
+	//5/28 JU - adding method (implements Feign. Calls newly added end pt.)
 	public List<com.revature.screenforce.dtos.SoftSkillViolation> getAllSoftSkillViolations() {
 		return this.screeningSVClient.getSoftSkillViolations();
 	}
 	
-	
-	public List<QuestionScore> getAllQuestionScores() {
+	/*
+	public List<SimpleQuestionScore> getAllQuestionScores() {
 		return this.questionScoreRepository.findAll();
 	}
- 	
+ 	*/
+	
 	public Integer getIdFromEmail(String email) {
 		Screener screener = screenerRepository.getByEmail(email);
 		return screener.getScreenerId();

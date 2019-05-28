@@ -52,6 +52,7 @@ public class ReportsService {
 	//Feign client services 
 	@Autowired AdminBucketClient adminBucketClient; 
 	@Autowired ScreeningScreeningClient screeningSClient; 
+	@Autowired ScreeningViolationClient screeningSVClient; 
 
 	
 	public List<String> getAllEmails(String email){
@@ -69,13 +70,16 @@ public class ReportsService {
 	}
 	*/
 
+	//5/28 JU - adding method to pull using feign client 
 	public List<com.revature.screenforce.dtos.Screening> getAllScreenings() {
 		return screeningSClient.getScreenings();
 	}
 	
-//	public List<SoftSkillViolation> getAllSoftSkillViolations() {
-//		return this.softSkillViolationRepository.findAll();
-//	}
+	//5/28 JU - adding mehtod (implements Feign. Calls newly added end pt.)
+	public List<com.revature.screenforce.dtos.SoftSkillViolation> getAllSoftSkillViolations() {
+		return this.screeningSVClient.getSoftSkillViolations();
+	}
+	
 	
 	public List<QuestionScore> getAllQuestionScores() {
 		return this.questionScoreRepository.findAll();

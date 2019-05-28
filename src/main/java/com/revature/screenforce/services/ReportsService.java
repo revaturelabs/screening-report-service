@@ -51,6 +51,8 @@ public class ReportsService {
 	@Autowired ScreeningRepository screeningRepository;
 	//Feign client services 
 	@Autowired AdminBucketClient adminBucketClient; 
+	@Autowired ScreeningScreeningClient screeningSClient; 
+
 	
 	public List<String> getAllEmails(String email){
 		List<Screener> screenerList = screenerRepository.findAllByEmailContainingIgnoreCase(email);
@@ -61,8 +63,14 @@ public class ReportsService {
 		return emailList;
 	}
 	
+	/*
 	public List<Screening> getAllScreenings() {
 		return this.screeningRepository.findAll();
+	}
+	*/
+
+	public List<com.revature.screenforce.dtos.Screening> getAllScreenings() {
+		return screeningSClient.getScreenings();
 	}
 	
 //	public List<SoftSkillViolation> getAllSoftSkillViolations() {

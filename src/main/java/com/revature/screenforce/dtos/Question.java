@@ -1,85 +1,46 @@
-package com.revature.screenforce.beans;
-
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
-
-import javax.persistence.*;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
+package com.revature.screenforce.dtos;
 
 import java.io.Serializable;
-import java.util.List;
 import java.util.Objects;
 
-/**
- * Outlines the Question POJO
- *
- * @author Ethan Conner | 1805-WVU-AUG3 | Richard Orr
- * @author Isaac Pawling | 1085-WVU | Richard Orr
- * @author Jeremy Straus | 1807-QC | Emily Higgins
- */
 
-import com.revature.screenforce.beans.Bucket;
-import com.revature.screenforce.beans.QuestionScore;
 
-@ApiModel(value = "Question", description = "a question to ask a candidate, along with 5 sample answers "
-        + "of varying correctness")
-@Entity
-@Table(name = "QUESTION")
+//5/27 JU - body from admin application
+
 public class Question implements Serializable {
 
-	//variables
     private static final long serialVersionUID = -6987859794752419355L;
 
-    @ApiModelProperty(value = "Question id")
-    @Id
-    @SequenceGenerator(name = "QUESTION_SEQUENCE", sequenceName = "QUESTION_SEQUENCE", allocationSize = 1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "QUESTION_SEQUENCE")
-    @Column(name = "QUESTION_ID")
+ 
     private int questionId;
 
-    @ApiModelProperty(value = "The Screening connected to the screening")
-	@OneToMany(fetch = FetchType.EAGER)
-	@JoinColumn(name = "QUESTION_ID")
-	private List<QuestionScore> questionScores;
-    
-    @ApiModelProperty(value = "Bucket id")
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "BUCKET_ID")
+
     private Bucket bucket;
 
-    @ApiModelProperty(value = "Boolean as to whether or not Question is active")
-    @Column(name = "IS_ACTIVE")
+  
     private boolean isActive;
 
-    @ApiModelProperty(value = "description of the Question")
-    @Column(name = "QUESTION_TEXT")
+ 
     private String questionText;
 
-    @ApiModelProperty(value = "sample answer 1")
-    @Column(name = "SAMPLE_ANSWER_1")
     private String sampleAnswer1;
 
-    @ApiModelProperty(value = "sample answer 2")
-    @Column(name = "SAMPLE_ANSWER_2")
+
     private String sampleAnswer2;
 
-    @ApiModelProperty(value = "sample answer 3")
-    @Column(name = "SAMPLE_ANSWER_3")
+
     private String sampleAnswer3;
 
-    @ApiModelProperty(value = "sample answer 4")
-    @Column(name = "SAMPLE_ANSWER_4")
+
     private String sampleAnswer4;
 
-    @ApiModelProperty(value = "sample answer 5")
-    @Column(name = "SAMPLE_ANSWER_5")
+
     private String sampleAnswer5;
 
-    //constructors 
-	public Question() {
+    public Question() {
         super();
     }
+
     public Question(Integer questionId, Bucket bucket, Boolean isActive, String questionText, String sampleAnswer1,
                     String sampleAnswer2, String sampleAnswer3, String sampleAnswer4, String sampleAnswer5) {
         super();
@@ -93,15 +54,10 @@ public class Question implements Serializable {
         this.sampleAnswer4 = sampleAnswer4;
         this.sampleAnswer5 = sampleAnswer5;
     }
-    
-	//getters and setters 
-    public List<QuestionScore> getQuestionScores() {
-		return questionScores;
-	}
-	public void setQuestionScores(List<QuestionScore> questionScores) {
-		this.questionScores = questionScores;
-	}
 
+    /**
+     * Getters and setters
+     */
     public int getQuestionId() {
         return questionId;
     }
@@ -174,7 +130,6 @@ public class Question implements Serializable {
         this.sampleAnswer5 = sampleAnswer5;
     }
 
-    //equals and hashcode
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -196,7 +151,6 @@ public class Question implements Serializable {
         return Objects.hash(getQuestionId(), getBucket(), getIsActive(), getQuestionText(), getSampleAnswer1(), getSampleAnswer2(), getSampleAnswer3(), getSampleAnswer4(), getSampleAnswer5());
     }
 
-    //toString
     @Override
     public String toString() {
         return "Question{" +

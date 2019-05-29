@@ -32,7 +32,7 @@ public class ReportsControllerTest {
 				.then()
 				.statusCode(200);
 	}
-/*	
+
 	@Test
 	public void testGetAllSoftSkillViolations() {
 		given()
@@ -72,7 +72,7 @@ public class ReportsControllerTest {
 			.then()
 			.statusCode(200);
 	}
-	
+	/*
 	// /getReport?startDate={startDate}&endDate={endDate}&screenerId={screenerId}
 	@Test
 	public void testGetReport() {
@@ -116,9 +116,9 @@ public class ReportsControllerTest {
 			.then()
 			.statusCode(200);
 	}
-	*/
+	
 	//this test is failing, when it should be passing. 
-	/*
+
 	@Test
 	public void testGetScreenerReportFail() {
 		given()
@@ -127,7 +127,7 @@ public class ReportsControllerTest {
 			.get("/getScreenerReport?screenerId={screenerId}", -23)
 			.then()
 			.statusCode(404);
-	}*/
-
+	}
+*/
 }
 

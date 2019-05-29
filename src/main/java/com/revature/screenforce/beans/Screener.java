@@ -17,10 +17,17 @@ import io.swagger.annotations.ApiModelProperty;
 @Entity
 @Table(name="SCREENER")
 public class Screener {
+	
+	//variables 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name="SCREENER_ID")
 	private int screenerId;
+	
+	@ApiModelProperty(value = "The Screening connected to the screening")
+	@OneToMany(fetch = FetchType.EAGER)
+	@JoinColumn(name = "SCREENER_ID")
+	private List<Screening> screenings;
 	
 	@Column(name="NAME")
 	private String name;
@@ -28,11 +35,20 @@ public class Screener {
 	@Column(name="EMAIL")
 	private String email;
 	
-	@ApiModelProperty(value = "The Screening connected to the screening")
-	@OneToMany(fetch = FetchType.EAGER)
-	@JoinColumn(name = "SCREENER_ID")
-	private List<Screening> screenings;
 
+	//constructors
+	public Screener(int screenerId, String name, String email) {
+		super();
+		this.screenerId = screenerId;
+		this.name = name;
+		this.email = email;
+	}
+
+	public Screener() {
+		super();
+	}
+	
+	//methods
 	public List<Screening> getScreenings() {
 		return screenings;
 	}
@@ -69,17 +85,7 @@ public class Screener {
 		this.email = email;
 	}
 
-	public Screener(int screenerId, String name, String email) {
-		super();
-		this.screenerId = screenerId;
-		this.name = name;
-		this.email = email;
-	}
-
-	public Screener() {
-		super();
-	}
-
+	//toString 
 	@Override
 	public String toString() {
 		return "Screener [screenerId=" + screenerId + ", " + (name != null ? "name=" + name + ", " : "")

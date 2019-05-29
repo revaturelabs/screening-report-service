@@ -1,71 +1,52 @@
-package com.revature.screenforce.beans;
+package com.revature.screenforce.dtos;
 
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
-
-import javax.persistence.*;
 import java.util.Objects;
 
-@ApiModel(value = "Candidate", description = "A candidate that is being screened")
-@Entity
-@Table(name = "CANDIDATE")
+
+//5/27 JU Taking whole body of bean from screening application
+
 public class Candidate {
 
 	//variables 
-	@ApiModelProperty(value = "Id of the candidate")
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name = "CANDIDATE_ID")
+
 	private int candidateId;
 
-	@ApiModelProperty(value = "Id from Salesforce which identifies the candidate")
-	@Column(name = "RESOURCE_ID")
+
 	private String resourceId;
 
-	@ApiModelProperty(value = "Name of the candidate")
-	@Column(name = "NAME")
+
 	private String name;
 
-	@ApiModelProperty(value = "Email of the candidate")
-	@Column(name = "EMAIL")
+
 	private String email;
 
-	@ApiModelProperty(value = "Phone number of the candidate")
-	@Column(name = "PHONE_NUMBER")
+
 	private String phoneNumber;
 
-	@ApiModelProperty(value = "Skype username of the candidate")
-	@Column(name = "SKYPE_ID")
+
 	private String skypeId;
 
-	@ApiModelProperty(value = "Link to the candidates portfolio")
-	@Column(name = "PROFILE_URL")
+
 	private String profileUrl;
 
-	@ApiModelProperty(value = "Name of the recruiter for the candidate")
-	@Column(name = "RECRUITER_NAME")
+
 	private String recruiterName;
 
-	@ApiModelProperty(value = "College the candidate attended")
-	@Column(name = "COLLEGE")
+
 	private String college;
 
-	@ApiModelProperty(value = "Degree the candidate attained")
-	@Column(name = "DEGREE")
 	private String degree;
 
-	@ApiModelProperty(value = "Field the candidate majored in")
-	@Column(name = "MAJOR")
+
 	private String major;
 
-	@ApiModelProperty(value = "Name of the screener for the candidate")
-	@Column(name = "TECH_SCREENER_NAME")
 	private String techScreenerName;
 
 	//constructors
 	public Candidate() {
 		super();
 	}
+
 	public Candidate(int candidateId, String resourceId, String name, String email, String phoneNumber, String skypeId,
 					 String profileUrl, String recruiterName, String college, String degree, String major,
 					 String techScreenerName) {
@@ -84,7 +65,7 @@ public class Candidate {
 		this.techScreenerName = techScreenerName;
 	}
 
-	//getters and setters 
+	//getters and setters
 	public int getCandidateId() {
 		return candidateId;
 	}

@@ -1,40 +1,26 @@
-package com.revature.screenforce.beans;
+package com.revature.screenforce.dtos;
 
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
-
-import javax.persistence.*;
 import java.util.Date;
 import java.util.Objects;
 
-@ApiModel(value = "Scheduled Screening", description = "A Scheduled Screening with information on the skills and timing.")
-@Entity
-@Table(name = "scheduled_screening")
+
+//5/27 JU - body from tech-screening application
+
 public class ScheduledScreening {
 
-	//variables 
-	@ApiModelProperty(value = "Id of the screening")
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name = "SCHEDULED_SCREENING_ID")
+	//variables
+
 	private int scheduledScreeningId;
 
-	@ApiModelProperty(value = "Candidate that is being screened")
-	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "candidate_id")
+
 	private Candidate candidate;
 
-	@ApiModelProperty(value = "Status of the screening")
-	@Enumerated(EnumType.STRING)
-	@Column(name = "STATUS")
+
 	private ScheduledStatus scheduledStatus;
 
-	@ApiModelProperty(value = "The skill type from admin service that the candidate is training in")
-	@Column(name = "SKILL_TYPE_ID")
 	private int skillTypeId;
 
-	@ApiModelProperty(value = "The date of the screening")
-	@Column(name = "SCHEDULED_DATE")
+
 	private Date scheduledDate;
 
 	//constructors

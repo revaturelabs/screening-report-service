@@ -1,57 +1,37 @@
-package com.revature.screenforce.beans;
+package com.revature.screenforce.dtos;
 
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
-import org.hibernate.annotations.CreationTimestamp;
-
-import javax.persistence.*;
 import java.util.Date;
 import java.util.Objects;
 
-/**
- * @author Jeremy Straus | 1807-QC | Emily Higgins
- */
-@ApiModel(value = "Question Score", description = "Object representing the score a candidate achieved on a question")
-@Entity
-@Table(name = "QUESTION_SCORE")
-public class QuestionScore {
+
+//5/27 JU - body from screening application
+
+public class SimpleQuestionScore {
 
 	//variables
-	@ApiModelProperty(value = "Id of the Question Score")
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name = "QUESTION_SCORE_ID")
+
 	private int questionScoreId;
 
-	@ApiModelProperty(value = "Id of the question being scored")
-	@Column(name = "QUESTION_ID")
+
 	private int questionId;
 
-	@ApiModelProperty(value = "Id of the bucket containing the question")
-	@Column(name = "BUCKET_ID")
+
 	private int bucketId;
 
-	@ApiModelProperty(value = "Id of the screening the question was asked on")
-	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "SCREENING_ID")
+
 	private Screening screening;
 
-	@ApiModelProperty(value = "Score achieved on the question")
-	@Column(name = "SCORE")
+
 	private Double score;
 
-	@ApiModelProperty(value = "Any comments about the answer to the question")
-	@Column(name = "COMMENT")
+
 	private String comment;
 
-	@ApiModelProperty(value = "Time question was asked")
-	@CreationTimestamp
-	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "TIME")
+
 	private Date beginTime;
-	
-	//constructors 
-	public QuestionScore(Integer questionId, Screening screeningId, Double score, String comment, Date beginTime) {
+
+	//constructor
+	public SimpleQuestionScore(Integer questionId, Screening screeningId, Double score, String comment, Date beginTime) {
 		super();
 		this.questionId = questionId;
 		this.screening = screeningId;
@@ -59,12 +39,11 @@ public class QuestionScore {
 		this.comment = comment;
 		this.beginTime = beginTime;
 	}
-
-	public QuestionScore() {
+	public SimpleQuestionScore() {
 		super();
 	}
 
-	//getters and setters 
+	//getters and setters
 	public int getQuestionScoreId() {
 		return questionScoreId;
 	}
@@ -121,12 +100,12 @@ public class QuestionScore {
 		this.bucketId = bucketId;
 	}
 
-	//equals and hashcode 
+	//equals and hashcode
 	@Override
 	public boolean equals(Object o) {
 		if (this == o) return true;
 		if (o == null || getClass() != o.getClass()) return false;
-		QuestionScore score1 = (QuestionScore) o;
+		SimpleQuestionScore score1 = (SimpleQuestionScore) o;
 		return getQuestionScoreId() == score1.getQuestionScoreId() &&
 				getQuestionId() == score1.getQuestionId() &&
 				getBucketId() == score1.getBucketId() &&
@@ -135,7 +114,6 @@ public class QuestionScore {
 				Objects.equals(getComment(), score1.getComment()) &&
 				Objects.equals(getBeginTime(), score1.getBeginTime());
 	}
-
 	@Override
 	public int hashCode() {
 		return Objects.hash(getQuestionScoreId(), getQuestionId(), getBucketId(), getScreening(), getScore(), getComment(), getBeginTime());

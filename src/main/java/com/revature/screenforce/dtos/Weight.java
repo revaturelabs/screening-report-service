@@ -1,48 +1,24 @@
-package com.revature.screenforce.beans;
+package com.revature.screenforce.dtos;
 
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
-
-import javax.persistence.*;
 import java.util.Objects;
 
 
-/**
- * @author Ethan Conner | 1805-WVU-AUG3 | Richard Orr
- * @author Jeremy Straus | 1807-QC | Emily Higgins
- * @author Rishabh Rana | 1807-QC | Emily Higgins
- * @author Alpha Barry | 1807-QC | Emily Higgins
- * @author Omar Guzman | 1807-QC | Emily Higgins
- *
- * POJO for the weight object
- */
-@ApiModel(value = "Weight", description = "Weights for Buckets within a SkillType, determining how a Bucket contributes to the final score")
-@Entity
-@Table(name = "WEIGHT")
+//5/27 JU - body from admin application
+
 public class Weight {
 
-	//instance variables 
-    @ApiModelProperty(value = "The weightId - primary key for the table")
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "WEIGHT_ID")
-    private long weightId;
 
-    @ApiModelProperty(value = "The actual weight needed for calculation")
-    @Column(name = "WEIGHT_VALUE")
+    private int weightId;
+
+
     private int weightValue;
 
-    @ApiModelProperty(value = "the SkillType Id")
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "SKILL_TYPE_ID")
+
     private SkillType skillType;
 
-    @ApiModelProperty(value = "The Bucket Id")
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "BUCKET_ID")
+
     private Bucket bucket;
 
-    //constructors
     public Weight() {
         super();
     }
@@ -55,12 +31,14 @@ public class Weight {
         this.bucket = bucket;
     }
 
-    //getters and setters
-    public long getWeightId() {
+    /**
+     * Getters and setters
+     */
+    public int getWeightId() {
         return weightId;
     }
 
-    public void setWeightId(long weightId) {
+    public void setWeightId(int weightId) {
         this.weightId = weightId;
     }
 
@@ -88,7 +66,7 @@ public class Weight {
         this.bucket = bucket;
     }
 
-    //equals and hashcode
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -105,7 +83,6 @@ public class Weight {
         return Objects.hash(getWeightId(), getWeightValue(), getSkillType(), getBucket());
     }
 
-    //toString
     @Override
     public String toString() {
         return "Weight{" +

@@ -97,10 +97,30 @@ public class ReportsControllerTest {
 			.statusCode(200);
 	}
 	
+	@Test
+	public void testGetReportWithEmail() {
+		given()
+			.port(port)
+			.when()
+			.get("/getReportWithEmail?startDate={startDate}8&endDate={endDate}&email={email}", "03/01/2018", "03/02/2018", "gadams@mailinator.com")
+			.then()
+			.statusCode(200);
+	}
+	
+	@Test
+	public void testGetAllEmail() {
+		given()
+			.port(port)
+			.when()
+			.get("/getEmails?email={email}", "gadams@mailinator.com")
+			.then()
+			.statusCode(200);
+	
+	}
 	//this test is failing, when it should be passing. 
 //	@Test
 //	public void testGetScreenerReportFail() {
-//		given()
+//		given()S
 //			.port(port)
 //			.when()
 //			.get("/getScreenerReport?screenerId={screenerId}", -23)

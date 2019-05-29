@@ -30,6 +30,11 @@ import com.revature.screenforce.services.ScreeningQuestionScoreClient;
 import com.revature.screenforce.services.ScreeningScreeningClient;
 import com.revature.screenforce.services.ScreeningViolationClient;
 
+/*
+ * @author Jacob Urmanec | 1903-USF-MAR11 | Emily Higgins
+ */
+
+
 @RestController
 @CrossOrigin
 @EnableFeignClients //JU
@@ -70,14 +75,14 @@ public class ReportsController {
 		return this.reportsService.getAllSoftSkillViolations();
 	}
 	
-	//5/26 JU - adding this for testing only. Works to pull from screening service w/ feign client. 
+	//5/26 JU  
 	@GetMapping(value="/violationTypes")
 	public List<ViolationType> getAllViolationTypes() {
 		return screeningVClient.getViolationTypes();
 	}
 	
 	
-	//5/28 JU  - working on this one.
+	//5/28 JU 
 	@GetMapping(value="/questionscores")
 	public List<SimpleQuestionScore> getAllQuestionScores() {
 		return this.reportsService.getAllQuestionScores();
@@ -91,7 +96,7 @@ public class ReportsController {
 		
 	}
 	
-	/*
+	
 	@GetMapping(value="/getReport")
 	public String getReport(@RequestParam(name="startDate") String startDate, @RequestParam(name = "endDate") String endDate, @RequestParam(name="screenerId") Integer screenerId) {
 		LocalDate start = LocalDate.parse(startDate);
@@ -126,5 +131,5 @@ public class ReportsController {
 		LocalDate end = LocalDate.parse(endDate);
 		return reportsService.getReport(start, end, screenerId);
 	}
-	*/
+	
 }

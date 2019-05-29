@@ -7,13 +7,16 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-
+//JU
 @FeignClient(url="localhost:8183/questionScore", name="questionScore") //name can be any name
 public interface ScreeningQuestionScoreClient {
-
-	@RequestMapping(method = RequestMethod.GET, value="/{screeningId}")
 	
+	//JU - works?
+	@RequestMapping(method = RequestMethod.GET, value="/{screeningId}")
 	com.revature.screenforce.dtos.SimpleQuestionScore getScoresByScreeningId(@PathVariable(value="screeningId") int screeningId); 
 	
+	//JU
+	@RequestMapping(value = "/all", method = RequestMethod.GET)
+	List<com.revature.screenforce.dtos.SimpleQuestionScore> getSimpleQuestionScores(); 
 	
 }

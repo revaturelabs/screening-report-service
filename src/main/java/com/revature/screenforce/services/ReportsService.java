@@ -32,6 +32,7 @@ import com.revature.screenforce.daos.SkillTypeDAO;
 import com.revature.screenforce.daos.SoftSkillViolationRepository;
 import com.revature.screenforce.daos.ViolationTypeRepository;
 import com.revature.screenforce.daos.WeightDAO;
+import com.revature.screenforce.dtos.SimpleQuestionScore;
 import com.revature.screenforce.models.ReportData;
 import com.revature.screenforce.models.ReportData.BarChartData;
 
@@ -52,6 +53,8 @@ public class ReportsService {
 	//Feign client services 
 	@Autowired AdminBucketClient adminBucketClient; 
 	@Autowired ScreeningScreeningClient screeningSClient; 
+	@Autowired ScreeningViolationClient screeningSVClient; 
+	@Autowired ScreeningQuestionScoreClient screeningQSClient; 
 
 	
 	public List<String> getAllEmails(String email){
@@ -69,18 +72,21 @@ public class ReportsService {
 	}
 	*/
 
+	//5/28 JU - adding method to pull using feign client 
 	public List<com.revature.screenforce.dtos.Screening> getAllScreenings() {
 		return screeningSClient.getScreenings();
 	}
 	
-//	public List<SoftSkillViolation> getAllSoftSkillViolations() {
-//		return this.softSkillViolationRepository.findAll();
-//	}
-	
-	public List<QuestionScore> getAllQuestionScores() {
-		return this.questionScoreRepository.findAll();
+	//5/28 JU - adding method (implements Feign. Calls newly added end points). This works.
+	public List<com.revature.screenforce.dtos.SoftSkillViolation> getAllSoftSkillViolations() {
+		return this.screeningSVClient.getSoftSkillViolations();
 	}
- 	
+	
+	//5/28 JU 
+	public List<SimpleQuestionScore> getAllQuestionScores() {
+		return this.screeningQSClient.getSimpleQuestionScores();
+	}
+	
 	public Integer getIdFromEmail(String email) {
 		Screener screener = screenerRepository.getByEmail(email);
 		return screener.getScreenerId();

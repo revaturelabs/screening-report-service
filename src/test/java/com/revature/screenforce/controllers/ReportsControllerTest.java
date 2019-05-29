@@ -32,7 +32,7 @@ public class ReportsControllerTest {
 				.then()
 				.statusCode(200);
 	}
-	
+/*	
 	@Test
 	public void testGetAllSoftSkillViolations() {
 		given()
@@ -44,6 +44,16 @@ public class ReportsControllerTest {
 	}
 	
 	@Test
+	public void testGetViolationTypes() {
+		given()
+			.port(port)
+			.when()
+			.get("/violationTypes")
+			.then()
+			.statusCode(200);
+	}
+	
+	@Test
 	public void testGetAllQuestionScores() {
 		given()
 				.port(port)
@@ -51,6 +61,16 @@ public class ReportsControllerTest {
 				.get("/questionscores")
 				.then()
 				.statusCode(200);
+	}
+	
+	@Test
+	public void getQuestionScoreById() {
+		given()
+			.port(port)
+			.when()
+			.get("/scores/{screeningId}", 2)
+			.then()
+			.statusCode(200);
 	}
 	
 	// /getReport?startDate={startDate}&endDate={endDate}&screenerId={screenerId}
@@ -96,7 +116,7 @@ public class ReportsControllerTest {
 			.then()
 			.statusCode(200);
 	}
-	
+	*/
 	//this test is failing, when it should be passing. 
 	/*
 	@Test

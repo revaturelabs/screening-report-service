@@ -18,7 +18,9 @@ import com.revature.screenforce.ScreeningReportServiceApplication;
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_CLASS)
 @AutoConfigureTestDatabase
 public class ReportsControllerTest {
-
+/*
+ * @author Deborah Fields-Watson | 1903-Emily
+ */
 	
 	@LocalServerPort
 	private int port;
@@ -68,7 +70,7 @@ public class ReportsControllerTest {
 		given()
 			.port(port)
 			.when()
-			.get("/scores/{screeningId}", 2)
+			.get("/scores?screeningId={screeningId}", 2)
 			.then()
 			.statusCode(200);
 	}

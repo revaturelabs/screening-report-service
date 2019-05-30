@@ -16,7 +16,6 @@ import java.util.Objects;
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class ViolationType {
 
-	//variables 
 	@ApiModelProperty(value = "Id of the violation")
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -31,10 +30,10 @@ public class ViolationType {
 	@Column(name = "DESCRIPTION")
 	private String description;
 
-	//constructors
 	public ViolationType() {
 		super();
 	}
+
 	public ViolationType(int violationTypeId, String violationTypeText, String description) {
 		super();
 		this.violationTypeId = violationTypeId;
@@ -42,7 +41,7 @@ public class ViolationType {
 		this.description = description;
 	}
 
-	//getters and setters
+
 	public int getViolationTypeId() {
 		return violationTypeId;
 	}
@@ -67,7 +66,6 @@ public class ViolationType {
 		this.description = description;
 	}
 
-	//equals and hashcode
 	@Override
 	public boolean equals(Object o) {
 		if (this == o) return true;
@@ -83,7 +81,6 @@ public class ViolationType {
 		return Objects.hash(getViolationTypeId(), getViolationTypeText(), getDescription());
 	}
 
-	//toString
 	@Override
 	public String toString() {
 		return "ViolationType{" +

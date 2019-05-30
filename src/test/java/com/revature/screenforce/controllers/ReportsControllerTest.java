@@ -20,6 +20,13 @@ import com.revature.screenforce.ScreeningReportServiceApplication;
 public class ReportsControllerTest {
 
 	
+	/**
+	 * @author Deborah Field-Watson | 1903-USF-MAR11 | Emily Higgins
+	 * @author Hyun Shin | 1903-USF-MAR11 | Emily Higgins
+	 * Tests work for methods that are not utilizing feign -- consult wiki docs 
+	 * 
+	 * */
+	
 	@LocalServerPort
 	private int port;
 	

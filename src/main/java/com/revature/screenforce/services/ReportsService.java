@@ -36,6 +36,11 @@ import com.revature.screenforce.dtos.SimpleQuestionScore;
 import com.revature.screenforce.models.ReportData;
 import com.revature.screenforce.models.ReportData.BarChartData;
 
+
+/**
+ * @author Jacob Urmanec | 1903-USF-MAR11 | Emily Higgins
+ **/
+
 @Service
 public class ReportsService {
 	

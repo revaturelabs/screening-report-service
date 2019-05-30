@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-//import com.revature.screenforce.beans.QuestionScore;
+import com.revature.screenforce.beans.QuestionScore;
 //import com.revature.screenforce.beans.Screening;
 import com.revature.screenforce.dtos.Screening;
 import com.revature.screenforce.dtos.SimpleQuestionScore;
@@ -30,6 +30,11 @@ import com.revature.screenforce.services.ScreeningQuestionScoreClient;
 import com.revature.screenforce.services.ScreeningScreeningClient;
 import com.revature.screenforce.services.ScreeningViolationClient;
 
+/**
+ * @author Jacob Urmanec | 1903-USF-MAR11 | Emily Higgins
+ * Consult wiki doc for more information
+ */
+
 @RestController
 @CrossOrigin
 @EnableFeignClients //JU
@@ -39,6 +44,7 @@ public class ReportsController {
 	 * Screeners are identified by email on the client side, but Id on the backend, so we have a special
 	 * function to handle emails.
 	 */
+
 
 	//variables - services to be injected in methods 
 	//services for internal data
@@ -58,11 +64,13 @@ public class ReportsController {
 		return emails;
 	}
 	*/
+
 	//5/28 JU - works as intended. 
 	@GetMapping(value="/screenings")
-	public List<Screening> getAllScreenings() {
+	public List<com.revature.screenforce.dtos.Screening> getAllScreenings() {
 		return this.reportsService.getAllScreenings();
 	} 
+
 
 	//5/28 JU - works as intended. 
 	@GetMapping(value="/softskillviolations")
@@ -70,13 +78,15 @@ public class ReportsController {
 		return this.reportsService.getAllSoftSkillViolations();
 	}
 	
-	//5/26 JU - * adding this for testing only. Works to pull from screening service w/ feign client. 
+
+	//5/26 JU - still needs testing.  
 	@GetMapping(value="/violationTypes")
 	public List<ViolationType> getAllViolationTypes() {
 		return screeningVClient.getViolationTypes();
 	}
 	
 	
+
 	//5/28 JU  - works as intended. 
 	@GetMapping(value="/questionscores")
 	public List<SimpleQuestionScore> getAllQuestionScores() {
@@ -84,47 +94,46 @@ public class ReportsController {
 	}
 
 	
-	//5/26 JU Adding this to pull from screening service w/ feign client. For testing only. Needs to be tested.
-	@GetMapping(value="/scores/{screeningId}")
-	public SimpleQuestionScore getScoresByScreeningId(@PathVariable int screeningId) {
-		return screeningQSClient.getScoresByScreeningId(screeningId);
-		
-	}
-	
-	/*
-	@GetMapping(value="/getReport")
-	public String getReport(@RequestParam(name="startDate") String startDate, @RequestParam(name = "endDate") String endDate, @RequestParam(name="screenerId") Integer screenerId) {
-		LocalDate start = LocalDate.parse(startDate);
-		LocalDate end = LocalDate.parse(endDate);
-		return reportsService.getReport(start, end, screenerId);
-	}
-
-	
-	@GetMapping(value="/getTotalReport")
-	public String getTotalReport() {
-		return reportsService.getReport();
-	}
-	
-	@GetMapping(value="/getWeeksReport")
-	public String getWeeksReport2(@RequestParam(name="startDate") String startDate, @RequestParam(name = "endDate") String endDate) {
-		LocalDate start = LocalDate.parse(startDate);
-		LocalDate end = LocalDate.parse(endDate);
-		return reportsService.getReport(start, end);
-	}
-	
-	@GetMapping(value="/getScreenerReport")
-	public String getScreenerReport(@RequestParam(name="screenerId") Integer screenerId) {
-		return reportsService.getReport(screenerId);
-	}
-	 
-	
-	//to make use of prior group's work -- they used emails rather than id
-	@GetMapping(value="/getReportWithEmail")
-	public String getReportWithEmail(@RequestParam(name="startDate") String startDate, @RequestParam(name = "endDate") String endDate, @RequestParam(name="email") String email) {
-		Integer screenerId = reportsService.getIdFromEmail(email);
-		LocalDate start = LocalDate.parse(startDate);
-		LocalDate end = LocalDate.parse(endDate);
-		return reportsService.getReport(start, end, screenerId);
-	}
-	*/
+	//5/26 All methods below have not been refactored/tested with Feign and have commented out for that reason
+//	@GetMapping(value="/scores/{screeningId}")
+//	public SimpleQuestionScore getScoresByScreeningId(@PathVariable int screeningId) {
+//		return screeningQSClient.getScoresByScreeningId(screeningId);
+//		
+//	}
+//	
+//	
+//	@GetMapping(value="/getReport")
+//	public String getReport(@RequestParam(name="startDate") String startDate, @RequestParam(name = "endDate") String endDate, @RequestParam(name="screenerId") Integer screenerId) {
+//		LocalDate start = LocalDate.parse(startDate);
+//		LocalDate end = LocalDate.parse(endDate);
+//		return reportsService.getReport(start, end, screenerId);
+//	}
+//
+//	
+//	@GetMapping(value="/getTotalReport")
+//	public String getTotalReport() {
+//		return reportsService.getReport();
+//	}
+//	
+//	@GetMapping(value="/getWeeksReport")
+//	public String getWeeksReport2(@RequestParam(name="startDate") String startDate, @RequestParam(name = "endDate") String endDate) {
+//		LocalDate start = LocalDate.parse(startDate);
+//		LocalDate end = LocalDate.parse(endDate);
+//		return reportsService.getReport(start, end);
+//	}
+//	
+//	@GetMapping(value="/getScreenerReport")
+//	public String getScreenerReport(@RequestParam(name="screenerId") Integer screenerId) {
+//		return reportsService.getReport(screenerId);
+//	}
+//	 
+//	
+//	//to make use of prior group's work -- they used emails rather than id
+//	@GetMapping(value="/getReportWithEmail")
+//	public String getReportWithEmail(@RequestParam(name="startDate") String startDate, @RequestParam(name = "endDate") String endDate, @RequestParam(name="email") String email) {
+//		Integer screenerId = reportsService.getIdFromEmail(email);
+//		LocalDate start = LocalDate.parse(startDate);
+//		LocalDate end = LocalDate.parse(endDate);
+//		return reportsService.getReport(start, end, screenerId);
+//	}
 }

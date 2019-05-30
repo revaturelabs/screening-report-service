@@ -21,6 +21,7 @@ import java.util.Objects;
 @Table(name = "WEIGHT")
 public class Weight {
 
+	//instance variables 
     @ApiModelProperty(value = "The weightId - primary key for the table")
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -41,6 +42,7 @@ public class Weight {
     @JoinColumn(name = "BUCKET_ID")
     private Bucket bucket;
 
+    //constructors
     public Weight() {
         super();
     }
@@ -53,9 +55,7 @@ public class Weight {
         this.bucket = bucket;
     }
 
-    /**
-     * Getters and setters
-     */
+    //getters and setters
     public long getWeightId() {
         return weightId;
     }
@@ -88,7 +88,7 @@ public class Weight {
         this.bucket = bucket;
     }
 
-
+    //equals and hashcode
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -105,6 +105,7 @@ public class Weight {
         return Objects.hash(getWeightId(), getWeightValue(), getSkillType(), getBucket());
     }
 
+    //toString
     @Override
     public String toString() {
         return "Weight{" +

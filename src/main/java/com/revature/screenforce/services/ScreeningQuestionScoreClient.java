@@ -15,7 +15,7 @@ public interface ScreeningQuestionScoreClient {
 	@RequestMapping(method = RequestMethod.GET, value="/{screeningId}")
 	com.revature.screenforce.dtos.SimpleQuestionScore getScoresByScreeningId(@PathVariable(value="screeningId") int screeningId); 
 	
-	//JU
+	//JU -  works. 
 	@RequestMapping(value = "/all", method = RequestMethod.GET)
 	List<com.revature.screenforce.dtos.SimpleQuestionScore> getSimpleQuestionScores(); 
 	

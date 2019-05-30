@@ -58,26 +58,26 @@ public class ReportsController {
 		return emails;
 	}
 	*/
-	//5/28 JU 
+	//5/28 JU - works as intended. 
 	@GetMapping(value="/screenings")
 	public List<Screening> getAllScreenings() {
 		return this.reportsService.getAllScreenings();
 	} 
 
-	//5/28 JU
+	//5/28 JU - works as intended. 
 	@GetMapping(value="/softskillviolations")
 	public List<com.revature.screenforce.dtos.SoftSkillViolation> getAllSoftSkillViolations() {
 		return this.reportsService.getAllSoftSkillViolations();
 	}
 	
-	//5/26 JU - adding this for testing only. Works to pull from screening service w/ feign client. 
+	//5/26 JU - * adding this for testing only. Works to pull from screening service w/ feign client. 
 	@GetMapping(value="/violationTypes")
 	public List<ViolationType> getAllViolationTypes() {
 		return screeningVClient.getViolationTypes();
 	}
 	
 	
-	//5/28 JU  - working on this one.
+	//5/28 JU  - works as intended. 
 	@GetMapping(value="/questionscores")
 	public List<SimpleQuestionScore> getAllQuestionScores() {
 		return this.reportsService.getAllQuestionScores();

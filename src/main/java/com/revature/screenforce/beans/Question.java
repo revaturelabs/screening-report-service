@@ -28,7 +28,6 @@ import com.revature.screenforce.beans.QuestionScore;
 @Table(name = "QUESTION")
 public class Question implements Serializable {
 
-	//variables
     private static final long serialVersionUID = -6987859794752419355L;
 
     @ApiModelProperty(value = "Question id")
@@ -38,14 +37,10 @@ public class Question implements Serializable {
     @Column(name = "QUESTION_ID")
     private int questionId;
 
-    @ApiModelProperty(value = "The Screening connected to the screening")
-	@OneToMany(fetch = FetchType.EAGER)
-	@JoinColumn(name = "QUESTION_ID")
-	private List<QuestionScore> questionScores;
-    
     @ApiModelProperty(value = "Bucket id")
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "BUCKET_ID")
+   
     private Bucket bucket;
 
     @ApiModelProperty(value = "Boolean as to whether or not Question is active")
@@ -76,10 +71,22 @@ public class Question implements Serializable {
     @Column(name = "SAMPLE_ANSWER_5")
     private String sampleAnswer5;
 
-    //constructors 
+	@ApiModelProperty(value = "The Screening connected to the screening")
+	@OneToMany(fetch = FetchType.EAGER)
+	@JoinColumn(name = "QUESTION_ID")
+	private List<QuestionScore> questionScores;
+	
+    public List<QuestionScore> getQuestionScores() {
+		return questionScores;
+	}
+	public void setQuestionScores(List<QuestionScore> questionScores) {
+		this.questionScores = questionScores;
+	}
+
 	public Question() {
         super();
     }
+
     public Question(Integer questionId, Bucket bucket, Boolean isActive, String questionText, String sampleAnswer1,
                     String sampleAnswer2, String sampleAnswer3, String sampleAnswer4, String sampleAnswer5) {
         super();
@@ -93,15 +100,10 @@ public class Question implements Serializable {
         this.sampleAnswer4 = sampleAnswer4;
         this.sampleAnswer5 = sampleAnswer5;
     }
-    
-	//getters and setters 
-    public List<QuestionScore> getQuestionScores() {
-		return questionScores;
-	}
-	public void setQuestionScores(List<QuestionScore> questionScores) {
-		this.questionScores = questionScores;
-	}
 
+    /**
+     * Getters and setters
+     */
     public int getQuestionId() {
         return questionId;
     }
@@ -174,7 +176,6 @@ public class Question implements Serializable {
         this.sampleAnswer5 = sampleAnswer5;
     }
 
-    //equals and hashcode
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -196,7 +197,6 @@ public class Question implements Serializable {
         return Objects.hash(getQuestionId(), getBucket(), getIsActive(), getQuestionText(), getSampleAnswer1(), getSampleAnswer2(), getSampleAnswer3(), getSampleAnswer4(), getSampleAnswer5());
     }
 
-    //toString
     @Override
     public String toString() {
         return "Question{" +

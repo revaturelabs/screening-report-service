@@ -11,7 +11,6 @@ import java.util.Objects;
 @Table(name = "CANDIDATE")
 public class Candidate {
 
-	//variables 
 	@ApiModelProperty(value = "Id of the candidate")
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -62,10 +61,10 @@ public class Candidate {
 	@Column(name = "TECH_SCREENER_NAME")
 	private String techScreenerName;
 
-	//constructors
 	public Candidate() {
 		super();
 	}
+
 	public Candidate(int candidateId, String resourceId, String name, String email, String phoneNumber, String skypeId,
 					 String profileUrl, String recruiterName, String college, String degree, String major,
 					 String techScreenerName) {
@@ -84,7 +83,6 @@ public class Candidate {
 		this.techScreenerName = techScreenerName;
 	}
 
-	//getters and setters 
 	public int getCandidateId() {
 		return candidateId;
 	}
@@ -181,7 +179,6 @@ public class Candidate {
 		this.techScreenerName = techScreenerName;
 	}
 
-	//equals and hashcode
 	@Override
 	public boolean equals(Object o) {
 		if (this == o) return true;
@@ -206,7 +203,6 @@ public class Candidate {
 		return Objects.hash(getCandidateId(), getResourceId(), getName(), getEmail(), getPhoneNumber(), getSkypeId(), getProfileUrl(), getRecruiterName(), getCollege(), getDegree(), getMajor(), getTechScreenerName());
 	}
 
-	//toString
 	@Override
 	public String toString() {
 		return "Candidate{" +

@@ -6,39 +6,43 @@ import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cloud.openfeign.EnableFeignClients;
+
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-//import com.revature.screenforce.beans.QuestionScore;
-//import com.revature.screenforce.beans.Screening;
+
+import com.revature.screenforce.beans.QuestionScore;
+import com.revature.screenforce.beans.Screening;
 import com.revature.screenforce.dtos.Screening;
 import com.revature.screenforce.dtos.SimpleQuestionScore;
-//import com.revature.screenforce.dtos.SoftSkillViolation;
+import com.revature.screenforce.dtos.SoftSkillViolation;
 import com.revature.screenforce.dtos.ViolationType;
 import com.revature.screenforce.services.ReportsService;
-//import com.revature.screenforce.beans.SimpleQuestionScore;
+import com.revature.screenforce.beans.SimpleQuestionScore;
 import com.revature.screenforce.beans.SoftSkillViolation;
-//import com.revature.screenforce.beans.ViolationType;
-//import com.revature.screenforce.services.ReportsService;
+import com.revature.screenforce.beans.ViolationType;
+import com.revature.screenforce.services.ReportsService;
 import com.revature.screenforce.services.ScreeningQuestionScoreClient;
 import com.revature.screenforce.services.ScreeningScreeningClient;
 import com.revature.screenforce.services.ScreeningViolationClient;
+/*
+ * @author Jacob Urmanec | 1903-USF-MAR11 | Emily Higgins
+ */
+
 
 @RestController
 @CrossOrigin
-@EnableFeignClients //JU
 public class ReportsController {
 	/*
 	 * This controller is built to work with screening-ui, generating reports for the Reports tab there.
 	 * Screeners are identified by email on the client side, but Id on the backend, so we have a special
 	 * function to handle emails.
 	 */
+
 
 	//variables - services to be injected in methods 
 	//services for internal data
@@ -57,12 +61,15 @@ public class ReportsController {
 		List<String> emails = this.reportsService.getAllEmails(email);
 		return emails;
 	}
+
 	*/
+
 	//5/28 JU - works as intended. 
 	@GetMapping(value="/screenings")
-	public List<Screening> getAllScreenings() {
+	public List<com.revature.screenforce.dtos.Screening> getAllScreenings() {
 		return this.reportsService.getAllScreenings();
 	} 
+
 
 	//5/28 JU - works as intended. 
 	@GetMapping(value="/softskillviolations")
@@ -70,13 +77,15 @@ public class ReportsController {
 		return this.reportsService.getAllSoftSkillViolations();
 	}
 	
-	//5/26 JU - * adding this for testing only. Works to pull from screening service w/ feign client. 
+
+	//5/26 JU - still needs testing.  
 	@GetMapping(value="/violationTypes")
 	public List<ViolationType> getAllViolationTypes() {
 		return screeningVClient.getViolationTypes();
 	}
 	
 	
+
 	//5/28 JU  - works as intended. 
 	@GetMapping(value="/questionscores")
 	public List<SimpleQuestionScore> getAllQuestionScores() {
@@ -84,14 +93,14 @@ public class ReportsController {
 	}
 
 	
-	//5/26 JU Adding this to pull from screening service w/ feign client. For testing only. Needs to be tested.
+	//5/26 All methods below have not been refactored/tested with Feign
 	@GetMapping(value="/scores/{screeningId}")
 	public SimpleQuestionScore getScoresByScreeningId(@PathVariable int screeningId) {
 		return screeningQSClient.getScoresByScreeningId(screeningId);
 		
 	}
 	
-	/*
+	
 	@GetMapping(value="/getReport")
 	public String getReport(@RequestParam(name="startDate") String startDate, @RequestParam(name = "endDate") String endDate, @RequestParam(name="screenerId") Integer screenerId) {
 		LocalDate start = LocalDate.parse(startDate);
@@ -126,5 +135,5 @@ public class ReportsController {
 		LocalDate end = LocalDate.parse(endDate);
 		return reportsService.getReport(start, end, screenerId);
 	}
-	*/
+
 }

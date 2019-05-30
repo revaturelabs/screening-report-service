@@ -13,15 +13,12 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.GetMapping;
 
 import com.google.gson.Gson;
-import com.revature.screenforce.beans.Bucket;
 import com.revature.screenforce.beans.QuestionScore;
 import com.revature.screenforce.beans.Screener;
 import com.revature.screenforce.beans.Screening;
 import com.revature.screenforce.beans.SoftSkillViolation;
-import com.revature.screenforce.beans.ViolationType;
 import com.revature.screenforce.daos.BucketDAO;
 import com.revature.screenforce.daos.QuestionDAO;
 //import com.revature.screenforce.daos.QuestionDAO;
@@ -38,9 +35,6 @@ import com.revature.screenforce.models.ReportData.BarChartData;
 
 @Service
 public class ReportsService {
-	
-	//variables 
-	//data sources
 	@Autowired ScreenerRepository screenerRepository;
 	@Autowired SkillTypeDAO skillTypeDAO;
 	@Autowired QuestionScoreRepository questionScoreRepository;
@@ -50,11 +44,14 @@ public class ReportsService {
 	@Autowired WeightDAO weightDAO;
 	@Autowired BucketDAO bucketDAO;
 	@Autowired ScreeningRepository screeningRepository;
+
 	//Feign client services 
 	@Autowired AdminBucketClient adminBucketClient; 
 	@Autowired ScreeningScreeningClient screeningSClient; 
 	@Autowired ScreeningViolationClient screeningSVClient; 
 	@Autowired ScreeningQuestionScoreClient screeningQSClient; 
+
+
 
 	
 	public List<String> getAllEmails(String email){
@@ -77,9 +74,11 @@ public class ReportsService {
 		return screeningSClient.getScreenings();
 	}
 	
+
 	//5/28 JU - adding method (implements Feign. Calls newly added end points). This works.
 	public List<com.revature.screenforce.dtos.SoftSkillViolation> getAllSoftSkillViolations() {
 		return this.screeningSVClient.getSoftSkillViolations();
+
 	}
 	
 	//5/28 JU 
@@ -103,7 +102,7 @@ public class ReportsService {
 		 */
 		Integer numApplicantsPassed;
 		Integer numApplicantsFailed;
-	
+		
 		List<Screening> screenings = getScreenings(startDate, endDate, screenerId);
 		List<ReportData.BarChartData> violationsByType = violationsByType(screenings);
 		List<QuestionScore> questionScores = getQuestionScores(startDate, endDate, screenerId);
@@ -237,7 +236,7 @@ public class ReportsService {
 		return json;
 	}
 
-	//5/26 JU - not pulled by reports controller, so I am ignoring
+	
 	private List<String> hardestQuestions(List<QuestionScore> questionScores){
 		/*
 		 * Returns a List containing the five hardest questions asked
@@ -285,7 +284,7 @@ public class ReportsService {
 		return hardestQuestions;	
 	}
 	
-
+	
 	private List<ReportData.BarChartData> avgSkillTypeScore(List<QuestionScore> questionScores){
 		/*
 		 * Returns a List of bar chart data to display in the front end.
@@ -317,9 +316,6 @@ public class ReportsService {
 		return avgSkillTypeScore;	
 	}
 	
-	
-	
-	
 	private List<ReportData.BarChartData> avgBucketTypeScore(List<QuestionScore> questionScores){
 		/*
 		 * Returns a List of bar chart data to display in the front end.
@@ -350,14 +346,6 @@ public class ReportsService {
         }
         return avgBucketTypeScore;
 	}
-	
-	//5/26 JU Adding method to pull from admin application bucket DAO 
-	/*
-	@GetMapping(value="/{id}")
-	public List<Bucket> getBucketById() {
-		return adminBucketClient.getBucketById();
-	}
-	*/
 	
 	private List<ReportData.BarChartData> violationsByType(List<Screening> screenings){
 		/*

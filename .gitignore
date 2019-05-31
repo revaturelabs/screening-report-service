@@ -446,4 +446,9 @@ local.properties
 
 .sts4-cache/
 
+# Log file
+*.log
+logs
+
 # End of https://www.gitignore.io/api/eclipse
+

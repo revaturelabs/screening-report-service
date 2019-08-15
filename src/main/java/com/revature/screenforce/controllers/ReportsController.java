@@ -14,10 +14,22 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+
 import com.revature.screenforce.beans.QuestionScore;
 import com.revature.screenforce.beans.Screening;
-import com.revature.screenforce.beans.SoftSkillViolation;
+import com.revature.screenforce.dtos.Screening;
+import com.revature.screenforce.dtos.SimpleQuestionScore;
+import com.revature.screenforce.dtos.SoftSkillViolation;
+import com.revature.screenforce.dtos.ViolationType;
 import com.revature.screenforce.services.ReportsService;
+import com.revature.screenforce.beans.SimpleQuestionScore;
+import com.revature.screenforce.beans.SoftSkillViolation;
+import com.revature.screenforce.beans.ViolationType;
+import com.revature.screenforce.services.ReportsService;
+import com.revature.screenforce.services.ScreeningQuestionScoreClient;
+import com.revature.screenforce.services.ScreeningScreeningClient;
+import com.revature.screenforce.services.ScreeningViolationClient;
+
 
 @RestController
 @CrossOrigin
@@ -28,28 +40,57 @@ public class ReportsController {
 	 * function to handle emails.
 	 */
 
-	@Autowired ReportsService reportsService;
 
+	//variables - services to be injected in methods 
+	//services for internal data
+	@Autowired ReportsService reportsService;
+	//services for external data 
+	@Autowired ScreeningViolationClient screeningVClient; 
+	@Autowired ScreeningQuestionScoreClient screeningQSClient; 
+	@Autowired ScreeningScreeningClient screeningSClient; 
+
+	//methods
+	
+	//5/28 JU - commenting out unless needed by front end. 
+	
 	@GetMapping(value="/getEmails", produces= MediaType.APPLICATION_JSON_VALUE)
 	public @ResponseBody List<String> getAllEmails(@RequestParam(value = "email") String email){
 		List<String> emails = this.reportsService.getAllEmails(email);
 		return emails;
 	}
-	
+
 	@GetMapping(value="/screenings")
 	public List<Screening> getAllScreenings() {
 		return this.reportsService.getAllScreenings();
 	} 
-	
+
+	//5/28 JU - works as intended. 
 	@GetMapping(value="/softskillviolations")
-	public List<SoftSkillViolation> getAllSoftSkillViolations() {
+	public List<com.revature.screenforce.dtos.SoftSkillViolation> getAllSoftSkillViolations() {
 		return this.reportsService.getAllSoftSkillViolations();
 	}
 	
+	//5/26 JU - * adding this for testing only. Works to pull from screening service w/ feign client. 
+	@GetMapping(value="/violationTypes")
+	public List<ViolationType> getAllViolationTypes() {
+		return screeningVClient.getViolationTypes();
+	}
+	
+	
+	//5/28 JU  - works as intended. 
 	@GetMapping(value="/questionscores")
-	public List<QuestionScore> getAllQuestionScores() {
+	public List<SimpleQuestionScore> getAllQuestionScores() {
 		return this.reportsService.getAllQuestionScores();
 	}
+
+	
+	//5/26 JU Adding this to pull from screening service w/ feign client. For testing only. Needs to be tested.
+	@GetMapping(value="/scores/{screeningId}")
+	public SimpleQuestionScore getScoresByScreeningId(@PathVariable int screeningId) {
+		return screeningQSClient.getScoresByScreeningId(screeningId);
+		
+	}
+	
 	
 	@GetMapping(value="/getReport")
 	public String getReport(@RequestParam(name="startDate") String startDate, @RequestParam(name = "endDate") String endDate, @RequestParam(name="screenerId") Integer screenerId) {

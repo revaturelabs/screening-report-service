@@ -29,6 +29,10 @@ import com.revature.screenforce.services.ReportsService;
 import com.revature.screenforce.services.ScreeningQuestionScoreClient;
 import com.revature.screenforce.services.ScreeningScreeningClient;
 import com.revature.screenforce.services.ScreeningViolationClient;
+/*
+ * @author Jacob Urmanec | 1903-USF-MAR11 | Emily Higgins
+ */
+
 
 
 @RestController
@@ -60,9 +64,10 @@ public class ReportsController {
 	}
 
 	@GetMapping(value="/screenings")
-	public List<Screening> getAllScreenings() {
+	public List<com.revature.screenforce.dtos.Screening> getAllScreenings() {
 		return this.reportsService.getAllScreenings();
 	} 
+
 
 	//5/28 JU - works as intended. 
 	@GetMapping(value="/softskillviolations")
@@ -70,13 +75,15 @@ public class ReportsController {
 		return this.reportsService.getAllSoftSkillViolations();
 	}
 	
-	//5/26 JU - * adding this for testing only. Works to pull from screening service w/ feign client. 
+
+	//5/26 JU - still needs testing.  
 	@GetMapping(value="/violationTypes")
 	public List<ViolationType> getAllViolationTypes() {
 		return screeningVClient.getViolationTypes();
 	}
 	
 	
+
 	//5/28 JU  - works as intended. 
 	@GetMapping(value="/questionscores")
 	public List<SimpleQuestionScore> getAllQuestionScores() {
@@ -84,7 +91,7 @@ public class ReportsController {
 	}
 
 	
-	//5/26 JU Adding this to pull from screening service w/ feign client. For testing only. Needs to be tested.
+	//5/26 All methods below have not been refactored/tested with Feign
 	@GetMapping(value="/scores/{screeningId}")
 	public SimpleQuestionScore getScoresByScreeningId(@PathVariable int screeningId) {
 		return screeningQSClient.getScoresByScreeningId(screeningId);
@@ -126,4 +133,5 @@ public class ReportsController {
 		LocalDate end = LocalDate.parse(endDate);
 		return reportsService.getReport(start, end, screenerId);
 	}
+
 }

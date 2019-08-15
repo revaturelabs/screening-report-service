@@ -44,11 +44,14 @@ public class ReportsService {
 	@Autowired WeightDAO weightDAO;
 	@Autowired BucketDAO bucketDAO;
 	@Autowired ScreeningRepository screeningRepository;
+
 	//Feign client services 
 	@Autowired AdminBucketClient adminBucketClient; 
 	@Autowired ScreeningScreeningClient screeningSClient; 
 	@Autowired ScreeningViolationClient screeningSVClient; 
 	@Autowired ScreeningQuestionScoreClient screeningQSClient; 
+
+
 
 	
 	public List<String> getAllEmails(String email){
@@ -71,9 +74,11 @@ public class ReportsService {
 		return screeningSClient.getScreenings();
 	}
 	
+
 	//5/28 JU - adding method (implements Feign. Calls newly added end points). This works.
 	public List<com.revature.screenforce.dtos.SoftSkillViolation> getAllSoftSkillViolations() {
 		return this.screeningSVClient.getSoftSkillViolations();
+
 	}
 	
 	//5/28 JU 

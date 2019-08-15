@@ -34,6 +34,7 @@ import com.revature.screenforce.services.ScreeningViolationClient;
  */
 
 
+
 @RestController
 @CrossOrigin
 public class ReportsController {
@@ -55,16 +56,13 @@ public class ReportsController {
 	//methods
 	
 	//5/28 JU - commenting out unless needed by front end. 
-	/*
+	
 	@GetMapping(value="/getEmails", produces= MediaType.APPLICATION_JSON_VALUE)
 	public @ResponseBody List<String> getAllEmails(@RequestParam(value = "email") String email){
 		List<String> emails = this.reportsService.getAllEmails(email);
 		return emails;
 	}
 
-	*/
-
-	//5/28 JU - works as intended. 
 	@GetMapping(value="/screenings")
 	public List<com.revature.screenforce.dtos.Screening> getAllScreenings() {
 		return this.reportsService.getAllScreenings();

@@ -163,7 +163,6 @@
 			<artifactId>gson</artifactId>
 		</dependency>
 
-
 		<!-- Logging aspects -->
 		<dependency>
 			<groupId>org.springframework</groupId>

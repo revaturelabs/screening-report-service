@@ -20,10 +20,6 @@
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<java.version>1.8</java.version>
 		<spring-cloud.version>Finchley.SR2</spring-cloud.version>
-		<sonar.projectKey>revaturelabs_screening-report-service</sonar.projectKey>
-		<sonar.projectName>Screenforce Screening Report Service</sonar.projectName>
-		<sonar.projectVersion>2.1</sonar.projectVersion>
-		<sonar.sourceEncoding>UTF-8</sonar.sourceEncoding>
 	</properties>
 
 
@@ -187,7 +183,6 @@
 			<artifactId>jacoco-maven-plugin</artifactId>
 			<version>0.8.2</version>
 		</dependency>
-
 	</dependencies>
 
 	<build>

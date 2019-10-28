@@ -1,12 +1,12 @@
 package com.revature.screenforce.beans;
 
-//import io.swagger.annotations.ApiModel;
+
 //import io.swagger.annotations.ApiModelProperty;
 //import org.hibernate.annotations.CreationTimestamp;
 //
 //import javax.persistence.*;
 import java.util.Date;
-//import java.util.Objects;
+
 
 /**
  *  The POJO for the SoftSkillViolation

@@ -1,14 +1,8 @@
 package com.revature.screenforce.beans;
-
-//import io.swagger.annotations.ApiModel;
-//import io.swagger.annotations.ApiModelProperty;
-//
-//import javax.persistence.*;
-//import java.util.Objects;
 /**
  *  The POJO for the Candidate
- *  This version has the hibernate
- *  Feign Client procedures haven't been implement (yet, maybe)
+ *  This version has the hibernate removed
+ *  
  *  
  * @author Zi Feng Chen | 1909-QC | Emily Higgins
  * @author George Ingleton | 1909-QC| Emily Higgins

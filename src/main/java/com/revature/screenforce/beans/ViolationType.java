@@ -1,11 +1,5 @@
 package com.revature.screenforce.beans;
 
-//import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-//import io.swagger.annotations.ApiModel;
-//import io.swagger.annotations.ApiModelProperty;
-//
-//import javax.persistence.*;
-//import java.util.Objects;
 /**
  *  The POJO for the ViolationType
  *  This version has the hibernate removed, 

@@ -13,7 +13,7 @@ import com.revature.screenforce.beans.Candidate;
 
 public class FullReportModel {
 	//The internal id of this fullreport
-	int internal_id;
+	int screening_id;
 	//A Date of the schedule time, 
 	Date scheduleDate;
 	//The id of the screener
@@ -36,11 +36,11 @@ public class FullReportModel {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	public int getInternal_id() {
-		return internal_id;
+	public int getScreening_id() {
+		return screening_id;
 	}
-	public void setInternal_id(int internal_id) {
-		this.internal_id = internal_id;
+	public void setScreening_id(int screening_id) {
+		this.screening_id = screening_id;
 	}
 	public int getScreener_id() {
 		return screener_id;

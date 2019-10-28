@@ -1,14 +1,5 @@
 package com.revature.screenforce.beans;
 
-//import io.swagger.annotations.ApiModel;
-//import io.swagger.annotations.ApiModelProperty;
-
-//import javax.persistence.*;
-//import java.io.Serializable;
-//import java.util.List;
-//import java.util.Objects;
-
-
 /**
  *  The POJO for the bucket
  *  This version has the hibernate removed, 
@@ -16,9 +7,6 @@ package com.revature.screenforce.beans;
  * @author Zi Feng Chen | 1909-QC | Emily Higgins
  * @author George Ingleton | 1909-QC| Emily Higgins
  */
-
-//Hi Future Rex
-
 
 
 public class Bucket {

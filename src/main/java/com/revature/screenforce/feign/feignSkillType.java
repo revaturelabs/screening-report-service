@@ -10,7 +10,7 @@ import com.revature.screenforce.beans.SkillType;
 
 
 @FeignClient(name = "SkillType", url = "http://localhost:8181/skilltype")
-public interface feignSkillType {
+public interface FeignSkillType {
 	@RequestMapping(method = RequestMethod.GET)
 	List<SkillType> getSkills();
 }

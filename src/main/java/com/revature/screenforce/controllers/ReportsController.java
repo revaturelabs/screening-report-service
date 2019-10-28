@@ -3,92 +3,54 @@ package com.revature.screenforce.controllers;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
-
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
-
 import com.revature.screenforce.services.ReportsService;
-import com.revature.screenforce.beans.Bucket;
-import com.revature.screenforce.beans.Question;
-import com.revature.screenforce.beans.QuestionScore;
-import com.revature.screenforce.beans.ScheduledScreening;
-import com.revature.screenforce.beans.Screening;
-import com.revature.screenforce.beans.SkillType;
-import com.revature.screenforce.beans.SoftSkillViolation;
-import com.revature.screenforce.beans.ViolationType;
-import com.revature.screenforce.beans.Weight;
 import com.revature.screenforce.models.FullReportModel;
-
+/**
+ * The Main Controller for screening-report-service
+ * Exposed 1 main endpoint to be consumed
+ * called : getFullReportByDate
+ * also exposes 2 tester end points to support for the Front End team
+ * Will be commented out once support is no longer needed
+ * called : getAFullReport, gettestFullReport
+ * Also contains commented out end points for feign testing
+ * Not used externally, just didn't want to delete anything
+ * 
+ * @author Zi Feng Chen | 1909-QC | Emily Higgins
+ * @author George Ingleton | 1909-QC| Emily Higgins
+ */
 @RestController
 @CrossOrigin
 public class ReportsController {
 
 	@Autowired ReportsService reportsService;
 	
-	@GetMapping(value="/bucket", produces= MediaType.APPLICATION_JSON_VALUE)
-	public @ResponseBody List<Bucket> getAllBucket(){
-		return this.reportsService.testGetAllBuckets();
-	}
-	@GetMapping(value="/question", produces= MediaType.APPLICATION_JSON_VALUE)
-	public @ResponseBody List<Question> getAllQuestion(){
-		return this.reportsService.testGetAllQuestion();
-	}
-	
-	@GetMapping(value="/scheduledscreening", produces= MediaType.APPLICATION_JSON_VALUE)
-	public @ResponseBody List<ScheduledScreening> getAllScheduledScreening(){
-		return this.reportsService.testGetAllScheduledScreening();
-	}
-	
-	@GetMapping(value="/questionscore", produces= MediaType.APPLICATION_JSON_VALUE)
-	public @ResponseBody List<QuestionScore> getAllQuestionScores(){
-		return this.reportsService.testGetAllQuestionScore();
-	}
-	
-	@GetMapping(value="/questionscore/{id}", produces= MediaType.APPLICATION_JSON_VALUE)
-	public @ResponseBody List<QuestionScore> getAllScoresByScreeningId(@PathVariable Integer id){
-		return this.reportsService.testGetScoresByScreeningId(id);
-	}
-
-	@GetMapping(value="/screening", produces= MediaType.APPLICATION_JSON_VALUE)
-	public @ResponseBody List<Screening> getAllScreening(){
-		return this.reportsService.testGetAllScreening();
-	}
-	
-	@GetMapping(value="/skilltype", produces= MediaType.APPLICATION_JSON_VALUE)
-	public @ResponseBody List<SkillType> getAllSkillType(){
-		return this.reportsService.testGetAllSkillType();
-	}
-
-	@GetMapping(value="/softskillviolation", produces= MediaType.APPLICATION_JSON_VALUE)
-	public @ResponseBody List<SoftSkillViolation> getAllSoftSkillViolation(){
-		return this.reportsService.testGetAllSoftSkillViolation();
-	}
-
-	@GetMapping(value="/violationtype", produces= MediaType.APPLICATION_JSON_VALUE)
-	public @ResponseBody List<ViolationType> getAllViolationType(){
-		return this.reportsService.testGetAllViolationType();
-	}
-
-	@GetMapping(value="/weight", produces= MediaType.APPLICATION_JSON_VALUE)
-	public @ResponseBody List<Weight> getAllWeight(){
-		return this.reportsService.testGetAllWeight();
-	}
+	/**
+	 * A testing end point for the Front End team to use 
+	 * screening id 4321, is the first entry from the test DB.
+	 * returns 1 fully completed FullReportModel
+	 * used for testing only
+	 * @return FullReportModel : 
+	 */
 	@GetMapping(value="/frm", produces= MediaType.APPLICATION_JSON_VALUE)
-	public @ResponseBody FullReportModel getFullReport(){
+	public @ResponseBody FullReportModel getAFullReport(){
 		return this.reportsService.testFullReport(new Integer(4321));
 	}
+	/**
+	 * A testing end point for the Front End team to use
+	 * Returns all the fully complete FullReportModels from the DB
+	 * checks if ScheduledStatus is "screened" to determine completion
+	 * @return List<FullReportModel> :
+	 */
 	@GetMapping(value="/frmtest", produces= MediaType.APPLICATION_JSON_VALUE)
 	public @ResponseBody List<FullReportModel> gettestFullReport(){
 		Date end = null;
@@ -97,6 +59,18 @@ public class ReportsController {
 
 		return this.reportsService.getAllReports(start, end);
 	}
+	/**
+	 * The Main end point for consumption. Recieves 2 inputs with get request
+	 * preconditions:
+	 * 	Both value must not be null
+	 * 	dateStart must be before dateEnd
+	 * 	Formatting of Dates: "yyyy-MM-dd" eg: 2018-03-01
+	 * 
+	 * @param dateStart String with correct formated date 
+	 * @param dateEnd	String with correct formated date
+	 * @return List<FullReportModel> with the scheduleDate between the start
+	 * and end date inclusively
+	 */
 	@GetMapping(value="/frm/{dateStart}/{dateEnd}", produces= MediaType.APPLICATION_JSON_VALUE)
 	public @ResponseBody List<FullReportModel> getFullReportByDate(@PathVariable String dateStart,@PathVariable String dateEnd){
 
@@ -131,18 +105,5 @@ public class ReportsController {
 		return null;
 	
 	}
-//	@GetMapping(value="/email", produces= MediaType.APPLICATION_JSON_VALUE)
-//	public @ResponseBody List<String> getAllEmails(@RequestParam(value = "email") String email){
-//		List<String> emails = this.reportsService.getAllEmails(email);
-//		return emails;
-//	}
-//
-//	@GetMapping(value = "/data", produces = MediaType.APPLICATION_JSON_VALUE)
-//	public String getReports(
-//			@RequestParam(name="weeks") 
-//			String weeks, 
-//			@RequestParam(name="email", required=false)
-//			String email) {
-//		return reportsService.getReport(email, weeks);
-//	}
+
 }

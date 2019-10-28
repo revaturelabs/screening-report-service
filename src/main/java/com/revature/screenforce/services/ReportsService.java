@@ -40,74 +40,16 @@ import com.revature.screenforce.util.Time;
 @Service
 public class ReportsService {
 	
-	@Autowired feignBucket feignbucket;
-	@Autowired feignQuestion feignquestion;
-	@Autowired feignQuestionScore feignquestionscore;
-	@Autowired feignScheduledScreening feignscheduledscreening;
-	@Autowired feignScreening feignscreening;
-	@Autowired feignSkillType feignskilltype;
-	@Autowired feignSoftSkillViolation feignsoftskillviolation;
-	@Autowired feignViolationType feignviolationtype;
-	@Autowired feignWeight feignweight;
+	@Autowired FeignBucket feignbucket;
+	@Autowired FeignQuestion feignquestion;
+	@Autowired FeignQuestionScore feignquestionscore;
+	@Autowired FeignScheduledScreening feignscheduledscreening;
+	@Autowired FeignScreening feignscreening;
+	@Autowired FeignSkillType feignskilltype;
+	@Autowired FeignSoftSkillViolation feignsoftskillviolation;
+	@Autowired FeignViolationType feignviolationtype;
+	@Autowired FeignWeight feignweight;
 
-//	private Map<String, Double> scoresByQuestion = new HashMap<>();
-//	private Map<String, Integer> numScoresPerQuestion = new HashMap<>();
-//	private Map<String, Double> top5HardestQuestions = new TreeMap<>();
-//	private ArrayList<String> questionKeys = new ArrayList<>();
-//	private List<SoftSkillViolation> softSkillViolations = new ArrayList<>();
-//	private List<ViolationType> violationTypes = new ArrayList<>();
-//
-//	private Map<String, List<Bucket>> bucketsBySkillType = new HashMap<>();
-//	private Map<String, Double> scoresByDescription = new HashMap<>();
-//	private Map<String, Integer> numScoresPerDescription = new HashMap<>();
-//	private Map<String, Double> scoresBySkillType = new HashMap<>();
-//	private Map<String, Integer> numScoresPerSkillType = new HashMap<>();
-//
-//	private Map<String, Integer> numViolationsByType = new HashMap<>();
-//
-//	int numScheduledScreenings = 0;
-	
-	
-	public List<Bucket> testGetAllBuckets() {
-		List<Bucket> testbucket = feignbucket.getBucket();
-		System.out.println(testbucket);
-		return feignbucket.getBucket();
-	}
-	public List<Question> testGetAllQuestion(){
-		return feignquestion.getQuestions();
-	}
-	
-	public List<QuestionScore> testGetAllQuestionScore(){
-		return feignquestionscore.getSimpleQuestionScores();
-	}
-	public List<QuestionScore> testGetScoresByScreeningId(Integer id){
-		return feignquestionscore.getScoresByScreeningId(id);
-	}
-
-	public List<ScheduledScreening> testGetAllScheduledScreening(){
-		return feignscheduledscreening.getAllScheduledScreenings();
-	}
-	public List<Screening> testGetAllScreening(){
-		return  feignscreening.getAllScreening();
-	}
-	
-	public List<SkillType> testGetAllSkillType(){
-		return  feignskilltype.getSkills();
-	}
-	
-	
-	
-	public List<SoftSkillViolation> testGetAllSoftSkillViolation(){
-		return  feignsoftskillviolation.getSoftSkillViolations();
-	}
-	
-	public List<ViolationType> testGetAllViolationType(){
-		return  feignviolationtype.getViolationTypes();
-	}
-
-	public List<Weight> testGetAllWeight(){
-		return  feignweight.getWeights();
-	}
 	public List<FullReportModel> getAllReports(Date start, Date end){
 		Date searchStart;
 		Date searchEnd;
@@ -141,9 +83,9 @@ public class ReportsService {
 		FullReportModel out = new FullReportModel();
 		
 
-		List<SkillType> st = testGetAllSkillType();
+		List<SkillType> st = feignskilltype.getSkills();
 		Screening op = feignscreening.getScreeningById(Screen_id);
-		out.setInternal_id(op.getScreeningId());
+		out.setScreening_id(op.getScreeningId());
 		out.setScreener_id(op.getScreenerId());
 		out.setCan(op.getScheduledScreening().getCandidate());
 		out.setScheduleDate(op.getStartDateTime());
@@ -158,7 +100,7 @@ public class ReportsService {
 		}
 		
 		List<BucketModel> bucketTested = new ArrayList<BucketModel>();
-		List<QuestionScore> qs = testGetScoresByScreeningId(new Integer(op.getScreeningId()));
+		List<QuestionScore> qs = feignquestionscore.getScoresByScreeningId(new Integer(op.getScreeningId()));
 		
 		List<ViolationModel> vm = new ArrayList<ViolationModel>();
 		List<SoftSkillViolation> ssv= feignsoftskillviolation.getSoftSkillViolations();

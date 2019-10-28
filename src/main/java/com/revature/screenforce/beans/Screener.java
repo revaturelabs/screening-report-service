@@ -2,35 +2,34 @@ package com.revature.screenforce.beans;
 
 import java.util.List;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
 
-import io.swagger.annotations.ApiModelProperty;
+//import javax.persistence.Column;
+//import javax.persistence.Entity;
+//import javax.persistence.FetchType;
+//import javax.persistence.GeneratedValue;
+//import javax.persistence.GenerationType;
+//import javax.persistence.Id;
+//import javax.persistence.JoinColumn;
+//import javax.persistence.OneToMany;
+//import javax.persistence.Table;
+//
+//import io.swagger.annotations.ApiModelProperty;
 
-@Entity
-@Table(name="SCREENER")
+/**
+ * TO DO (Unused)
+ * we only have screenerId
+ * the name and email was stored locally on the h2 db.
+ * once db is removed, all sources of name and email are gone.
+ */
+
 public class Screener {
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name="SCREENER_ID")
+
 	private int screenerId;
 	
-	@Column(name="NAME")
 	private String name;
-	
-	@Column(name="EMAIL")
+
 	private String email;
-	
-	@ApiModelProperty(value = "The Screening connected to the screening")
-	@OneToMany(fetch = FetchType.EAGER)
-	@JoinColumn(name = "SCREENER_ID")
+
 	private List<Screening> screenings;
 
 	public List<Screening> getScreenings() {

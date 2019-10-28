@@ -1,104 +1,48 @@
 package com.revature.screenforce.beans;
 
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+//import io.swagger.annotations.ApiModel;
+//import io.swagger.annotations.ApiModelProperty;
+//
+//import javax.persistence.*;
 
-import javax.persistence.*;
-
-import java.time.LocalDate;
-import java.util.List;
-import java.util.Objects;
+//import java.time.LocalDate;
+import java.util.Date;
+//import java.util.List;
+//import java.util.Objects;
 
 /**
- * @author Jeremy Straus | 1807-QC | Emily Higgins
+ *  The POJO for the Screening
+ *  This version has the hibernate removed, 
+ *  and the declaration is from feign client, used in the feign folder
+ * @author Zi Feng Chen | 1909-QC | Emily Higgins
+ * @author George Ingleton | 1909-QC| Emily Higgins
  */
-@ApiModel(value = "Screening", description = "An object to record the result of screening a candidate")
-@Entity
-@Table(name = "SCREENING")
 public class Screening {
-	@ApiModelProperty(value = "Id of the screening")
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name = "SCREENING_ID")
+	
+
 	private int screeningId;
 
-	@ApiModelProperty(value = "The Scheduled Screening connected to the screening")
-	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "SCHEDULED_SCREENING_ID")
 	private ScheduledScreening scheduledScreening;
 
-	@ApiModelProperty(value = "Id of the person screening the candidate")
-	@Column(name = "SCREENER_ID")
 	private int screenerId;
 
-	@ApiModelProperty(value = "Id referencing a training track in the screening-admin-service")
-	@Column(name = "SKILL_TYPE_ID")
-	private int skillTypeId;
+	private int skillType;
 
-	@ApiModelProperty(value = "The total score the candidate recieved")
-	@Column(name = "COMPOSITE_SCORE")
 	private Double compositeScore;
 
-	@ApiModelProperty(value = "Comments regarding candidate's introduction")
-	@Column(name = "ABOUT_COMMENT")
 	private String aboutMeCommentary;
 
-	@ApiModelProperty(value = "General commentary regarding the candidate's screening")
-	@Column(name = "GENERAL_COMMENT")
 	private String generalCommentary;
 
-	@ApiModelProperty(value = "Commentary regarding candidate's soft skills")
-	@Column(name = "SOFT_SKILL_COMMENT")
 	private String softSkillCommentary;
 
-	@ApiModelProperty(value = "Starting date and time of the screening")
-	@Column(name = "START_DATE")
-	private LocalDate startDateTime;
+	private Date startDateTime;
 
-	@ApiModelProperty(value = "Ending date and time of the screening")
-	@Column(name = "END_DATE")
-	private LocalDate endDateTime;
+	private Date endDateTime;
 
-	@ApiModelProperty(value = "Final verdict on the candidate's soft skills")
-	@Column(name = "SOFT_SKILL_VERDICT")
 	private Boolean softSkillsVerdict;
 
-	@ApiModelProperty(value = "Enum denoting the current status of the screening")
-	@Column(name = "STATUS")
 	private String status;
-	
-	@ApiModelProperty(value = "The Screening connected to the screening")
-	@OneToMany(fetch = FetchType.EAGER)
-	@JoinColumn(name = "SCREENING_ID")
-	private List<Bucket> buckets;
-
-	public List<Bucket> getBuckets() {
-		return buckets;
-	}
-
-	public void setBuckets(List<Bucket> buckets) {
-		this.buckets = buckets;
-	}
-
-	public Screening() {
-		super();
-	}
-	public Screening(ScheduledScreening scheduledScreening, int screenerId, 
-			int skillTypeId, Double compositeScore, String aboutMeCommentary, 
-			String generalCommentary, String softSkillCommentary, LocalDate startDateTime, 
-			LocalDate endDateTime, Boolean softSkillsVerdict, String status) {
-		this.scheduledScreening = scheduledScreening;
-		this.screenerId = screenerId;
-		this.skillTypeId = skillTypeId;
-		this.compositeScore = compositeScore;
-		this.aboutMeCommentary = aboutMeCommentary;
-		this.generalCommentary = generalCommentary;
-		this.softSkillCommentary = softSkillCommentary;
-		this.startDateTime = startDateTime;
-		this.endDateTime = endDateTime;
-		this.softSkillsVerdict = softSkillsVerdict;
-		this.status = status;
-	}
 
 	public int getScreeningId() {
 		return screeningId;
@@ -124,12 +68,12 @@ public class Screening {
 		this.screenerId = screenerId;
 	}
 
-	public int getSkillTypeId() {
-		return skillTypeId;
+	public int getSkillType() {
+		return skillType;
 	}
 
-	public void setSkillTypeId(int skillTypeId) {
-		this.skillTypeId = skillTypeId;
+	public void setSkillType(int skillType) {
+		this.skillType = skillType;
 	}
 
 	public Double getCompositeScore() {
@@ -164,19 +108,19 @@ public class Screening {
 		this.softSkillCommentary = softSkillCommentary;
 	}
 
-	public LocalDate getStartDateTime() {
+	public Date getStartDateTime() {
 		return startDateTime;
 	}
 
-	public void setStartDateTime(LocalDate startDateTime) {
+	public void setStartDateTime(Date startDateTime) {
 		this.startDateTime = startDateTime;
 	}
 
-	public LocalDate getEndDateTime() {
+	public Date getEndDateTime() {
 		return endDateTime;
 	}
 
-	public void setEndDateTime(LocalDate endDateTime) {
+	public void setEndDateTime(Date endDateTime) {
 		this.endDateTime = endDateTime;
 	}
 
@@ -197,44 +141,61 @@ public class Screening {
 	}
 
 	@Override
-	public boolean equals(Object o) {
-		if (this == o) return true;
-		if (o == null || getClass() != o.getClass()) return false;
-		Screening screening = (Screening) o;
-		return getScreeningId() == screening.getScreeningId() &&
-				getScreenerId() == screening.getScreenerId() &&
-				getSkillTypeId() == screening.getSkillTypeId() &&
-				Objects.equals(getScheduledScreening(), screening.getScheduledScreening()) &&
-				Objects.equals(getCompositeScore(), screening.getCompositeScore()) &&
-				Objects.equals(getAboutMeCommentary(), screening.getAboutMeCommentary()) &&
-				Objects.equals(getGeneralCommentary(), screening.getGeneralCommentary()) &&
-				Objects.equals(getSoftSkillCommentary(), screening.getSoftSkillCommentary()) &&
-				Objects.equals(getStartDateTime(), screening.getStartDateTime()) &&
-				Objects.equals(getEndDateTime(), screening.getEndDateTime()) &&
-				Objects.equals(getSoftSkillsVerdict(), screening.getSoftSkillsVerdict()) &&
-				Objects.equals(getStatus(), screening.getStatus());
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + screeningId;
+		return result;
 	}
 
 	@Override
-	public int hashCode() {
-		return Objects.hash(getScreeningId(), getScheduledScreening(), getScreenerId(), getSkillTypeId(), getCompositeScore(), getAboutMeCommentary(), getGeneralCommentary(), getSoftSkillCommentary(), getStartDateTime(), getEndDateTime(), getSoftSkillsVerdict(), getStatus());
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Screening other = (Screening) obj;
+		if (screeningId != other.screeningId)
+			return false;
+		return true;
+	}
+
+	public Screening() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+	public Screening(int screeningId, ScheduledScreening scheduledScreening, int screenerId, int skillType,
+			Double compositeScore, String aboutMeCommentary, String generalCommentary, String softSkillCommentary,
+			Date startDateTime, Date endDateTime, Boolean softSkillsVerdict, String status) {
+		super();
+		this.screeningId = screeningId;
+		this.scheduledScreening = scheduledScreening;
+		this.screenerId = screenerId;
+		this.skillType = skillType;
+		this.compositeScore = compositeScore;
+		this.aboutMeCommentary = aboutMeCommentary;
+		this.generalCommentary = generalCommentary;
+		this.softSkillCommentary = softSkillCommentary;
+		this.startDateTime = startDateTime;
+		this.endDateTime = endDateTime;
+		this.softSkillsVerdict = softSkillsVerdict;
+		this.status = status;
 	}
 
 	@Override
 	public String toString() {
-		return "Screening{" +
-				"screeningId=" + screeningId +
-				", scheduledScreening=" + scheduledScreening +
-				", screenerId=" + screenerId +
-				", skillType=" + skillTypeId +
-				", compositeScore=" + compositeScore +
-				", aboutMeCommentary='" + aboutMeCommentary + '\'' +
-				", generalCommentary='" + generalCommentary + '\'' +
-				", softSkillCommentary='" + softSkillCommentary + '\'' +
-				", startDateTime=" + startDateTime +
-				", endDateTime=" + endDateTime +
-				", softSkillsVerdict=" + softSkillsVerdict +
-				", status=" + status +
-				'}';
+		return "Screening [screeningId=" + screeningId + ", scheduledScreening=" + scheduledScreening + ", screenerId="
+				+ screenerId + ", skillType=" + skillType + ", compositeScore=" + compositeScore
+				+ ", aboutMeCommentary=" + aboutMeCommentary + ", generalCommentary=" + generalCommentary
+				+ ", softSkillCommentary=" + softSkillCommentary + ", startDateTime=" + startDateTime + ", endDateTime="
+				+ endDateTime + ", softSkillsVerdict=" + softSkillsVerdict + ", status=" + status + "]";
 	}
+	
+	
+	
+	
+	
 }

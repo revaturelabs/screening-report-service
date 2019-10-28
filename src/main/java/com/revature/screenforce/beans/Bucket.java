@@ -1,130 +1,89 @@
 package com.revature.screenforce.beans;
 
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+//import io.swagger.annotations.ApiModel;
+//import io.swagger.annotations.ApiModelProperty;
 
-import javax.persistence.*;
-import java.io.Serializable;
-import java.util.List;
-import java.util.Objects;
+//import javax.persistence.*;
+//import java.io.Serializable;
+//import java.util.List;
+//import java.util.Objects;
 
 
 /**
- * Define bucket POJO
- *
- * @author Adil Iqbal | 1805-WVU-MAY29 | Richard Orr
- * @author Jeremy Straus | 1807-QC | Emily Higgins
- * @author Rishabh Rana | 1807-QC | Emily Higgins
- * @author Alpha Barry | 1807-QC | Emily Higgins
- * @author Omar Guzman | 1807-QC | Emily Higgins
+ *  The POJO for the bucket
+ *  This version has the hibernate removed, 
+ *  and the declaration is from feign client, used in the feign folder
+ * @author Zi Feng Chen | 1909-QC | Emily Higgins
+ * @author George Ingleton | 1909-QC| Emily Higgins
  */
-@ApiModel(value = "Bucket", description = "A Bucket which holds a set of related Questions")
-@Entity
-@Table(name = "bucket")
-public class Bucket implements Serializable {
 
-    private static final long serialVersionUID = 2435095816452768808L;
+//Hi Future Rex
 
-    @ApiModelProperty(value = "id of the Bucket")
-    @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "BUCKET_SEQUENCE")
-    @SequenceGenerator(name = "BUCKET_SEQUENCE", sequenceName = "bucket_sequence", allocationSize = 1)
-    @Column(name = "BUCKET_ID")
+
+
+public class Bucket {
+
     private int bucketId;
-    
-    @ApiModelProperty(value = "set me!")
-    @Column(name="SCREENING_ID")
-    private int screeningId;
-    
-    public int getScreeningId() {
-		return screeningId;
-	}
-	public void setScreeningId(int screeningId) {
-		this.screeningId = screeningId;
-	}
-
-	@ApiModelProperty(value = "description of the Bucket")
-    @Column(name = "BUCKET_DESCRIPTION")
     private String bucketDescription;
-
-    @ApiModelProperty(value = "denotes whether Bucket is active or not")
-    @Column(name = "IS_ACTIVE")
     private boolean isActive;
     
-	@ApiModelProperty(value = "The Screening connected to the screening")
-	@OneToMany(fetch = FetchType.EAGER)
-	@JoinColumn(name = "BUCKET_ID")
-	private List<Question> questions;
-    
-	public List<Question> getQuestions() {
-		return questions;
+	public int getBucketId() {
+		return bucketId;
 	}
-	public void setQuestions(List<Question> questions) {
-		this.questions = questions;
+	public void setBucketId(int bucketId) {
+		this.bucketId = bucketId;
+	}
+	public String getBucketDescription() {
+		return bucketDescription;
+	}
+	public void setBucketDescription(String bucketDescription) {
+		this.bucketDescription = bucketDescription;
+	}
+	public boolean isActive() {
+		return isActive;
+	}
+	public void setActive(boolean isActive) {
+		this.isActive = isActive;
 	}
 	
+	
+	
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + bucketId;
+		return result;
+	}
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Bucket other = (Bucket) obj;
+		if (bucketId != other.bucketId)
+			return false;
+		return true;
+	}
 	public Bucket() {
-        super();
-    }
-
-    public Bucket(Integer bucketId, Integer screeningId, String bucketDescription, Boolean isActive) {
-        super();
-        this.bucketId = bucketId;
-        this.screeningId = screeningId;
-        this.bucketDescription = bucketDescription;
-        this.isActive = isActive;
-    }
-
-    /**
-     * Getters & Setters
-     */
-    public int getBucketId() {
-        return bucketId;
-    }
-
-    public void setBucketId(int bucketId) {
-        this.bucketId = bucketId;
-    }
-
-    public String getBucketDescription() {
-        return bucketDescription;
-    }
-
-    public void setBucketDescription(String bucketDescription) {
-        this.bucketDescription = bucketDescription;
-    }
-
-    public boolean getIsActive() {
-        return isActive;
-    }
-
-    public void setIsActive(boolean isActive) {
-        this.isActive = isActive;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Bucket bucket = (Bucket) o;
-        return getBucketId() == bucket.getBucketId() &&
-                isActive == bucket.isActive &&
-                Objects.equals(getBucketDescription(), bucket.getBucketDescription());
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(getBucketId(), getScreeningId(), getBucketDescription(), isActive);
-    }
-
-    @Override
-    public String toString() {
-        return "Bucket{" +
-                "bucketId=" + bucketId +
-                "screeningId=" + screeningId +
-                ", bucketDescription='" + bucketDescription + '\'' +
-                ", isActive=" + isActive +
-                '}';
-    }
+		super();
+		// TODO Auto-generated constructor stub
+	}
+	public Bucket(int bucketId, String bucketDescription, boolean isActive) {
+		super();
+		this.bucketId = bucketId;
+		this.bucketDescription = bucketDescription;
+		this.isActive = isActive;
+	}
+	@Override
+	public String toString() {
+		return "Bucket [bucketId=" + bucketId + ", bucketDescription=" + bucketDescription + ", isActive=" + isActive
+				+ "]";
+	}
+ 
+  
 }
 

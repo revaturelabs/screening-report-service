@@ -3,6 +3,7 @@ package com.revature.screenforce.services;
 import java.time.LocalDate;
 import java.time.ZoneOffset;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -21,6 +22,7 @@ import com.revature.screenforce.beans.Bucket;
 import com.revature.screenforce.beans.Question;
 import com.revature.screenforce.beans.QuestionScore;
 import com.revature.screenforce.beans.ScheduledScreening;
+import com.revature.screenforce.beans.ScheduledStatus;
 import com.revature.screenforce.beans.Screener;
 import com.revature.screenforce.beans.Screening;
 import com.revature.screenforce.beans.SkillType;
@@ -106,13 +108,39 @@ public class ReportsService {
 	public List<Weight> testGetAllWeight(){
 		return  feignweight.getWeights();
 	}
-	
-	public FullReportModel testFullReport() {
+	public List<FullReportModel> getAllReports(Date start, Date end){
+		Date searchStart;
+		Date searchEnd;
+		List<FullReportModel> out = new ArrayList<FullReportModel>();
+		if(end==null) {
+			searchEnd = new Date();
+		}else {
+			searchEnd = end;
+		}
+		if(start==null) {
+			searchStart = new Date(0);
+		}else {
+			searchStart = start;
+		}
+		List<Screening> test = feignscreening.getAllScreening();
+		for(Screening s:test) {
+			if(s.getScheduledScreening().getScheduledStatus().equals(ScheduledStatus.SCREENED) &&
+					s.getScheduledScreening().getScheduledDate().after(searchStart) && 
+					s.getScheduledScreening().getScheduledDate().before(searchEnd)){
+				out.add(testFullReport(new Integer(s.getScreeningId())));
+				System.out.println("herer");
+			}
+		}
+		
+		
+		return out;
+	}
+	public FullReportModel testFullReport(Integer Screen_id) {
 		FullReportModel out = new FullReportModel();
 		
-		List<Screening> test = testGetAllScreening();
+
 		List<SkillType> st = testGetAllSkillType();
-		Screening op = test.get(0);
+		Screening op = feignscreening.getScreeningById(Screen_id);
 		out.setInternal_id(op.getScreeningId());
 		out.setScreener_id(op.getScreenerId());
 		out.setCan(op.getScheduledScreening().getCandidate());

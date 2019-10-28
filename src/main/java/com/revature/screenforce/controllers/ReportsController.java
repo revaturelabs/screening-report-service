@@ -1,6 +1,7 @@
 package com.revature.screenforce.controllers;
 
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -82,10 +83,20 @@ public class ReportsController {
 	}
 	@GetMapping(value="/frm", produces= MediaType.APPLICATION_JSON_VALUE)
 	public @ResponseBody FullReportModel getFullReport(){
-		return this.reportsService.testFullReport();
+		return this.reportsService.testFullReport(new Integer(4321));
 	}
-
-
+	@GetMapping(value="/frmtest", produces= MediaType.APPLICATION_JSON_VALUE)
+	public @ResponseBody List<FullReportModel> gettestFullReport(){
+		Date end = null;
+		Date start = null;
+		return this.reportsService.getAllReports(start, end);
+	}
+	@GetMapping(value="/frm/{dateStart}/{dateEnd}", produces= MediaType.APPLICATION_JSON_VALUE)
+	public @ResponseBody List<FullReportModel> getFullReportByDate(@PathVariable Date dateStart, Date dateEnd){
+	//	System.out.println(dateStart.toString()+"\n"+dateEnd.toString());
+		return null;
+		//return this.reportsService.getFullReport(dateStart,dateEnd);
+	}
 //	@GetMapping(value="/email", produces= MediaType.APPLICATION_JSON_VALUE)
 //	public @ResponseBody List<String> getAllEmails(@RequestParam(value = "email") String email){
 //		List<String> emails = this.reportsService.getAllEmails(email);

@@ -123,10 +123,12 @@ public class ReportsService {
 			searchStart = start;
 		}
 		List<Screening> test = feignscreening.getAllScreening();
+		System.out.println("here3");
 		for(Screening s:test) {
-			if(s.getScheduledScreening().getScheduledStatus().equals(ScheduledStatus.SCREENED) &&
-					s.getScheduledScreening().getScheduledDate().after(searchStart) && 
-					s.getScheduledScreening().getScheduledDate().before(searchEnd)){
+			if( s.getScheduledScreening().getScheduledStatus().compareTo(ScheduledStatus.SCREENED)==0 	&&
+					(s.getStartDateTime().after(searchStart) && s.getStartDateTime().before(searchEnd))
+					 
+				){
 				out.add(testFullReport(new Integer(s.getScreeningId())));
 				System.out.println("herer");
 			}
@@ -144,7 +146,7 @@ public class ReportsService {
 		out.setInternal_id(op.getScreeningId());
 		out.setScreener_id(op.getScreenerId());
 		out.setCan(op.getScheduledScreening().getCandidate());
-		out.setScheduleDate(op.getScheduledScreening().getScheduledDate());
+		out.setScheduleDate(op.getStartDateTime());
 		out.setAboutMeCommentary(op.getAboutMeCommentary());
 		out.setGeneralCommentary(op.getGeneralCommentary());
 		out.setSoftSkillCommentary(op.getSoftSkillCommentary());

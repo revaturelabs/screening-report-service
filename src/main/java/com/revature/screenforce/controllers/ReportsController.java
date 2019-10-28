@@ -1,6 +1,10 @@
 package com.revature.screenforce.controllers;
 
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -88,14 +92,44 @@ public class ReportsController {
 	@GetMapping(value="/frmtest", produces= MediaType.APPLICATION_JSON_VALUE)
 	public @ResponseBody List<FullReportModel> gettestFullReport(){
 		Date end = null;
+		
 		Date start = null;
+
 		return this.reportsService.getAllReports(start, end);
 	}
 	@GetMapping(value="/frm/{dateStart}/{dateEnd}", produces= MediaType.APPLICATION_JSON_VALUE)
-	public @ResponseBody List<FullReportModel> getFullReportByDate(@PathVariable Date dateStart, Date dateEnd){
-	//	System.out.println(dateStart.toString()+"\n"+dateEnd.toString());
+	public @ResponseBody List<FullReportModel> getFullReportByDate(@PathVariable String dateStart,@PathVariable String dateEnd){
+
+	
+		Date start;
+		Date end;
+		SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd");
+		Calendar c = Calendar.getInstance();
+
+		//return dateStart;
+		try {
+			start = sf.parse(dateStart);
+		//	LocalDateTime temp = start.toInstant();
+		
+			c.setTime(start);
+			c.add(Calendar.DATE, -1);
+			Date searchStart = sf.parse(sf.format(c.getTime()));
+			
+			
+			end = sf.parse(dateEnd);
+			c.setTime(end);
+			c.add(Calendar.DATE, 1);
+			Date searchEnd = sf.parse(sf.format(c.getTime()));
+			
+			//LocalDateTime.from(end.toInstant()).plusDays(1);
+			return this.reportsService.getAllReports(searchStart,searchEnd);
+		} catch (ParseException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} 
+
 		return null;
-		//return this.reportsService.getFullReport(dateStart,dateEnd);
+	
 	}
 //	@GetMapping(value="/email", produces= MediaType.APPLICATION_JSON_VALUE)
 //	public @ResponseBody List<String> getAllEmails(@RequestParam(value = "email") String email){

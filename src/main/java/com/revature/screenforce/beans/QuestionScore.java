@@ -14,7 +14,7 @@ public class QuestionScore {
 
 	private int questionScoreId;
 	private int questionId;
-	private int bucketId;
+	private int categoryId;
 	private Screening screening;
 	private Double score;
 	private String comment;
@@ -47,12 +47,12 @@ public class QuestionScore {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	public QuestionScore(int questionScoreId, int questionId, int bucketId, Screening screening, Double score,
+	public QuestionScore(int questionScoreId, int questionId, int categoryId, Screening screening, Double score,
 			String comment, Date beginTime) {
 		super();
 		this.questionScoreId = questionScoreId;
 		this.questionId = questionId;
-		this.bucketId = bucketId;
+		this.categoryId = categoryId;
 		this.screening = screening;
 		this.score = score;
 		this.comment = comment;
@@ -60,8 +60,8 @@ public class QuestionScore {
 	}
 	@Override
 	public String toString() {
-		return "QuestionScore [questionScoreId=" + questionScoreId + ", questionId=" + questionId + ", bucketId="
-				+ bucketId + ", screening=" + screening + ", score=" + score + ", comment=" + comment + ", beginTime="
+		return "QuestionScore [questionScoreId=" + questionScoreId + ", questionId=" + questionId + ", categoryId="
+				+ categoryId + ", screening=" + screening + ", score=" + score + ", comment=" + comment + ", beginTime="
 				+ beginTime + "]";
 	}
 	public int getQuestionScoreId() {
@@ -76,11 +76,12 @@ public class QuestionScore {
 	public void setQuestionId(int questionId) {
 		this.questionId = questionId;
 	}
-	public int getBucketId() {
-		return bucketId;
+
+	public int getCategoryId() {
+		return categoryId;
 	}
-	public void setBucketId(int bucketId) {
-		this.bucketId = bucketId;
+	public void setCategoryId(int categoryId) {
+		this.categoryId = categoryId;
 	}
 	public Screening getScreening() {
 		return screening;

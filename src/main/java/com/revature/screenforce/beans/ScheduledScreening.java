@@ -16,7 +16,7 @@ public class ScheduledScreening {
 	private int scheduledScreeningId;
 	private Candidate candidate;
 	private ScheduledStatus scheduledStatus;
-	private int skillTypeId;
+	private int TrackId;
 	private Date scheduledDate;
 	public int getScheduledScreeningId() {
 		return scheduledScreeningId;
@@ -36,11 +36,13 @@ public class ScheduledScreening {
 	public void setScheduledStatus(ScheduledStatus scheduledStatus) {
 		this.scheduledStatus = scheduledStatus;
 	}
-	public int getSkillTypeId() {
-		return skillTypeId;
+
+	
+	public int getTrackId() {
+		return TrackId;
 	}
-	public void setSkillTypeId(int skillTypeId) {
-		this.skillTypeId = skillTypeId;
+	public void setTrackId(int trackId) {
+		TrackId = trackId;
 	}
 	public Date getScheduledDate() {
 		return scheduledDate;
@@ -76,18 +78,18 @@ public class ScheduledScreening {
 		// TODO Auto-generated constructor stub
 	}
 	public ScheduledScreening(int scheduledScreeningId, Candidate candidate, ScheduledStatus scheduledStatus,
-			int skillTypeId, Date scheduledDate) {
+			int TrackId, Date scheduledDate) {
 		super();
 		this.scheduledScreeningId = scheduledScreeningId;
 		this.candidate = candidate;
 		this.scheduledStatus = scheduledStatus;
-		this.skillTypeId = skillTypeId;
+		this.TrackId = TrackId;
 		this.scheduledDate = scheduledDate;
 	}
 	@Override
 	public String toString() {
 		return "ScheduledScreening [scheduledScreeningId=" + scheduledScreeningId + ", candidate=" + candidate
-				+ ", scheduledStatus=" + scheduledStatus + ", skillTypeId=" + skillTypeId + ", scheduledDate="
+				+ ", scheduledStatus=" + scheduledStatus + ", TrackId=" + TrackId + ", scheduledDate="
 				+ scheduledDate + "]";
 	}
 	

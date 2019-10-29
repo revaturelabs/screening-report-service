@@ -13,7 +13,7 @@ package com.revature.screenforce.beans;
 public class Question {
 
 	private int questionId;
-	private Bucket bucket;
+	private Category category;
 	private boolean isActive;
 	private String questionText;
 	private String sampleAnswer;
@@ -42,14 +42,14 @@ public class Question {
 
 	@Override
 	public String toString() {
-		return "Question [questionId=" + questionId + ", bucket=" + bucket + ", isActive=" + isActive
+		return "Question [questionId=" + questionId + ", category=" + category + ", isActive=" + isActive
 				+ ", questionText=" + questionText + ", sampleAnswer=" + sampleAnswer + "]";
 	}
 
-	public Question(int questionId, Bucket bucket, boolean isActive, String questionText, String sampleAnswer) {
+	public Question(int questionId, Category category, boolean isActive, String questionText, String sampleAnswer) {
 		super();
 		this.questionId = questionId;
-		this.bucket = bucket;
+		this.category = category;
 		this.isActive = isActive;
 		this.questionText = questionText;
 		this.sampleAnswer = sampleAnswer;
@@ -64,16 +64,16 @@ public class Question {
 		return questionId;
 	}
 
+	public Category getCategory() {
+		return category;
+	}
+
+	public void setCategory(Category category) {
+		this.category = category;
+	}
+
 	public void setQuestionId(int questionId) {
 		this.questionId = questionId;
-	}
-
-	public Bucket getBucket() {
-		return bucket;
-	}
-
-	public void setBucket(Bucket bucket) {
-		this.bucket = bucket;
 	}
 
 	public boolean isActive() {

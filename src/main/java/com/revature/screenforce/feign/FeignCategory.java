@@ -6,7 +6,7 @@ import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import com.revature.screenforce.beans.Bucket;
+import com.revature.screenforce.beans.Category;
 /**
  * The feignClient for bucket
  * Takes Data from the screening-admin-service, BucketController
@@ -14,13 +14,13 @@ import com.revature.screenforce.beans.Bucket;
  * @author George Ingleton | 1909-QC| Emily Higgins
  *
  */
-@FeignClient(name = "bucket", url = "http://localhost:8181/bucket")
-public interface FeignBucket {
+@FeignClient(name = "category", url = "http://localhost:8181/category")
+public interface FeignCategory {
 	@RequestMapping(method = RequestMethod.GET)
-    List<Bucket> getBucket();
+    List<Category> getCategory();
 	
 
-	@RequestMapping(value="/{bucketId}", method = RequestMethod.GET)
-	Bucket getBucketByBucketId(@PathVariable Integer bucketId) ;
+	@RequestMapping(value="/{categoryId}", method = RequestMethod.GET)
+	Category getCategoryByCategoryId(@PathVariable Integer categoryId) ;
 	
 }

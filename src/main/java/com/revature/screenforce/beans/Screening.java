@@ -24,7 +24,7 @@ public class Screening {
 
 	private int screenerId;
 
-	private int skillType;
+	private int track;
 
 	private Double compositeScore;
 
@@ -66,12 +66,13 @@ public class Screening {
 		this.screenerId = screenerId;
 	}
 
-	public int getSkillType() {
-		return skillType;
+
+	public int getTrack() {
+		return track;
 	}
 
-	public void setSkillType(int skillType) {
-		this.skillType = skillType;
+	public void setTrack(int track) {
+		this.track = track;
 	}
 
 	public Double getCompositeScore() {
@@ -165,14 +166,14 @@ public class Screening {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Screening(int screeningId, ScheduledScreening scheduledScreening, int screenerId, int skillType,
+	public Screening(int screeningId, ScheduledScreening scheduledScreening, int screenerId, int track,
 			Double compositeScore, String aboutMeCommentary, String generalCommentary, String softSkillCommentary,
 			Date startDateTime, Date endDateTime, Boolean softSkillsVerdict, String status) {
 		super();
 		this.screeningId = screeningId;
 		this.scheduledScreening = scheduledScreening;
 		this.screenerId = screenerId;
-		this.skillType = skillType;
+		this.track = track;
 		this.compositeScore = compositeScore;
 		this.aboutMeCommentary = aboutMeCommentary;
 		this.generalCommentary = generalCommentary;
@@ -186,7 +187,7 @@ public class Screening {
 	@Override
 	public String toString() {
 		return "Screening [screeningId=" + screeningId + ", scheduledScreening=" + scheduledScreening + ", screenerId="
-				+ screenerId + ", skillType=" + skillType + ", compositeScore=" + compositeScore
+				+ screenerId + ", track=" + track + ", compositeScore=" + compositeScore
 				+ ", aboutMeCommentary=" + aboutMeCommentary + ", generalCommentary=" + generalCommentary
 				+ ", softSkillCommentary=" + softSkillCommentary + ", startDateTime=" + startDateTime + ", endDateTime="
 				+ endDateTime + ", softSkillsVerdict=" + softSkillsVerdict + ", status=" + status + "]";

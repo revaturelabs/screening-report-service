@@ -61,11 +61,11 @@ public class ReportsController {
 		try {
 			start = sf.parse(dateStart);
 			c.setTime(start);
-			c.add(Calendar.DATE, -1);
+			c.add(Calendar.DATE, -2);
 			Date searchStart = sf.parse(sf.format(c.getTime()));
 			end = sf.parse(dateEnd);
 			c.setTime(end);
-			c.add(Calendar.DATE, 1);
+			c.add(Calendar.DATE, 0);
 			Date searchEnd = sf.parse(sf.format(c.getTime()));
 			return this.reportsService.getSimpleReportModelByRange(searchStart, searchEnd);	
 		} catch (ParseException e1) {

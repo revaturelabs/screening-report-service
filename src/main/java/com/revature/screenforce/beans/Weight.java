@@ -18,79 +18,85 @@ public class Weight {
 
     private int weightValue;
 
-    private SkillType skillType;
+    private Track track;
 
-    private Bucket bucket;
+    private Category category;
 
-    public Weight() {
-        super();
-    }
+    
+    
+    
+	public long getWeightId() {
+		return weightId;
+	}
 
-    public Weight(int weightId, int weightValue, SkillType skillType, Bucket bucket) {
-        super();
-        this.weightId = weightId;
-        this.weightValue = weightValue;
-        this.skillType = skillType;
-        this.bucket = bucket;
-    }
+	public void setWeightId(long weightId) {
+		this.weightId = weightId;
+	}
 
-   
-    public long getWeightId() {
-        return weightId;
-    }
+	public int getWeightValue() {
+		return weightValue;
+	}
 
-    public void setWeightId(long weightId) {
-        this.weightId = weightId;
-    }
+	public void setWeightValue(int weightValue) {
+		this.weightValue = weightValue;
+	}
 
-    public int getWeightValue() {
-        return weightValue;
-    }
+	public Track getTrack() {
+		return track;
+	}
 
-    public void setWeightValue(int weightValue) {
-        this.weightValue = weightValue;
-    }
+	public void setTrack(Track track) {
+		this.track = track;
+	}
 
-    public SkillType getSkillType() {
-        return skillType;
-    }
+	public Category getCategory() {
+		return category;
+	}
 
-    public void setSkillType(SkillType skillType) {
-        this.skillType = skillType;
-    }
+	public void setCategory(Category category) {
+		this.category = category;
+	}
 
-    public Bucket getBucket() {
-        return bucket;
-    }
+	public Weight(long weightId, int weightValue, Track track, Category category) {
+		super();
+		this.weightId = weightId;
+		this.weightValue = weightValue;
+		this.track = track;
+		this.category = category;
+	}
 
-    public void setBucket(Bucket bucket) {
-        this.bucket = bucket;
-    }
+	public Weight() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
 
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + (int) (weightId ^ (weightId >>> 32));
+		return result;
+	}
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Weight weight1 = (Weight) o;
-        return getWeightId() == weight1.getWeightId() &&
-                getWeightValue() == weight1.getWeightValue() &&
-                getSkillType() == weight1.getSkillType() &&
-                getBucket() == weight1.getBucket();
-    }
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Weight other = (Weight) obj;
+		if (weightId != other.weightId)
+			return false;
+		return true;
+	}
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(getWeightId(), getWeightValue(), getSkillType(), getBucket());
-    }
+	@Override
+	public String toString() {
+		return "Weight [weightId=" + weightId + ", weightValue=" + weightValue + ", track=" + track + ", category="
+				+ category + "]";
+	}
 
-    @Override
-    public String toString() {
-        return "Weight{" +
-                "weightId=" + weightId +
-                ", weightValue=" + weightValue +
-                ", skillType=" + skillType +
-                ", bucket=" + bucket +
-                '}';
-    }
+ 
 }

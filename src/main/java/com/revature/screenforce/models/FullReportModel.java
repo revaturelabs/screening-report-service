@@ -12,6 +12,7 @@ import com.revature.screenforce.beans.Candidate;
 
 
 public class FullReportModel {
+/*
 	//The internal id of this fullreport
 	int screening_id;
 	//A Date of the schedule time, 
@@ -102,5 +103,5 @@ public class FullReportModel {
 	public void setViolation(List<ViolationModel> violation) {
 		this.violation = violation;
 	}
-
+*/
 }

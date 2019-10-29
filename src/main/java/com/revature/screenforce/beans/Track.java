@@ -11,21 +11,21 @@ package com.revature.screenforce.beans;
 
 //Hi Future Rex
 
-public class SkillType  {
+public class Track  {
 
 
-	private int skillTypeId;
+	private int trackId;
 
 	private String title;
 
     private boolean isActive;
 
-	public int getSkillTypeId() {
-		return skillTypeId;
+	public int getTrackId() {
+		return trackId;
 	}
 
-	public void setSkillTypeId(int skillTypeId) {
-		this.skillTypeId = skillTypeId;
+	public void setSkillTypeId(int trackId) {
+		this.trackId = trackId;
 	}
 
 	public String getTitle() {
@@ -48,7 +48,7 @@ public class SkillType  {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + skillTypeId;
+		result = prime * result + trackId;
 		return result;
 	}
 
@@ -60,27 +60,27 @@ public class SkillType  {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		SkillType other = (SkillType) obj;
-		if (skillTypeId != other.skillTypeId)
+		Track other = (Track) obj;
+		if (trackId != other.trackId)
 			return false;
 		return true;
 	}
 
-	public SkillType() {
+	public Track() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public SkillType(int skillTypeId, String title, boolean isActive) {
+	public Track(int trackId, String title, boolean isActive) {
 		super();
-		this.skillTypeId = skillTypeId;
+		this.trackId = trackId;
 		this.title = title;
 		this.isActive = isActive;
 	}
 
 	@Override
 	public String toString() {
-		return "SkillType [skillTypeId=" + skillTypeId + ", title=" + title + ", isActive=" + isActive + "]";
+		return "SkillType [trackId=" + trackId + ", title=" + title + ", isActive=" + isActive + "]";
 	}
   
     

@@ -22,15 +22,15 @@ import com.revature.screenforce.models.ViolationModel;
 @Service
 public class ReportsService {
 	
-	@Autowired FeignCategory feignCategory;
-	@Autowired FeignQuestion feignQuestion;
-	@Autowired FeignQuestionScore feignQuestionScore;
-	@Autowired FeignScheduledScreening feignScheduledScreening;
-	@Autowired FeignScreening feignScreening;
-	@Autowired FeignTrack feignTrack;
-	@Autowired FeignSoftSkillViolation feignSoftSkillViolation;
-	@Autowired FeignViolationType feignViolationType;
-	@Autowired FeignWeight feignWeight;
+	@Autowired public FeignCategory feignCategory;
+	@Autowired public FeignQuestion feignQuestion;
+	@Autowired public FeignQuestionScore feignQuestionScore;
+	@Autowired public FeignScheduledScreening feignScheduledScreening;
+	@Autowired public FeignScreening feignScreening;
+	@Autowired public FeignTrack feignTrack;
+	@Autowired public FeignSoftSkillViolation feignSoftSkillViolation;
+	@Autowired public FeignViolationType feignViolationType;
+	@Autowired public FeignWeight feignWeight;
 	
 	private List<ViolationModel> makeViolationModel(Screening scr){
 	List<ViolationModel> vm = new ArrayList<ViolationModel>();

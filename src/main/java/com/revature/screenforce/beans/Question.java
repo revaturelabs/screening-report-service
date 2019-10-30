@@ -1,5 +1,7 @@
 package com.revature.screenforce.beans;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 
 /**
  *  The POJO for the Question
@@ -8,13 +10,22 @@ package com.revature.screenforce.beans;
  * @author George Ingleton | 1909-QC| Emily Higgins
  */
 
-//Hi Future Rex
+@ApiModel(value = "Question", description = "contains the question")
 public class Question {
 
+	@ApiModelProperty(value = "id of the question")
 	private int questionId;
+	
+	@ApiModelProperty(value = "id of the category")
 	private Category category;
+	
+	@ApiModelProperty(value = "let's you know is the question is active")
 	private boolean isActive;
+	
+	@ApiModelProperty(value = "the text of the question")
 	private String questionText;
+	
+	@ApiModelProperty(value = "a sample of the answer to the question")
 	private String sampleAnswer;
 
 	@Override

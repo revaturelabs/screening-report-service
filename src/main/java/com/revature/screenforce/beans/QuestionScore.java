@@ -2,6 +2,8 @@ package com.revature.screenforce.beans;
 
 import java.util.Date;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 
 /**
  *  The POJO for the QuestionScore
@@ -9,18 +11,30 @@ import java.util.Date;
  * @author Zi Feng Chen | 1909-QC | Emily Higgins
  * @author George Ingleton | 1909-QC| Emily Higgins
  */
+
+@ApiModel(value = "QuestionScore", description = "contains the score of the candidate based on this question")
 public class QuestionScore {
 
+	@ApiModelProperty(value = "question score id")
 	private int questionScoreId;
+	
+	@ApiModelProperty(value = "question id")
 	private int questionId;
+	
+	@ApiModelProperty(value = "category id")
 	private int categoryId;
+	
+	@ApiModelProperty(value = "the current screening")
 	private Screening screening;
+	
+	@ApiModelProperty(value = "the score for the question")
 	private Double score;
+	
+	@ApiModelProperty(value = "any comments from the screener")
 	private String comment;
+	
+	@ApiModelProperty(value = "the start time of the screening")
 	private Date beginTime;
-	
-	
-	
 	
 	@Override
 	public int hashCode() {

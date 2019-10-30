@@ -8,37 +8,53 @@ package com.revature.screenforce.beans;
 //import java.time.LocalDate;
 import java.util.Date;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+
 /**
  *  The POJO for the Screening
  *  the declaration is from feign client, used in the feign folder
  * @author Zi Feng Chen | 1909-QC | Emily Higgins
  * @author George Ingleton | 1909-QC| Emily Higgins
  */
-public class Screening {
-	
 
+@ApiModel(value = "Screening", description = "contains the information about the screening")
+public class Screening {
+
+	@ApiModelProperty(value = "the screening's id")
 	private int screeningId;
 
+	@ApiModelProperty(value = "the current scheduled screening")
 	private ScheduledScreening scheduledScreening;
 
+	@ApiModelProperty(value = "the screener's id")
 	private int screenerId;
 
+	@ApiModelProperty(value = "the track id")
 	private int track;
 
+	@ApiModelProperty(value = "the composite score")
 	private Double compositeScore;
 
+	@ApiModelProperty(value = "any comment for the candidate's about me")
 	private String aboutMeCommentary;
 
+	@ApiModelProperty(value = "any general comments")
 	private String generalCommentary;
 
+	@ApiModelProperty(value = "any soft skill comments")
 	private String softSkillCommentary;
 
+	@ApiModelProperty(value = "the start time for the screening")
 	private Date startDateTime;
 
+	@ApiModelProperty(value = "the end time for the screening")
 	private Date endDateTime;
 
+	@ApiModelProperty(value = "true meaning they passed, fail meaning the failed")
 	private Boolean softSkillsVerdict;
 
+	@ApiModelProperty(value = "the screening's status")
 	private String status;
 
 	public int getScreeningId() {

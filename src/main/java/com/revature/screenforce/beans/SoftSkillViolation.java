@@ -98,7 +98,7 @@ public class SoftSkillViolation {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + softViolationId;
+		result = prime * result + softSkillViolationId;
 		return result;
 	}
 
@@ -112,7 +112,7 @@ public class SoftSkillViolation {
 		if (getClass() != obj.getClass())
 			return false;
 		SoftSkillViolation other = (SoftSkillViolation) obj;
-		if (softViolationId != other.softViolationId)
+		if (softSkillViolationId != other.softSkillViolationId)
 			return false;
 		return true;
 	}
@@ -120,7 +120,7 @@ public class SoftSkillViolation {
 
 	@Override
 	public String toString() {
-		return "SoftSkillViolation [softViolationId=" + softViolationId + ", screening=" + screening
+		return "SoftSkillViolation [softSkillViolationId=" + softSkillViolationId + ", screening=" + screening
 				+ ", violationType=" + violationType + ", comment=" + comment + ", time=" + time + "]";
 	}
 	

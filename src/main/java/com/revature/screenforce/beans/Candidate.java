@@ -1,32 +1,50 @@
 package com.revature.screenforce.beans;
+
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+
 /**
  *  The POJO for the Candidate
  * @author Zi Feng Chen | 1909-QC | Emily Higgins
  * @author George Ingleton | 1909-QC| Emily Higgins
  */
+@ApiModel(value = "Candidate", description = "A Candidate which holds relevant candidate information")
 public class Candidate {
+	
+	@ApiModelProperty(value = "id of the candidate")
 	private int candidateId;
 
+	@ApiModelProperty(value = "id of the salesforce which represents the candidate")
 	private String resourceId;
 
+	@ApiModelProperty(value = "name of the candidate")
 	private String name;
 
+	@ApiModelProperty(value = "email of the candidate")
 	private String email;
 
+	@ApiModelProperty(value = "phone number of the candidate")
 	private String phoneNumber;
 
+	@ApiModelProperty(value = "skype id of the candidate")
 	private String skypeId;
 
+	@ApiModelProperty(value = "the profile url of the candidate")
 	private String profileUrl;
 
+	@ApiModelProperty(value = "the name of this candidates recruiter")
 	private String recruiterName;
 
+	@ApiModelProperty(value = "the college that the candidate went to")
 	private String college;
 
+	@ApiModelProperty(value = "the degree that the candidate received")
 	private String degree;
 
+	@ApiModelProperty(value = "the major of the candidate")
 	private String major;
 	
+	@ApiModelProperty(value = "the name of the screener for the candidate")
 	private String techScreenerName;
 
 	public int getCandidateId() {

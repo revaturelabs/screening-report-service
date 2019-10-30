@@ -2,7 +2,6 @@ package com.revature.screenforce.models;
 
 import java.util.Date;
 
-import com.revature.screenforce.beans.Candidate;
 import com.revature.screenforce.beans.Screening;
 import com.revature.screenforce.beans.Track;
 

@@ -1,9 +1,6 @@
 package com.revature.screenforce.beans;
 /**
  *  The POJO for the Candidate
- *  This version has the hibernate removed
- *  
- *  
  * @author Zi Feng Chen | 1909-QC | Emily Higgins
  * @author George Ingleton | 1909-QC| Emily Higgins
  */

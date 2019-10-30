@@ -15,7 +15,7 @@ public interface FeignWeight {
 	@RequestMapping(method = RequestMethod.GET)
 	List<Weight> getWeights() ;
 	
-	@RequestMapping(value = "/{skillTypeId}/{bucketId}",method = RequestMethod.GET)
-    Weight getWeightFromIds(@PathVariable Integer skillTypeId,@PathVariable Integer bucketId);
+	@RequestMapping(value = "/{trackId}/{bucketId}",method = RequestMethod.GET)
+    Weight getWeightFromIds(@PathVariable Integer trackId,@PathVariable Integer bucketId);
 }
 

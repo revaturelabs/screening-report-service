@@ -4,57 +4,106 @@ import com.revature.screenforce.beans.Question;
 
 public class QuestionModel {
 	//The internal ID of THIS question
-	int QuestionId;
+	int questionId;
 	//The Question
-	String QuestionText;
+	String questionText;
 	//The Answer
-	String QuestionAnswer;
+	String questionAnswer;
 	//The Score Received
-	Double Score;
-	String QuestionComment;
-	
-	
+	Double score;
+	String questionComment;
+
+	public QuestionModel(Question q) {
+		this.questionId = q.getQuestionId();
+		this.questionText = q.getQuestionText();
+		this.questionAnswer = q.getSampleAnswer();
+	}
 	public QuestionModel() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	
-	public QuestionModel(Question q) {
-		this.QuestionId = q.getQuestionId();
-		this.QuestionText = q.getQuestionText();
-		this.QuestionAnswer = q.getSampleAnswer();
-	}
-	
+
+
 	public int getQuestionId() {
-		return QuestionId;
+		return questionId;
 	}
+
+
 	public void setQuestionId(int questionId) {
-		QuestionId = questionId;
+		this.questionId = questionId;
 	}
+
+
 	public String getQuestionText() {
-		return QuestionText;
+		return questionText;
 	}
+
+
 	public void setQuestionText(String questionText) {
-		QuestionText = questionText;
+		this.questionText = questionText;
 	}
+
+
 	public String getQuestionAnswer() {
-		return QuestionAnswer;
+		return questionAnswer;
 	}
+
+
 	public void setQuestionAnswer(String questionAnswer) {
-		QuestionAnswer = questionAnswer;
+		this.questionAnswer = questionAnswer;
 	}
+
+
 	public Double getScore() {
-		return Score;
+		return score;
 	}
+
+
 	public void setScore(Double score) {
-		Score = score;
+		this.score = score;
 	}
+
+
 	public String getQuestionComment() {
-		return QuestionComment;
+		return questionComment;
 	}
+
+
 	public void setQuestionComment(String questionComment) {
-		QuestionComment = questionComment;
+		this.questionComment = questionComment;
 	}
+
+
+	@Override
+	public String toString() {
+		return "QuestionModel [questionId=" + questionId + ", questionText=" + questionText + ", questionAnswer="
+				+ questionAnswer + ", score=" + score + ", questionComment=" + questionComment + "]";
+	}
+
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + questionId;
+		return result;
+	}
+
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		QuestionModel other = (QuestionModel) obj;
+		if (questionId != other.questionId)
+			return false;
+		return true;
+	}
+
 	
 	
 }

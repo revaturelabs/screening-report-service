@@ -6,8 +6,7 @@ import java.util.Date;
 
 /**
  *  The POJO for the ScheduledScreening
- *  This version has the hibernate removed, 
- *  and the declaration is from feign client, used in the feign folder
+ *  the declaration is from feign client, used in the feign folder
  * @author Zi Feng Chen | 1909-QC | Emily Higgins
  * @author George Ingleton | 1909-QC| Emily Higgins
  */

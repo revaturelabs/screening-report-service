@@ -1,16 +1,13 @@
 package com.revature.screenforce.beans;
 
-
-
-
 /**
  *  The POJO for the Weight
  *  the declaration is from feign client, used in the feign folder
  * @author Zi Feng Chen | 1909-QC | Emily Higgins
  * @author George Ingleton | 1909-QC| Emily Higgins
  */
-public class Weight {
 
+public class Weight {
 
     private long weightId;
 
@@ -20,9 +17,6 @@ public class Weight {
 
     private Category category;
 
-    
-    
-    
 	public long getWeightId() {
 		return weightId;
 	}
@@ -96,5 +90,4 @@ public class Weight {
 				+ category + "]";
 	}
 
- 
 }

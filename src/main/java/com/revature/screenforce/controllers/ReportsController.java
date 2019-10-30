@@ -34,8 +34,7 @@ import com.revature.screenforce.models.SimpleReportModel;
 public class ReportsController {
 
 	@Autowired ReportsService reportsService;
-	
-	
+
 	@GetMapping(value="/frmtest", produces= MediaType.APPLICATION_JSON_VALUE)
 	public @ResponseBody FullReportModel getTestFullReportModel(){
 		return this.reportsService.createFullReportModel(4321);
@@ -51,8 +50,7 @@ public class ReportsController {
 		Date start = new Date(0);
 		Date end = new Date();
 		return this.reportsService.getSimpleReportModelByRange(start, end);	
-		
-		
+
 	}
 	
 	@GetMapping(value="/srm/{dateStart}/{dateEnd}", produces= MediaType.APPLICATION_JSON_VALUE)
@@ -137,7 +135,6 @@ public class ReportsController {
 			c.setTime(start);
 			c.add(Calendar.DATE, -1);
 			Date searchStart = sf.parse(sf.format(c.getTime()));
-			
 			
 			end = sf.parse(dateEnd);
 			c.setTime(end);

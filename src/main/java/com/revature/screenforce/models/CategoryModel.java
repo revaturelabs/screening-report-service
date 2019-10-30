@@ -76,9 +76,5 @@ public class CategoryModel {
 	public void setQuestion(List<QuestionModel> question) {
 		this.question = question;
 	}
-
-	
-	
-	
 	
 }

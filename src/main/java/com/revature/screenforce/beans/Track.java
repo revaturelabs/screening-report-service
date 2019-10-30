@@ -1,6 +1,5 @@
 package com.revature.screenforce.beans;
 
-
 /**
  *  The POJO for the Track
  *  the declaration is from feign client, used in the feign folder
@@ -12,7 +11,6 @@ package com.revature.screenforce.beans;
 
 public class Track  {
 
-	
 	private int trackId;
 
 	private String title;
@@ -23,7 +21,7 @@ public class Track  {
 		return trackId;
 	}
 
-	public void setSkillTypeId(int trackId) {
+	public void setTrackId(int trackId) {
 		this.trackId = trackId;
 	}
 
@@ -79,9 +77,7 @@ public class Track  {
 
 	@Override
 	public String toString() {
-		return "SkillType [trackId=" + trackId + ", title=" + title + ", isActive=" + isActive + "]";
+		return "Track [trackId=" + trackId + ", title=" + title + ", isActive=" + isActive + "]";
 	}
-  
-    
-    
+
 }

@@ -1,10 +1,6 @@
 package com.revature.screenforce.beans;
 
 
-//import io.swagger.annotations.ApiModelProperty;
-//import org.hibernate.annotations.CreationTimestamp;
-//
-//import javax.persistence.*;
 import java.util.Date;
 
 

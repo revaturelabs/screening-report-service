@@ -1,13 +1,12 @@
 package com.revature.screenforce.models;
 
-import java.util.Date;
-
+import java.time.LocalDateTime;
 import com.revature.screenforce.beans.Screening;
 import com.revature.screenforce.beans.Track;
 
 public class SimpleReportModel {
 	private int screeningId;
-	private Date screenDate;
+	private LocalDateTime screenDate;
 	private double compositeScore;
 	private Track track;
 	public SimpleReportModel() {
@@ -36,10 +35,10 @@ public class SimpleReportModel {
 	public void setScreeningId(int screeningId) {
 		this.screeningId = screeningId;
 	}
-	public Date getScreenDate() {
+	public LocalDateTime getScreenDate() {
 		return screenDate;
 	}
-	public void setScreenDate(Date screenDate) {
+	public void setScreenDate(LocalDateTime screenDate) {
 		this.screenDate = screenDate;
 	}
 	public double getCompositeScore() {

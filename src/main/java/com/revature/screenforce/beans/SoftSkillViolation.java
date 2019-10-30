@@ -1,9 +1,5 @@
 package com.revature.screenforce.beans;
 
-//import io.swagger.annotations.ApiModelProperty;
-//import org.hibernate.annotations.CreationTimestamp;
-//
-//import javax.persistence.*;
 import java.util.Date;
 
 import io.swagger.annotations.ApiModel;
@@ -20,19 +16,19 @@ import io.swagger.annotations.ApiModelProperty;
 @ApiModel(value = "SoftSkillViolation", description = "contains the information about the soft skill violation")
 public class SoftSkillViolation {
 
-	@ApiModelProperty(value = "the screening's id")
+	@ApiModelProperty(value = "the soft skill violation id")
 	private int softSkillViolationId;
 
-	@ApiModelProperty(value = "the screening's id")
+	@ApiModelProperty(value = "the current screening")
 	private Screening screening;
 
-	@ApiModelProperty(value = "the screening's id")
+	@ApiModelProperty(value = "the current violation type")
 	private ViolationType violationType;
 
-	@ApiModelProperty(value = "the screening's id")
+	@ApiModelProperty(value = "any general comment about the soft skill violation")
 	private String comment;
 
-	@ApiModelProperty(value = "the screening's id")
+	@ApiModelProperty(value = "the time of the violation")
 	private Date time;
 
 	public int getSoftSkillViolationId() {

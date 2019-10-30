@@ -1,5 +1,8 @@
 package com.revature.screenforce.beans;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+
 /**
  *  The POJO for the Weight
  *  the declaration is from feign client, used in the feign folder
@@ -7,14 +10,19 @@ package com.revature.screenforce.beans;
  * @author George Ingleton | 1909-QC| Emily Higgins
  */
 
+@ApiModel(value = "Weight", description = "contains the information about the weight of a track and category")
 public class Weight {
 
+	@ApiModelProperty(value = "the weight's id")
     private long weightId;
 
+	@ApiModelProperty(value = "the weight's value")
     private int weightValue;
 
+	@ApiModelProperty(value = "the current track")
     private Track track;
 
+	@ApiModelProperty(value = "the current category")
     private Category category;
 
 	public long getWeightId() {

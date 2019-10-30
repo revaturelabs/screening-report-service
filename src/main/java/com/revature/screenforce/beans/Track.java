@@ -10,14 +10,16 @@ import io.swagger.annotations.ApiModelProperty;
  * @author George Ingleton | 1909-QC| Emily Higgins
  */
 
-@ApiModel(value = "Screening", description = "contains the information about the screening")
+@ApiModel(value = "Track", description = "contains the information about the track")
 public class Track  {
 
-	@ApiModelProperty(value = "the screening's id")
+	@ApiModelProperty(value = "the track's id")
 	private int trackId;
 
+	@ApiModelProperty(value = "the track's title")
 	private String title;
 
+	@ApiModelProperty(value = "a variable to check if the track is active")
     private boolean isActive;
 
 	public int getTrackId() {

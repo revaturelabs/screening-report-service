@@ -1,9 +1,8 @@
 package com.revature.screenforce.beans;
 
 /**
- *  The POJO for the bucket
- *  This version has the hibernate removed, 
- *  and the declaration is from feign client, used in the feign folder
+ *  The POJO for the Category
+ *  the declaration is from feign client, used in the feign folder
  * @author Zi Feng Chen | 1909-QC | Emily Higgins
  * @author George Ingleton | 1909-QC| Emily Higgins
  */

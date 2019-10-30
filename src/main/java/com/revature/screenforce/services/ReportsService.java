@@ -38,15 +38,15 @@ import com.revature.screenforce.util.Time;
 @Service
 public class ReportsService {
 	
-	@Autowired FeignCategory feigncategory;
-	@Autowired FeignQuestion feignquestion;
-	@Autowired FeignQuestionScore feignquestionscore;
-	@Autowired FeignScheduledScreening feignscheduledscreening;
-	@Autowired FeignScreening feignscreening;
-	@Autowired FeignTrack feigntrack;
-	@Autowired FeignSoftSkillViolation feignsoftskillviolation;
-	@Autowired FeignViolationType feignviolationtype;
-	@Autowired FeignWeight feignweight;
+	@Autowired FeignCategory feignCategory;
+	@Autowired FeignQuestion feignQuestion;
+	@Autowired FeignQuestionScore feignQuestionScore;
+	@Autowired FeignScheduledScreening feignScheduledScreening;
+	@Autowired FeignScreening feignScreening;
+	@Autowired FeignTrack feignTrack;
+	@Autowired FeignSoftSkillViolation feignSoftSkillViolation;
+	@Autowired FeignViolationType feignViolationType;
+	@Autowired FeignWeight feignWeight;
 
 //	public List<FullReportModel> getAllReports(Date start, Date end){
 //		Date searchStart;
@@ -79,13 +79,13 @@ public class ReportsService {
 //	}
 	
 	public SimpleReportModel createSimpleModel(Screening scr) {
-		Track track = feigntrack.getTrackById(scr.getTrack());
+		Track track = feignTrack.getTrackById(scr.getTrack());
 		SimpleReportModel out = new SimpleReportModel(scr,track);
 		return out;
 	}
 	public List<SimpleReportModel> getSimpleReportModelByRange(Date start, Date end){
 		List<SimpleReportModel> out = new ArrayList<SimpleReportModel>();
-		List<Screening> test = feignscreening.getAllScreening();
+		List<Screening> test = feignScreening.getAllScreening();
 		for(Screening s:test) {
 			if( s.getScheduledScreening().getScheduledStatus().compareTo(ScheduledStatus.SCREENED)==0 	&&
 					(s.getStartDateTime().after(start) && s.getStartDateTime().before(end))){
@@ -151,216 +151,7 @@ public class ReportsService {
 //				bucketTested.add(in);
 //			}
 //		}
-//		
-//		//populate the violations model
-//		for(SoftSkillViolation s : ssv) {
-//			if(s.getScreening().getScreeningId()== op.getScreeningId()) {
-//				vm.add(new ViolationModel(s));
-//			}
-//		}
-//		out.setBucketTested(bucketTested);
-//		out.setViolation(vm);
-//		return out;
-//	}
-	
-//	public List<String> getAllEmails(String email){
-//		List<Screener> screenerList = screenerRepository.findAllByEmailContainingIgnoreCase(email);
-//		List<String> emailList = new ArrayList<>();
-//		for(Screener screener : screenerList) {
-//				emailList.add(screener.getEmail());
-//		}
-//		return emailList;
-//	}
-//	
-//	public ScreenerInfoModel getJsonReportForEmailAndWeeks(String email, String weeks) {
-//		Time time = new Time();
-//		LocalDate startDate = time.getWeekToDate(Integer.parseInt(weeks));
-//		LocalDate endDate = LocalDate.now(ZoneOffset.UTC);
-//		
-//		Screener screener = screenerRepository.getByEmail(email);
-//
-//		if (screener.getScreenings() == null) return null;
-//		List<Screening> screenings = screener.getScreenings();
-//		List<ScheduledScreening> scheduledScreenings = new ArrayList<>();
-//		
-//		if (screenings != null) {
-//			for (Screening s : screenings) {
-//				if(s.getEndDateTime().isAfter(startDate) && s.getEndDateTime().isBefore(endDate)) {
-//				
-//				ScheduledScreening ss = s.getScheduledScreening();
-//				scheduledScreenings.add(ss);
-//				
-//				SkillType st = skillTypeDAO.getBySkillTypeId(s.getSkillTypeId());
-//				bucketsBySkillType.put(st.getTitle(), s.getBuckets());
-//				
-//				if (softSkillViolationRepository.existsByScreeningId(s.getScreeningId())) {
-//					SoftSkillViolation softSkillViolation = softSkillViolationRepository.getByScreeningId(s.getScreeningId());
-//					softSkillViolations.add(softSkillViolation);
-//					
-//					if (softSkillViolation.hasViolationType())
-//						violationTypes.add(softSkillViolation.getViolationType());
-//				}
-//				
-//				numScheduledScreenings += scheduledScreenings.size();
-//			}
-//			}
-//
-//			Set<String> skillTypeTypes = bucketsBySkillType.keySet();
-//			for (String st : skillTypeTypes) {
-//				List<Bucket> bl = bucketsBySkillType.get(st);
-//				for (Bucket b : bl) {
-//					String bucketKey = b.getBucketDescription();
-//					for (Question q : b.getQuestions()) {
-//						String questionText = q.getQuestionText();
-//						for (QuestionScore qs : q.getQuestionScores()) {
-//							Double value = qs.getScore();
-//							if (value == null) break;
-//							if (!scoresBySkillType.containsKey(st)) {
-//								scoresBySkillType.put(st, value);
-//								numScoresPerSkillType.put(st, 1);
-//							} else {
-//								if (st == null) {
-//									bucketsBySkillType.remove(st);
-//								} else {
-//									double currentSkillSum = scoresBySkillType.get(st);
-//									double newSkillSum = currentSkillSum + value;
-//									scoresBySkillType.put(st, newSkillSum);
-//									numScoresPerSkillType.put(st, numScoresPerSkillType.get(st) + 1);
-//								}
-//							}
-//							
-//							if (bucketKey != null && !scoresByDescription.containsKey(bucketKey)) {
-//								scoresByDescription.put(bucketKey, value);
-//								numScoresPerDescription.put(bucketKey, 1);
-//							} else {
-//								double currentBucketSum = scoresByDescription.get(bucketKey);
-//								double newBucketVal = currentBucketSum + value;
-//								scoresByDescription.put(bucketKey, newBucketVal);
-//								numScoresPerDescription.put(bucketKey, numScoresPerDescription.get(bucketKey) + 1);
-//							}
-//						
-//							if (questionText != null && !scoresByQuestion.containsKey(questionText)) {
-//								scoresByQuestion.put(questionText, value);
-//								numScoresPerQuestion.put(questionText, 1);
-//							} else {
-//								double currentQuestionSum = scoresByQuestion.get(questionText);
-//								double newQuestionSum = currentQuestionSum + value;
-//								scoresByQuestion.put(questionText, newQuestionSum);
-//								numScoresPerQuestion.put(questionText, numScoresPerQuestion.get(questionText) + 1);
-//							}
-//						}
-//					}
-//				}
-//			}
-//		}
-//		
-//		return new ScreenerInfoModel(
-//				screener.getScreenerId(),
-//				screener.getEmail(),
-//				screener.getName());
-//	}
-//
-//	public String getReport(String email, String weeks) {
-//		reset();
-//		List<ScreenerInfoModel> reports = new ArrayList<>();
-//		if (email == null || email.isEmpty() || email.equals("null")) {
-//			List<Screener> screeners = screenerRepository.findAll();
-//			for (Screener s : screeners) {
-//				if (s.hasScreenings())
-//					reports.add(getJsonReportForEmailAndWeeks(s.getEmail(), weeks));
-//			}
-//		} else {
-//			reports.add(getJsonReportForEmailAndWeeks(email, weeks));
-//		}
-//		
-//		Set<String> keyset = scoresByDescription.keySet();
-//		Iterator<String> iter = keyset.iterator();
-//		while (iter.hasNext()) {
-//			String key = iter.next();
-//			if (scoresByDescription.get(key) != 0) {
-//				double scoreByDescription = scoresByDescription.get(key) / (double) numScoresPerDescription.get(key);
-//				scoresByDescription.put(key, scoreByDescription);
-//			}
-//		}
-//		
-//		iter = scoresBySkillType.keySet().iterator();
-//		while (iter.hasNext()) {
-//			String key = iter.next();
-//			double scoreBySkillType = scoresBySkillType.get(key) / (double) numScoresPerSkillType.get(key);
-//			scoresBySkillType.put(key,  scoreBySkillType);
-//		}
-//		
-//		iter = scoresByQuestion.keySet().iterator();
-//		while (iter.hasNext()) {
-//			String key = iter.next();
-//			double scoreByQuestion = scoresByQuestion.get(key) / (double) numScoresPerQuestion.get(key);
-//			scoresByQuestion.put(key,  scoreByQuestion);
-//			questionKeys.add(key);
-//		}
-//		System.out.println(questionKeys);
-//		top5HardestQuestions = top5HardestSort(scoresByQuestion, questionKeys);
-//		
-//		for (ViolationType v : violationTypes) {
-//			String key = v.getViolationTypeText();
-//			if (!numViolationsByType.containsKey(key)) {
-//				numViolationsByType.put(key, 1);
-//			} else if (numViolationsByType.containsKey(key)) {
-//				numViolationsByType.put(key, numViolationsByType.get(key) + 1);
-//			}
-//		}
-//		
-//		FullReportModel reportByWeeksModel = new FullReportModel(
-//				reports, 
-//				scoresByDescription, 
-//				scoresBySkillType, 
-//				top5HardestQuestions,
-//				numViolationsByType,
-//				numScheduledScreenings);
-//		Gson gson = new Gson();
-//		String json = gson.toJson(reportByWeeksModel);
-//		return json;
-//	}
-//	
-//	public TreeMap<String, Double> top5HardestSort(
-//			Map<String, 
-//			Double> mapToSort, 
-//			ArrayList<String> keys){
-//		
-//		TreeMap<String, Double> sortedTreeMap = new TreeMap<>();
-//		TreeSet<String> keysAndValues = new TreeSet<>();
-//		
-//		for(String key : keys) {
-//			keysAndValues.add(String.valueOf(mapToSort.get(key)) + ";" + key);
-//		}
-//		
-//		int count = 1;
-//		
-//		for(String keyAndValue : keysAndValues) {
-//			if(count < 6) {
-//				String key = keyAndValue.substring(keyAndValue.indexOf(";") + 1, keyAndValue.length());
-//				Double value = Double.parseDouble(keyAndValue.substring(0, keyAndValue.indexOf(";")));
-//				sortedTreeMap.put(String.valueOf(count) + ". " + key, value);
-//			}
-//			count++;
-//		}
-//		
-//		return sortedTreeMap;
-//	}
-//	public void reset() {
-//		numScheduledScreenings = 0;
-//		if (!scoresByQuestion.isEmpty()) scoresByQuestion.clear();
-//		if (!numScoresPerQuestion.isEmpty()) numScoresPerQuestion.clear();
-//		if (!top5HardestQuestions.isEmpty()) top5HardestQuestions.clear();
-//		if (!questionKeys.isEmpty()) questionKeys.clear();
-//		if (!softSkillViolations.isEmpty()) softSkillViolations.clear();
-//		if (!violationTypes.isEmpty()) violationTypes.clear();
-//		if (!bucketsBySkillType.isEmpty()) bucketsBySkillType.clear();
-//		if (!scoresByDescription.isEmpty()) scoresByDescription.clear();
-//		if (!numScoresPerDescription.isEmpty()) numScoresPerDescription.clear();
-//		if (!scoresBySkillType.isEmpty()) scoresBySkillType.clear();
-//		if (!numScoresPerSkillType.isEmpty()) numScoresPerSkillType.clear();
-//		if (!numViolationsByType.isEmpty()) numViolationsByType.clear();
-//	}
+
 }
 
 

@@ -10,15 +10,14 @@ import java.util.Date;
 
 /**
  *  The POJO for the SoftSkillViolation
- *  This version has the hibernate removed, 
- *  and the declaration is from feign client, used in the feign folder
+ *  the declaration is from feign client, used in the feign folder
  * @author Zi Feng Chen | 1909-QC | Emily Higgins
  * @author George Ingleton | 1909-QC| Emily Higgins
  */
 //Hi Future Rex
 public class SoftSkillViolation {
 
-	private int softViolationId;
+	private int softSkillViolationId;
 
 	private Screening screening;
 
@@ -29,13 +28,13 @@ public class SoftSkillViolation {
 	private Date time;
 
 
-	public int getSoftViolationId() {
-		return softViolationId;
+	public int getSoftSkillViolationId() {
+		return softSkillViolationId;
 	}
 
 
-	public void setSoftViolationId(int softViolationId) {
-		this.softViolationId = softViolationId;
+	public void setSoftSkillViolationId(int softSkillViolationId) {
+		this.softSkillViolationId = softSkillViolationId;
 	}
 
 
@@ -84,10 +83,10 @@ public class SoftSkillViolation {
 	}
 
 
-	public SoftSkillViolation(int softViolationId, Screening screening, ViolationType violationType, String comment,
+	public SoftSkillViolation(int softSkillViolationId, Screening screening, ViolationType violationType, String comment,
 			Date time) {
 		super();
-		this.softViolationId = softViolationId;
+		this.softSkillViolationId = softSkillViolationId;
 		this.screening = screening;
 		this.violationType = violationType;
 		this.comment = comment;

@@ -1,5 +1,4 @@
 package com.revature.screenforce.beans;
-
 import java.util.Date;
 
 import io.swagger.annotations.ApiModel;

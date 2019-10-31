@@ -1,8 +1,8 @@
 package com.revature.screenforce.services;
 
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -110,12 +110,12 @@ public class ReportsService {
 		SimpleReportModel out = new SimpleReportModel(scr,track);
 		return out;
 	}
-	public List<SimpleReportModel> getSimpleReportModelByRange(Date start, Date end){
+	public List<SimpleReportModel> getSimpleReportModelByRange(LocalDateTime start, LocalDateTime end){
 		List<SimpleReportModel> out = new ArrayList<SimpleReportModel>();
 		List<Screening> test = feignScreening.getAllScreening();
 		for(Screening s:test) {
 			if( s.getScheduledScreening().getScheduledStatus().compareTo(ScheduledStatus.SCREENED)==0 	&&
-					(s.getStartDateTime().after(start) && s.getStartDateTime().before(end))){
+					(s.getStartDateTime().isAfter(start) && s.getStartDateTime().isBefore(end))){
 				out.add(createSimpleModel(s));
 			}
 		}

@@ -1,7 +1,6 @@
 package com.revature.screenforce.beans;
 
-import java.util.Date;
-
+import java.time.LocalDateTime;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
@@ -26,9 +25,9 @@ public class ScheduledScreening {
 	
 	@ApiModelProperty(value = "the track id")
 	private int TrackId;
-	
+
 	@ApiModelProperty(value = "the date for the current screening")
-	private Date scheduledDate;
+	private LocalDateTime scheduledDate;
 
 	public int getScheduledScreeningId() {
 		return scheduledScreeningId;
@@ -62,11 +61,10 @@ public class ScheduledScreening {
 		TrackId = trackId;
 	}
 
-	public Date getScheduledDate() {
+	public LocalDateTime getScheduledDate() {
 		return scheduledDate;
 	}
-
-	public void setScheduledDate(Date scheduledDate) {
+	public void setScheduledDate(LocalDateTime scheduledDate) {
 		this.scheduledDate = scheduledDate;
 	}
 
@@ -98,7 +96,7 @@ public class ScheduledScreening {
 	}
 
 	public ScheduledScreening(int scheduledScreeningId, Candidate candidate, ScheduledStatus scheduledStatus,
-			int TrackId, Date scheduledDate) {
+			int TrackId, LocalDateTime scheduledDate) {
 		super();
 		this.scheduledScreeningId = scheduledScreeningId;
 		this.candidate = candidate;

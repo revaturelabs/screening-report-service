@@ -1,5 +1,8 @@
 package com.revature.screenforce.beans;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+
 /**
  *  The POJO for the Track
  *  the declaration is from feign client, used in the feign folder
@@ -7,14 +10,16 @@ package com.revature.screenforce.beans;
  * @author George Ingleton | 1909-QC| Emily Higgins
  */
 
-//Hi Future Rex
-
+@ApiModel(value = "Track", description = "contains the information about the track")
 public class Track  {
 
+	@ApiModelProperty(value = "the track's id")
 	private int trackId;
 
+	@ApiModelProperty(value = "the track's title")
 	private String title;
 
+	@ApiModelProperty(value = "a variable to check if the track is active")
     private boolean isActive;
 
 	public int getTrackId() {

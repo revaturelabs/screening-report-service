@@ -2,7 +2,8 @@ package com.revature.screenforce.beans;
 
 import java.util.List;
 
-
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 
 /**
  * TO DO (Unused)
@@ -11,14 +12,19 @@ import java.util.List;
  * once db is removed, all sources of name and email are gone.
  */
 
+@ApiModel(value = "Screener", description = "contains the information about the screener")
 public class Screener {
 
+	@ApiModelProperty(value = "the screener's id")
 	private int screenerId;
 	
+	@ApiModelProperty(value = "the screener's name")
 	private String name;
 
+	@ApiModelProperty(value = "the screener's eail")
 	private String email;
 
+	@ApiModelProperty(value = "a list of this screener's screenings")
 	private List<Screening> screenings;
 
 	public List<Screening> getScreenings() {

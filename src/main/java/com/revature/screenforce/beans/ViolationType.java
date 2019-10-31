@@ -1,22 +1,28 @@
 package com.revature.screenforce.beans;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+
 /**
- *  The POJO for the ViolationType
- *  the declaration is from feign client, used in the feign folder
+ * The POJO for the ViolationType the declaration is from feign client, used in
+ * the feign folder
+ * 
  * @author Zi Feng Chen | 1909-QC | Emily Higgins
  * @author George Ingleton | 1909-QC| Emily Higgins
  */
-//Hi Future Rex
+
+@ApiModel(value = "ViolationType", description = "contains the information about the violation type")
 public class ViolationType {
 
+	@ApiModelProperty(value = "the violation type id")
 	private int violationTypeId;
 
+	@ApiModelProperty(value = "the violation type")
 	private String violationTypeText;
 
-	
+	@ApiModelProperty(value = "the description of the violation type")
 	private String description;
-	
-	
+
 	public ViolationType() {
 		super();
 	}
@@ -27,7 +33,6 @@ public class ViolationType {
 		this.violationTypeText = violationTypeText;
 		this.description = description;
 	}
-
 
 	public int getViolationTypeId() {
 		return violationTypeId;

@@ -1,7 +1,7 @@
 package com.revature.screenforce.beans;
 
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 
 /**
@@ -16,7 +16,7 @@ public class ScheduledScreening {
 	private Candidate candidate;
 	private ScheduledStatus scheduledStatus;
 	private int TrackId;
-	private Date scheduledDate;
+	private LocalDateTime scheduledDate;
 	public int getScheduledScreeningId() {
 		return scheduledScreeningId;
 	}
@@ -43,10 +43,10 @@ public class ScheduledScreening {
 	public void setTrackId(int trackId) {
 		TrackId = trackId;
 	}
-	public Date getScheduledDate() {
+	public LocalDateTime getScheduledDate() {
 		return scheduledDate;
 	}
-	public void setScheduledDate(Date scheduledDate) {
+	public void setScheduledDate(LocalDateTime scheduledDate) {
 		this.scheduledDate = scheduledDate;
 	}
 	
@@ -77,7 +77,7 @@ public class ScheduledScreening {
 		// TODO Auto-generated constructor stub
 	}
 	public ScheduledScreening(int scheduledScreeningId, Candidate candidate, ScheduledStatus scheduledStatus,
-			int TrackId, Date scheduledDate) {
+			int TrackId, LocalDateTime scheduledDate) {
 		super();
 		this.scheduledScreeningId = scheduledScreeningId;
 		this.candidate = candidate;

@@ -1,12 +1,7 @@
 package com.revature.screenforce.beans;
 
-//import io.swagger.annotations.ApiModel;
-//import io.swagger.annotations.ApiModelProperty;
-//
-//import javax.persistence.*;
+import java.time.LocalDateTime;
 
-//import java.time.LocalDate;
-import java.util.Date;
 
 /**
  *  The POJO for the Screening
@@ -33,9 +28,9 @@ public class Screening {
 
 	private String softSkillCommentary;
 
-	private Date startDateTime;
+	private LocalDateTime startDateTime;
 
-	private Date endDateTime;
+	private LocalDateTime endDateTime;
 
 	private Boolean softSkillsVerdict;
 
@@ -106,19 +101,19 @@ public class Screening {
 		this.softSkillCommentary = softSkillCommentary;
 	}
 
-	public Date getStartDateTime() {
+	public LocalDateTime getStartDateTime() {
 		return startDateTime;
 	}
 
-	public void setStartDateTime(Date startDateTime) {
+	public void setStartDateTime(LocalDateTime startDateTime) {
 		this.startDateTime = startDateTime;
 	}
 
-	public Date getEndDateTime() {
+	public LocalDateTime getEndDateTime() {
 		return endDateTime;
 	}
 
-	public void setEndDateTime(Date endDateTime) {
+	public void setEndDateTime(LocalDateTime endDateTime) {
 		this.endDateTime = endDateTime;
 	}
 
@@ -167,7 +162,7 @@ public class Screening {
 
 	public Screening(int screeningId, ScheduledScreening scheduledScreening, int screenerId, int track,
 			Double compositeScore, String aboutMeCommentary, String generalCommentary, String softSkillCommentary,
-			Date startDateTime, Date endDateTime, Boolean softSkillsVerdict, String status) {
+			LocalDateTime startDateTime, LocalDateTime endDateTime, Boolean softSkillsVerdict, String status) {
 		super();
 		this.screeningId = screeningId;
 		this.scheduledScreening = scheduledScreening;

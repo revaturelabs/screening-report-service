@@ -17,7 +17,7 @@ public class testReportsController {
 		public void testSingleFRM() {
 			 given().
 			    when().
-			        get("http://localhost:8185/report/frmtest/").
+			        get("http://localhost:8185/frmtest/").
 			    then().
 			        assertThat().
 			        statusCode(200).
@@ -32,7 +32,7 @@ public class testReportsController {
 		public void testFRMById() {
 			 given().
 			    when().
-			        get("http://localhost:8185/report/frm/4323").
+			        get("http://localhost:8185/frm/4323").
 			    then().
 			        assertThat().
 			        statusCode(200).
@@ -47,16 +47,16 @@ public class testReportsController {
 		public void testSRMDates() {
 			 given().
 			    when().
-			        get("http://localhost:8185/report/srm/2018-03-05/2018-03-09").
+			        get("http://localhost:8185/srm/2018-03-05/2018-03-09").
 			    then().
 			        assertThat().
 			        statusCode(200).
 			    and().
 			    	assertThat().
-			    	body("screeningId", hasItems(4325,4323)).
+			    	body("screeningId", hasItems(4325)).
 			    and().
 			    	assertThat().
-			    	body("track.trackId",hasItems(51,52));
+			    	body("track.trackId",hasItems(52));
 			 }
 
 }

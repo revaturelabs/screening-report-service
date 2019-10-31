@@ -72,7 +72,7 @@ public class ReportsController {
 		}
 		try {
 			se = LocalDateTime.of(Integer.parseInt(end[0]), Integer.parseInt(end[1]), Integer.parseInt(end[2]), 0, 0);
-			se.plusDays(1);
+			se.minusDays(1);
 		} catch (Exception e1) {
 			se = LocalDateTime.now();
 			e1.printStackTrace();

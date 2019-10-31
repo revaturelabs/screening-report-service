@@ -33,7 +33,7 @@ import com.revature.screenforce.models.SimpleReportModel;
  * @author George Ingleton | 1909-QC| Emily Higgins
  */
 @RestController
-@CrossOrigin
+
 public class ReportsController {
 
 	@Autowired ReportsService reportsService;
@@ -59,33 +59,30 @@ public class ReportsController {
 		return this.reportsService.getSimpleReportModelByRange(start, end);	
 
 	}
-	
+
 	@GetMapping(value="/srm/{dateStart}/{dateEnd}", produces= MediaType.APPLICATION_JSON_VALUE)
-	public @ResponseBody List<SimpleReportModel> getSimpleReportModelByRange(@PathVariable String dateStart,@PathVariable String dateEnd){
+	public @ResponseBody List<SimpleReportModel>  getSimpleReportModelByRange(@PathVariable String dateStart,@PathVariable String dateEnd){
 	
-		Date start;
-		Date end;
-		SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd");
-		Calendar c = Calendar.getInstance();
+		String [] start = dateStart.split("-");
+		String [] end = dateEnd.split("-");
+		LocalDateTime ss;
+		LocalDateTime se;
 		try {
-			start = sf.parse(dateStart);
-			c.setTime(start);
-			c.add(Calendar.DATE, -2);
-			Date searchStart = sf.parse(sf.format(c.getTime()));
-			end = sf.parse(dateEnd);
-			c.setTime(end);
-			c.add(Calendar.DATE, 0);
-			Date searchEnd = sf.parse(sf.format(c.getTime()));
-			LocalDateTime ss = LocalDateTime.of(searchStart.getYear(),searchStart.getMonth(),searchStart.getDay(),0,0);
-			LocalDateTime se = LocalDateTime.of(searchEnd.getYear(),searchEnd.getMonth(),searchEnd.getDay(),0,0);
-			return this.reportsService.getSimpleReportModelByRange(ss,se);	
-		} catch (ParseException e1) {
-			// TODO Auto-generated catch block
+			 ss = LocalDateTime.of(Integer.parseInt(start[0]),Integer.parseInt(start[1]), Integer.parseInt(start[2]),0,0);
+			 ss.minusDays(1);
+		} catch (Exception e1) {
+			ss = LocalDateTime.of(1970,1,1,0,0);
 			e1.printStackTrace();
 		} 
-
-		return null;
+		try {
+			se = LocalDateTime.of(Integer.parseInt(end[0]),Integer.parseInt(end[1]), Integer.parseInt(end[2]),0,0);
+			se.plusDays(1);
+		} catch (Exception e1) {
+			se = LocalDateTime.now();
+			e1.printStackTrace();
+		} 
+		System.out.println(ss.toLocalDate().toString() + "\n"+ se.toLocalDate().toString());
+		return this.reportsService.getSimpleReportModelByRange(ss,se);	
 
 	}
-
 }

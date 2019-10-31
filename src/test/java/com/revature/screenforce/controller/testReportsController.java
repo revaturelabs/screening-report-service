@@ -53,10 +53,10 @@ public class testReportsController {
 			        statusCode(200).
 			    and().
 			    	assertThat().
-			    	body("screeningId", hasItems(4325)).
+			    	body("screeningId", hasItems(4323, 4325)).
 			    and().
 			    	assertThat().
-			    	body("track.trackId",hasItems(52));
+			    	body("track.trackId",hasItems(51, 52));
 			 }
 
 }

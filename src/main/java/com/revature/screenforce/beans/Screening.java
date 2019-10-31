@@ -2,13 +2,13 @@ package com.revature.screenforce.beans;
 
 import java.time.LocalDateTime;
 
-
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
 /**
- *  The POJO for the Screening
- *  the declaration is from feign client, used in the feign folder
+ * The POJO for the Screening the declaration is from feign client, used in the
+ * feign folder
+ * 
  * @author Zi Feng Chen | 1909-QC | Emily Higgins
  * @author George Ingleton | 1909-QC| Emily Higgins
  */
@@ -75,7 +75,6 @@ public class Screening {
 	public void setScreenerId(int screenerId) {
 		this.screenerId = screenerId;
 	}
-
 
 	public int getTrack() {
 		return track;
@@ -197,14 +196,10 @@ public class Screening {
 	@Override
 	public String toString() {
 		return "Screening [screeningId=" + screeningId + ", scheduledScreening=" + scheduledScreening + ", screenerId="
-				+ screenerId + ", track=" + track + ", compositeScore=" + compositeScore
-				+ ", aboutMeCommentary=" + aboutMeCommentary + ", generalCommentary=" + generalCommentary
-				+ ", softSkillCommentary=" + softSkillCommentary + ", startDateTime=" + startDateTime + ", endDateTime="
-				+ endDateTime + ", softSkillsVerdict=" + softSkillsVerdict + ", status=" + status + "]";
+				+ screenerId + ", track=" + track + ", compositeScore=" + compositeScore + ", aboutMeCommentary="
+				+ aboutMeCommentary + ", generalCommentary=" + generalCommentary + ", softSkillCommentary="
+				+ softSkillCommentary + ", startDateTime=" + startDateTime + ", endDateTime=" + endDateTime
+				+ ", softSkillsVerdict=" + softSkillsVerdict + ", status=" + status + "]";
 	}
-	
-	
-	
-	
-	
+
 }

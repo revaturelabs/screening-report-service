@@ -4,8 +4,9 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
 /**
- *  The POJO for the Question
- *  the declaration is from feign client, used in the feign folder
+ * The POJO for the Question the declaration is from feign client, used in the
+ * feign folder
+ * 
  * @author Zi Feng Chen | 1909-QC | Emily Higgins
  * @author George Ingleton | 1909-QC| Emily Higgins
  */
@@ -15,16 +16,16 @@ public class Question {
 
 	@ApiModelProperty(value = "id of the question")
 	private int questionId;
-	
+
 	@ApiModelProperty(value = "id of the category")
 	private Category category;
-	
+
 	@ApiModelProperty(value = "let's you know is the question is active")
 	private boolean isActive;
-	
+
 	@ApiModelProperty(value = "the text of the question")
 	private String questionText;
-	
+
 	@ApiModelProperty(value = "a sample of the answer to the question")
 	private String sampleAnswer;
 

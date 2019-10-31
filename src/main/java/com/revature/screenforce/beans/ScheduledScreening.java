@@ -16,13 +16,13 @@ public class ScheduledScreening {
 
 	@ApiModelProperty(value = "the scheduled screening id")
 	private int scheduledScreeningId;
-	
+
 	@ApiModelProperty(value = "the current candidate")
 	private Candidate candidate;
-	
+
 	@ApiModelProperty(value = "the scheduled status")
 	private ScheduledStatus scheduledStatus;
-	
+
 	@ApiModelProperty(value = "the track id")
 	private int TrackId;
 
@@ -64,6 +64,7 @@ public class ScheduledScreening {
 	public LocalDateTime getScheduledDate() {
 		return scheduledDate;
 	}
+
 	public void setScheduledDate(LocalDateTime scheduledDate) {
 		this.scheduledDate = scheduledDate;
 	}

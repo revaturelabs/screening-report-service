@@ -16,10 +16,10 @@ public class Category {
 
 	@ApiModelProperty(value = "id of the category")
 	private int categoryId;
-	
+
 	@ApiModelProperty(value = "the description of the category")
 	private String categoryDescription;
-	
+
 	@ApiModelProperty(value = "a variable that let's you know if the category is active")
 	private boolean isActive;
 

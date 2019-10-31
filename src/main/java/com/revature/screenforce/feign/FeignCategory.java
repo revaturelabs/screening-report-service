@@ -9,8 +9,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import com.revature.screenforce.beans.Category;
 
 /**
- * The feignClient for category
- * Takes Data from the screening-admin-service, CategoryController
+ * The feignClient for category Takes Data from the screening-admin-service,
+ * CategoryController
+ * 
  * @author Zi Feng Chen | 1909-QC | Emily Higgins
  * @author George Ingleton | 1909-QC| Emily Higgins
  *
@@ -19,9 +20,9 @@ import com.revature.screenforce.beans.Category;
 @FeignClient(name = "category", url = "http://localhost:8181/category")
 public interface FeignCategory {
 	@RequestMapping(method = RequestMethod.GET)
-    List<Category> getCategory();
-	
-	@RequestMapping(value="/{categoryId}", method = RequestMethod.GET)
-	Category getCategoryByCategoryId(@PathVariable Integer categoryId) ;
-	
+	List<Category> getCategory();
+
+	@RequestMapping(value = "/{categoryId}", method = RequestMethod.GET)
+	Category getCategoryByCategoryId(@PathVariable Integer categoryId);
+
 }

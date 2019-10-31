@@ -4,13 +4,14 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
 /**
- *  The POJO for the Candidate
+ * The POJO for the Candidate
+ * 
  * @author Zi Feng Chen | 1909-QC | Emily Higgins
  * @author George Ingleton | 1909-QC| Emily Higgins
  */
 @ApiModel(value = "Candidate", description = "A Candidate which holds relevant candidate information")
 public class Candidate {
-	
+
 	@ApiModelProperty(value = "id of the candidate")
 	private int candidateId;
 
@@ -43,7 +44,7 @@ public class Candidate {
 
 	@ApiModelProperty(value = "the major of the candidate")
 	private String major;
-	
+
 	@ApiModelProperty(value = "the name of the screener for the candidate")
 	private String techScreenerName;
 
@@ -195,8 +196,5 @@ public class Candidate {
 				+ ", recruiterName=" + recruiterName + ", college=" + college + ", degree=" + degree + ", major="
 				+ major + ", techScreenerName=" + techScreenerName + "]";
 	}
-	
-	
-	
 
 }

@@ -10,11 +10,10 @@ import com.revature.screenforce.beans.QuestionScore;
 
 @FeignClient(name = "questionScore", url = "http://localhost:8183/questionScore/")
 public interface FeignQuestionScore {
-	@RequestMapping(value = "/all",method = RequestMethod.GET)
+	@RequestMapping(value = "/all", method = RequestMethod.GET)
 	List<QuestionScore> getSimpleQuestionScores();
-	
+
 	@RequestMapping(value = "/{screeningId}", method = RequestMethod.GET)
 	List<QuestionScore> getScoresByScreeningId(@PathVariable Integer screeningId);
-	
-}
 
+}

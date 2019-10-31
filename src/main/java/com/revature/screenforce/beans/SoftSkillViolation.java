@@ -1,5 +1,5 @@
 package com.revature.screenforce.beans;
-import java.util.Date;
+import java.time.LocalDateTime;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -28,7 +28,7 @@ public class SoftSkillViolation {
 	private String comment;
 
 	@ApiModelProperty(value = "the time of the violation")
-	private Date time;
+	private LocalDateTime time;
 
 	public int getSoftSkillViolationId() {
 		return softSkillViolationId;
@@ -62,11 +62,11 @@ public class SoftSkillViolation {
 		this.comment = comment;
 	}
 
-	public Date getTime() {
+	public LocalDateTime getTime() {
 		return time;
 	}
 
-	public void setTime(Date time) {
+	public void setTime(LocalDateTime time) {
 		this.time = time;
 	}
 
@@ -75,7 +75,7 @@ public class SoftSkillViolation {
 	}
 
 	public SoftSkillViolation(int softSkillViolationId, Screening screening, ViolationType violationType,
-			String comment, Date time) {
+			String comment, LocalDateTime time) {
 		super();
 		this.softSkillViolationId = softSkillViolationId;
 		this.screening = screening;

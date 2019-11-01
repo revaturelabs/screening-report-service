@@ -27,7 +27,6 @@ public class ScreeningReportServiceApplication {
 	 * 
 	 * @param DocumentationType - the version and type of documentation
 	 * @return Docket - contains information regarding end points
-	 * @author Germy Louis | 1903-Tampa | Emily Higgins
 	 */
 	@Bean
 	public Docket swag() {

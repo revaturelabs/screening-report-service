@@ -1,10 +1,14 @@
 package com.revature.screenforce.models;
 
+<<<<<<< HEAD
 import java.util.Date;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
+=======
+import java.time.LocalDateTime;
+>>>>>>> 6e9ab08ac86480033bffc98ba42e602cc93e2205
 import com.revature.screenforce.beans.Screening;
 import com.revature.screenforce.beans.Track;
 
@@ -14,8 +18,9 @@ public class SimpleReportModel {
 	@ApiModelProperty(value = "id of the simple report")
 	private int screeningId;
 
+
 	@ApiModelProperty(value = "date of the screening")
-	private Date screenDate;
+	private LocalDateTime screenDate;
 
 	@ApiModelProperty(value = "cumulative score of the screening")
 	private double compositeScore;
@@ -49,10 +54,10 @@ public class SimpleReportModel {
 	public void setScreeningId(int screeningId) {
 		this.screeningId = screeningId;
 	}
-	public Date getScreenDate() {
+	public LocalDateTime getScreenDate() {
 		return screenDate;
 	}
-	public void setScreenDate(Date screenDate) {
+	public void setScreenDate(LocalDateTime screenDate) {
 		this.screenDate = screenDate;
 	}
 	public double getCompositeScore() {

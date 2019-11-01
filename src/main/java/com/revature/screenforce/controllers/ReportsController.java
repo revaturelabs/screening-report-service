@@ -16,6 +16,9 @@ import org.springframework.web.bind.annotation.RestController;
 import com.revature.screenforce.services.ReportsService;
 import com.revature.screenforce.models.FullReportModel;
 import com.revature.screenforce.models.SimpleReportModel;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
 /**
  * The Main Controller for screening-report-service
  * Exposed 1 main endpoint to be consumed
@@ -31,31 +34,39 @@ import com.revature.screenforce.models.SimpleReportModel;
  */
 @RestController
 @CrossOrigin
+@Api(value = "/report", description = "Report operations")
 public class ReportsController {
 
 	@Autowired ReportsService reportsService;
 
-	@GetMapping(value="/frmtest", produces= MediaType.APPLICATION_JSON_VALUE)
-	public @ResponseBody FullReportModel getTestFullReportModel(){
-		return this.reportsService.createFullReportModel(4321);
-	}
-
+	@ApiOperation(httpMethod = "GET",
+			value = "resource to get a full report by screeningId",
+			response = FullReportModel.class,
+			nickname="getTestFullReportModelByScreeningId")
 	@GetMapping(value="/frm/{screeningId}", produces= MediaType.APPLICATION_JSON_VALUE)
 	public @ResponseBody FullReportModel getTestFullReportModelByScreeningId(@PathVariable int screeningId){
 		return this.reportsService.createFullReportModel(screeningId);
 	}
-	
+
+	@ApiOperation(httpMethod = "GET",
+			value = "resource to get all simple reports",
+			response = SimpleReportModel.class,
+			responseContainer = "list",
+			nickname="getAllSimpleReportModel")
 	@GetMapping(value="/srm", produces= MediaType.APPLICATION_JSON_VALUE)
 	public @ResponseBody List<SimpleReportModel> getAllSimpleReportModel(){
 		Date start = new Date(0);
 		Date end = new Date();
-		return this.reportsService.getSimpleReportModelByRange(start, end);	
-
+		return this.reportsService.getSimpleReportModelByRange(start, end);
 	}
-	
+
+	@ApiOperation(httpMethod = "GET",
+			value = "resource to get all simple reports within a specified date range",
+			response = SimpleReportModel.class,
+			responseContainer = "list",
+			nickname="getSimpleReportModelByRange")
 	@GetMapping(value="/srm/{dateStart}/{dateEnd}", produces= MediaType.APPLICATION_JSON_VALUE)
 	public @ResponseBody List<SimpleReportModel> getSimpleReportModelByRange(@PathVariable String dateStart,@PathVariable String dateEnd){
-	
 		Date start;
 		Date end;
 		SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd");
@@ -73,10 +84,8 @@ public class ReportsController {
 		} catch (ParseException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
-		} 
-
+		}
 		return null;
-
 	}
 	/**
 	 * A testing end point for the Front End team to use 

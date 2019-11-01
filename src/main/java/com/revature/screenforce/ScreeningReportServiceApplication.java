@@ -27,13 +27,16 @@ public class ScreeningReportServiceApplication {
 	 * 
 	 * @param DocumentationType - the version and type of documentation
 	 * @return Docket - contains information regarding end points
-	 * @author Germy Louis | 1903-Tampa | Emily Higgins
+	 * @author Zi Feng Chen | 1909-QC | Emily Higgins
+	 * @author Ambiorix Cruz Angeles | 1909-QC | Emily Higgins
+	 * @author George Ingleton | 1909-QC | Emily Higgins
 	 */
+
 	@Bean
 	public Docket swag() {
 		return new Docket(DocumentationType.SWAGGER_2)
 				.select()
-				.apis(RequestHandlerSelectors.any())
+				.apis(RequestHandlerSelectors.basePackage("com.revature.screenforce"))
 				.paths(PathSelectors.any())
 				.build();
 	}

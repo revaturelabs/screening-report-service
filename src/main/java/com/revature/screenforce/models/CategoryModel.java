@@ -1,14 +1,27 @@
 package com.revature.screenforce.models;
 
 import java.util.List;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 
 import com.revature.screenforce.beans.Category;
 
+@ApiModel(value = "Category Model", description = "A Category which holds relevant category information")
 public class CategoryModel {
+
+	@ApiModelProperty(value = "id of the category")
     private int categoryId;
-    private String categoryDescription;
-    private int weightValue;
+
+	@ApiModelProperty(value = "description of the category")
+	private String categoryDescription;
+
+	@ApiModelProperty(value = "holds the weight of the category")
+	private int weightValue;
+
+	@ApiModelProperty(value = "holds the average value of question scores")
     private double averageQuestionScore;
+
+	@ApiModelProperty(value = "list of questions")
 	private List<QuestionModel> question;
 	
 	public CategoryModel(Category c) {

@@ -1,16 +1,26 @@
 package com.revature.screenforce.models;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+
 import com.revature.screenforce.beans.Question;
 
+@ApiModel(value = "Candidate model", description = "A Full report which holds relevant screening information")
 public class QuestionModel {
-	//The internal ID of THIS question
+
+	@ApiModelProperty(value = "id of the question")
 	int questionId;
-	//The Question
+
+	@ApiModelProperty(value = "id of the question")
 	String questionText;
-	//The Answer
+
+	@ApiModelProperty(value = "answer of the question")
 	String questionAnswer;
-	//The Score Received
+
+	@ApiModelProperty(value = "score received for the question")
 	Double score;
+
+	@ApiModelProperty(value = "screener comment for question")
 	String questionComment;
 
 	public QuestionModel(Question q) {
@@ -23,63 +33,51 @@ public class QuestionModel {
 		// TODO Auto-generated constructor stub
 	}
 
-
 	public int getQuestionId() {
 		return questionId;
 	}
-
 
 	public void setQuestionId(int questionId) {
 		this.questionId = questionId;
 	}
 
-
 	public String getQuestionText() {
 		return questionText;
 	}
-
 
 	public void setQuestionText(String questionText) {
 		this.questionText = questionText;
 	}
 
-
 	public String getQuestionAnswer() {
 		return questionAnswer;
 	}
-
 
 	public void setQuestionAnswer(String questionAnswer) {
 		this.questionAnswer = questionAnswer;
 	}
 
-
 	public Double getScore() {
 		return score;
 	}
-
 
 	public void setScore(Double score) {
 		this.score = score;
 	}
 
-
 	public String getQuestionComment() {
 		return questionComment;
 	}
 
-
 	public void setQuestionComment(String questionComment) {
 		this.questionComment = questionComment;
 	}
-
 
 	@Override
 	public String toString() {
 		return "QuestionModel [questionId=" + questionId + ", questionText=" + questionText + ", questionAnswer="
 				+ questionAnswer + ", score=" + score + ", questionComment=" + questionComment + "]";
 	}
-
 
 	@Override
 	public int hashCode() {
@@ -88,7 +86,6 @@ public class QuestionModel {
 		result = prime * result + questionId;
 		return result;
 	}
-
 
 	@Override
 	public boolean equals(Object obj) {
@@ -104,7 +101,5 @@ public class QuestionModel {
 		return true;
 	}
 
-	
-	
 }
 

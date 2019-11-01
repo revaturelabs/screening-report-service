@@ -2,14 +2,27 @@ package com.revature.screenforce.models;
 
 import java.util.Date;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+
 import com.revature.screenforce.beans.Screening;
 import com.revature.screenforce.beans.Track;
 
+@ApiModel(value = "Simple model", description = "A simplied version of the screening full report")
 public class SimpleReportModel {
+
+	@ApiModelProperty(value = "id of the simple report")
 	private int screeningId;
+
+	@ApiModelProperty(value = "date of the screening")
 	private Date screenDate;
+
+	@ApiModelProperty(value = "cumulative score of the screening")
 	private double compositeScore;
+
+	@ApiModelProperty(value = "track of the screening report")
 	private Track track;
+
 	public SimpleReportModel() {
 		super();
 		// TODO Auto-generated constructor stub
@@ -74,8 +87,5 @@ public class SimpleReportModel {
 			return false;
 		return true;
 	}
-	
-	
-	
 	
 }

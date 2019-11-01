@@ -15,7 +15,7 @@ public class Candidate {
 	@ApiModelProperty(value = "id of the candidate")
 	private int candidateId;
 
-	@ApiModelProperty(value = "id of the salesforce which represents the candidate")
+	@ApiModelProperty(value = "id of the salesforce record which represents the candidate")
 	private String resourceId;
 
 	@ApiModelProperty(value = "name of the candidate")

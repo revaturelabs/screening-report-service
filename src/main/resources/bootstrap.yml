@@ -1,4 +1,0 @@
-spring:
-   #Spring Configuration
-    application:
-        name: screening-report-service

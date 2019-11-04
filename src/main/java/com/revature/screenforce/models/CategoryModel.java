@@ -18,7 +18,6 @@ public class CategoryModel {
 
 	public CategoryModel() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	@Override

@@ -17,7 +17,6 @@ public class ViolationModel {
 
 	public ViolationModel() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	public int getViolationId() {

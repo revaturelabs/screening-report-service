@@ -3,7 +3,7 @@ package com.revature.screenforce.models;
 import com.revature.screenforce.beans.Question;
 
 public class QuestionModel {
-	// The internal ID of THIS question
+	// The Question id
 	int questionId;
 	// The Question
 	String questionText;
@@ -11,6 +11,7 @@ public class QuestionModel {
 	String questionAnswer;
 	// The Score Received
 	Double score;
+	// Commentary from Screener
 	String questionComment;
 
 	public QuestionModel(Question q) {
@@ -21,7 +22,6 @@ public class QuestionModel {
 
 	public QuestionModel() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	public int getQuestionId() {

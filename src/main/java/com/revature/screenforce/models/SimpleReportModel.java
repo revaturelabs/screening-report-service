@@ -12,7 +12,6 @@ public class SimpleReportModel {
 
 	public SimpleReportModel() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	public SimpleReportModel(Screening s) {

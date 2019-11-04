@@ -5,21 +5,22 @@ import com.revature.screenforce.beans.Candidate;
 
 public class FullReportModel {
 
+	// SimpleReport with Screening id, Track, date, and composite score
 	private SimpleReportModel srm;
 	// The id of the screener
 	private int screener_id;
 	// A Candidate Object that has all information of the current Candidate
-	private Candidate can;
+	private Candidate candidate;
 	// Overall Commentary supplied
 	private String aboutMeCommentary;
 	private String generalCommentary;
 	private String softSkillCommentary;
 	// pass or not
 	private boolean softSkillVerdict;
-	// What SkillType is being tested at this time
-	// A list of the buckets that was tested for this Candidate
-	private List<CategoryModel> CategoryTested;
-	private List<ViolationModel> violation;
+	// A list of Category-specific results
+	private List<CategoryModel> categoriesTested;
+	// A list of SoftSkillViolations which were observed
+	private List<ViolationModel> violationsObserved;
 
 	public FullReportModel(SimpleReportModel srm) {
 		this.srm = srm;
@@ -27,7 +28,6 @@ public class FullReportModel {
 
 	public FullReportModel() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	public SimpleReportModel getSrm() {
@@ -46,12 +46,12 @@ public class FullReportModel {
 		this.screener_id = screener_id;
 	}
 
-	public Candidate getCan() {
-		return can;
+	public Candidate getCandidate() {
+		return candidate;
 	}
 
-	public void setCan(Candidate can) {
-		this.can = can;
+	public void setCandidate(Candidate candidate) {
+		this.candidate = candidate;
 	}
 
 	public String getAboutMeCommentary() {
@@ -86,35 +86,35 @@ public class FullReportModel {
 		this.softSkillVerdict = softSkillVerdict;
 	}
 
-	public List<CategoryModel> getCategoryModel() {
-		return CategoryTested;
+	public List<CategoryModel> getCategoriesTested() {
+		return categoriesTested;
 	}
 
-	public void setCategoryModel(List<CategoryModel> categoryTested) {
-		CategoryTested = categoryTested;
+	public void setCategoryModel(List<CategoryModel> categoriesTested) {
+		this.categoriesTested = categoriesTested;
 	}
 
-	public List<ViolationModel> getViolation() {
-		return violation;
+	public List<ViolationModel> getViolationsObserved() {
+		return violationsObserved;
 	}
 
-	public void setViolation(List<ViolationModel> violation) {
-		this.violation = violation;
-	}
-
-	@Override
-	public String toString() {
-		return "FullReportModel [srm=" + srm + ", screener_id=" + screener_id + ", can=" + can + ", aboutMeCommentary="
-				+ aboutMeCommentary + ", generalCommentary=" + generalCommentary + ", softSkillCommentary="
-				+ softSkillCommentary + ", softSkillVerdict=" + softSkillVerdict + ", CategoryTested=" + CategoryTested
-				+ ", violation=" + violation + "]";
+	public void setViolationsObserved(List<ViolationModel> violationsObserved) {
+		this.violationsObserved = violationsObserved;
 	}
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
+		result = prime * result + ((aboutMeCommentary == null) ? 0 : aboutMeCommentary.hashCode());
+		result = prime * result + ((candidate == null) ? 0 : candidate.hashCode());
+		result = prime * result + ((categoriesTested == null) ? 0 : categoriesTested.hashCode());
+		result = prime * result + ((generalCommentary == null) ? 0 : generalCommentary.hashCode());
+		result = prime * result + screener_id;
+		result = prime * result + ((softSkillCommentary == null) ? 0 : softSkillCommentary.hashCode());
+		result = prime * result + (softSkillVerdict ? 1231 : 1237);
 		result = prime * result + ((srm == null) ? 0 : srm.hashCode());
+		result = prime * result + ((violationsObserved == null) ? 0 : violationsObserved.hashCode());
 		return result;
 	}
 
@@ -127,12 +127,54 @@ public class FullReportModel {
 		if (getClass() != obj.getClass())
 			return false;
 		FullReportModel other = (FullReportModel) obj;
+		if (aboutMeCommentary == null) {
+			if (other.aboutMeCommentary != null)
+				return false;
+		} else if (!aboutMeCommentary.equals(other.aboutMeCommentary))
+			return false;
+		if (candidate == null) {
+			if (other.candidate != null)
+				return false;
+		} else if (!candidate.equals(other.candidate))
+			return false;
+		if (categoriesTested == null) {
+			if (other.categoriesTested != null)
+				return false;
+		} else if (!categoriesTested.equals(other.categoriesTested))
+			return false;
+		if (generalCommentary == null) {
+			if (other.generalCommentary != null)
+				return false;
+		} else if (!generalCommentary.equals(other.generalCommentary))
+			return false;
+		if (screener_id != other.screener_id)
+			return false;
+		if (softSkillCommentary == null) {
+			if (other.softSkillCommentary != null)
+				return false;
+		} else if (!softSkillCommentary.equals(other.softSkillCommentary))
+			return false;
+		if (softSkillVerdict != other.softSkillVerdict)
+			return false;
 		if (srm == null) {
 			if (other.srm != null)
 				return false;
 		} else if (!srm.equals(other.srm))
 			return false;
+		if (violationsObserved == null) {
+			if (other.violationsObserved != null)
+				return false;
+		} else if (!violationsObserved.equals(other.violationsObserved))
+			return false;
 		return true;
+	}
+
+	@Override
+	public String toString() {
+		return "FullReportModel [srm=" + srm + ", screener_id=" + screener_id + ", candidate=" + candidate
+				+ ", aboutMeCommentary=" + aboutMeCommentary + ", generalCommentary=" + generalCommentary
+				+ ", softSkillCommentary=" + softSkillCommentary + ", softSkillVerdict=" + softSkillVerdict
+				+ ", categoriesTested=" + categoriesTested + ", violationsObserved=" + violationsObserved + "]";
 	}
 
 }

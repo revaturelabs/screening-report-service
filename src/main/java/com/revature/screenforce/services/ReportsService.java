@@ -108,11 +108,11 @@ public class ReportsService {
 		frm.setAboutMeCommentary(scr.getAboutMeCommentary());
 		frm.setGeneralCommentary(scr.getSoftSkillCommentary());
 		frm.setSoftSkillCommentary(scr.getSoftSkillCommentary());
-		frm.setCan(scr.getScheduledScreening().getCandidate());
+		frm.setCandidate(scr.getScheduledScreening().getCandidate());
 		frm.setScreener_id(scr.getScreenerId());
 		frm.setSoftSkillVerdict(scr.getSoftSkillsVerdict());
 		frm.setCategoryModel(makeCategoryModel(scr));
-		frm.setViolation(makeViolationModel(scr));
+		frm.setViolationsObserved(makeViolationModel(scr));
 		return frm;
 	}
 

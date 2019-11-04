@@ -6,14 +6,13 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
 /**
- * The POJO for the QuestionScore the declaration is from feign client, used in
- * the feign folder
+ * The POJO for the QuestionScore
  * 
  * @author Zi Feng Chen | 1909-QC | Emily Higgins
  * @author George Ingleton | 1909-QC| Emily Higgins
  */
 
-@ApiModel(value = "QuestionScore", description = "contains the score of the candidate based on this question")
+@ApiModel(value = "QuestionScore", description = "records a Candidates's score on a Question")
 public class QuestionScore {
 
 	@ApiModelProperty(value = "question score id")
@@ -34,7 +33,7 @@ public class QuestionScore {
 	@ApiModelProperty(value = "any comments from the screener")
 	private String comment;
 
-	@ApiModelProperty(value = "the start time of the screening")
+	@ApiModelProperty(value = "the time at which the score was recorded")
 	private LocalDateTime beginTime;
 
 	@Override
@@ -61,7 +60,6 @@ public class QuestionScore {
 
 	public QuestionScore() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	public QuestionScore(int questionScoreId, int questionId, int categoryId, Screening screening, Double score,

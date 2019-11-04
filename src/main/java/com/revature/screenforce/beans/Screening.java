@@ -6,8 +6,7 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
 /**
- * The POJO for the Screening the declaration is from feign client, used in the
- * feign folder
+ * The POJO for the Screening
  * 
  * @author Zi Feng Chen | 1909-QC | Emily Higgins
  * @author George Ingleton | 1909-QC| Emily Higgins
@@ -46,7 +45,7 @@ public class Screening {
 	@ApiModelProperty(value = "the end time for the screening")
 	private LocalDateTime endDateTime;
 
-	@ApiModelProperty(value = "true meaning they passed, fail meaning the failed")
+	@ApiModelProperty(value = "true meaning they passed, false meaning the failed")
 	private Boolean softSkillsVerdict;
 
 	@ApiModelProperty(value = "the screening's status")

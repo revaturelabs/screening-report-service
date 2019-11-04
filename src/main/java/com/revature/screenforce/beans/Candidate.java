@@ -168,7 +168,6 @@ public class Candidate {
 
 	public Candidate() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	public Candidate(int candidateId, String resourceId, String name, String email, String phoneNumber, String skypeId,

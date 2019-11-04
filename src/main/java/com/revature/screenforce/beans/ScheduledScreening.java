@@ -5,13 +5,12 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
 /**
- * The POJO for the ScheduledScreening the declaration is from feign client,
- * used in the feign folder
+ * The POJO for the ScheduledScreening
  * 
  * @author Zi Feng Chen | 1909-QC | Emily Higgins
  * @author George Ingleton | 1909-QC| Emily Higgins
  */
-@ApiModel(value = "ScheduledScreening", description = "contains the screening date")
+@ApiModel(value = "ScheduledScreening", description = "contains scheduling, Track, and Candidate information for a Screening")
 public class ScheduledScreening {
 
 	@ApiModelProperty(value = "the scheduled screening id")
@@ -26,7 +25,7 @@ public class ScheduledScreening {
 	@ApiModelProperty(value = "the track id")
 	private int TrackId;
 
-	@ApiModelProperty(value = "the date for the current screening")
+	@ApiModelProperty(value = "the date on which the screening is scheduled")
 	private LocalDateTime scheduledDate;
 
 	public int getScheduledScreeningId() {
@@ -93,7 +92,6 @@ public class ScheduledScreening {
 
 	public ScheduledScreening() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	public ScheduledScreening(int scheduledScreeningId, Candidate candidate, ScheduledStatus scheduledStatus,

@@ -9,7 +9,7 @@ import io.swagger.annotations.ApiModelProperty;
  * @author Zi Feng Chen | 1909-QC | Emily Higgins
  * @author George Ingleton | 1909-QC| Emily Higgins
  */
-@ApiModel(value = "Candidate", description = "A Candidate which holds relevant candidate information")
+@ApiModel(value = "Candidate", description = "Candidate information, modeled after Salesforce entity format")
 public class Candidate {
 
 	@ApiModelProperty(value = "id of the candidate")
@@ -33,7 +33,7 @@ public class Candidate {
 	@ApiModelProperty(value = "the profile url of the candidate")
 	private String profileUrl;
 
-	@ApiModelProperty(value = "the name of this candidates recruiter")
+	@ApiModelProperty(value = "the name of this candidate's recruiter")
 	private String recruiterName;
 
 	@ApiModelProperty(value = "the college that the candidate went to")

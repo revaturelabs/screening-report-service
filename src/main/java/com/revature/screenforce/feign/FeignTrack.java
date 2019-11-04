@@ -10,6 +10,7 @@ import com.revature.screenforce.beans.Track;
 
 @FeignClient(name = "Track", url = "http://localhost:8181/track")
 public interface FeignTrack {
+	
 	@RequestMapping(method = RequestMethod.GET)
 	List<Track> getTrack();
 

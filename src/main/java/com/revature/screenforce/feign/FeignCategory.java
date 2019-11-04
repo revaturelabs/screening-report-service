@@ -9,8 +9,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import com.revature.screenforce.beans.Category;
 
 /**
- * The feignClient for category Takes Data from the screening-admin-service,
- * CategoryController
+ * The feignClient for Category consumes screening-admin-service's CategoryController
  * 
  * @author Zi Feng Chen | 1909-QC | Emily Higgins
  * @author George Ingleton | 1909-QC| Emily Higgins

@@ -8,6 +8,7 @@ import com.revature.screenforce.beans.ViolationType;
 
 @FeignClient(name = "violation", url = "http://localhost:8183/violation")
 public interface FeignViolationType {
+	
 	@RequestMapping(method = RequestMethod.GET)
 	List<ViolationType> getViolationTypes();
 }

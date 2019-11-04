@@ -9,6 +9,7 @@ import com.revature.screenforce.beans.Screening;
 
 @FeignClient(name = "screening", url = "http://localhost:8183/screening")
 public interface FeignScreening {
+	
 	@RequestMapping(method = RequestMethod.GET)
 	List<Screening> getAllScreening();
 

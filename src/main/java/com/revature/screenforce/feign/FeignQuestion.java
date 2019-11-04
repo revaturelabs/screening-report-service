@@ -10,8 +10,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import com.revature.screenforce.beans.Question;
 
 /**
- * The feignClient for question Takes Data from the screening-admin-service,
- * QuestionController
+ * The feignClient for Question consumes screening-admin-service's QuestionController
  * 
  * @author Zi Feng Chen | 1909-QC | Emily Higgins
  * @author George Ingleton | 1909-QC| Emily Higgins

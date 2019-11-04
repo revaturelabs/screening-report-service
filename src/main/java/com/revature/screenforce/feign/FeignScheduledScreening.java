@@ -8,6 +8,7 @@ import com.revature.screenforce.beans.ScheduledScreening;
 
 @FeignClient(name = "feignScheduledScreening", url = "http://localhost:8183/screening/scheduled")
 public interface FeignScheduledScreening {
+	
 	@RequestMapping(method = RequestMethod.GET)
 	List<ScheduledScreening> getAllScheduledScreenings();
 }

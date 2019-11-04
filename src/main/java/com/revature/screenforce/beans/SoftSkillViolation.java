@@ -6,14 +6,13 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
 /**
- * The POJO for the SoftSkillViolation the declaration is from feign client,
- * used in the feign folder
+ * The POJO for the SoftSkillViolation
  * 
  * @author Zi Feng Chen | 1909-QC | Emily Higgins
  * @author George Ingleton | 1909-QC| Emily Higgins
  */
 
-@ApiModel(value = "SoftSkillViolation", description = "contains the information about the soft skill violation")
+@ApiModel(value = "SoftSkillViolation", description = "contains information about a soft skill violation")
 public class SoftSkillViolation {
 
 	@ApiModelProperty(value = "the soft skill violation id")

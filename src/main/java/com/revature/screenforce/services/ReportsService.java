@@ -56,12 +56,12 @@ public class ReportsService {
 		List<CategoryModel> cm = new ArrayList<CategoryModel>();
 		List<QuestionScore> qs = feignQuestionScore.getScoresByScreeningId(new Integer(scr.getScreeningId()));
 		for (QuestionScore q : qs) {
-			boolean bucketExist = false;
+			boolean categoryExist = false;
 			for (CategoryModel b : cm) {
 
-				// If bucket exist, just add question into bucket
+				// If category exist, just add question into category
 				if (b.getCategoryId() == q.getCategoryId()) {
-					bucketExist = true;
+					categoryExist = true;
 					List<QuestionModel> qmlist = b.getQuestion();
 					QuestionModel qm = new QuestionModel(feignQuestion.getQuestionById(new Integer(q.getQuestionId())));
 					qm.setScore(q.getScore());
@@ -70,8 +70,8 @@ public class ReportsService {
 					b.setQuestion(qmlist);
 				}
 			}
-			// if bucket doesn't exist, add bucket and question
-			if (bucketExist == false) {
+			// if category doesn't exist, add category and question
+			if (categoryExist == false) {
 				CategoryModel in = new CategoryModel(
 						feignCategory.getCategoryByCategoryId(new Integer(q.getCategoryId())));
 				Weight w = feignWeight.getWeightFromIds(new Integer(scr.getTrack()), new Integer(q.getCategoryId()));

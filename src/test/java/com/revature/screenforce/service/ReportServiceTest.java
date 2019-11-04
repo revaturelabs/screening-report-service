@@ -42,7 +42,7 @@ import com.revature.screenforce.services.ReportsService;
 @SpringBootTest
 @RunWith(SpringRunner.class)
 //@MockBean
-public class testReportService {
+public class ReportServiceTest {
 	@Mock
 	FeignScreening fsMock;
 	@Mock

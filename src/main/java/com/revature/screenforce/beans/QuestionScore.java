@@ -1,65 +1,84 @@
 package com.revature.screenforce.beans;
 
+import java.time.LocalDateTime;
+
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import org.hibernate.annotations.CreationTimestamp;
-
-import javax.persistence.*;
-import java.util.Date;
-import java.util.Objects;
 
 /**
- * @author Jeremy Straus | 1807-QC | Emily Higgins
+ * The POJO for the QuestionScore
+ * 
+ * @author Zi Feng Chen | 1909-QC | Emily Higgins
+ * @author George Ingleton | 1909-QC| Emily Higgins
  */
-@ApiModel(value = "Question Score", description = "Object representing the score a candidate achieved on a question")
-@Entity
-@Table(name = "QUESTION_SCORE")
+
+@ApiModel(value = "QuestionScore", description = "records a Candidate's score on a Question")
 public class QuestionScore {
 
-	@ApiModelProperty(value = "Id of the Question Score")
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name = "QUESTION_SCORE_ID")
+	@ApiModelProperty(value = "question score id")
 	private int questionScoreId;
 
-	@ApiModelProperty(value = "Id of the question being scored")
-	@Column(name = "QUESTION_ID")
+	@ApiModelProperty(value = "question id")
 	private int questionId;
 
-	@ApiModelProperty(value = "Id of the bucket containing the question")
-	@Column(name = "BUCKET_ID")
-	private int bucketId;
+	@ApiModelProperty(value = "category id")
+	private int categoryId;
 
-	@ApiModelProperty(value = "Id of the screening the question was asked on")
-	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "SCREENING_ID")
+	@ApiModelProperty(value = "the current screening")
 	private Screening screening;
 
-	@ApiModelProperty(value = "Score achieved on the question")
-	@Column(name = "SCORE")
+	@ApiModelProperty(value = "the score for the question")
 	private Double score;
 
-	@ApiModelProperty(value = "Any comments about the answer to the question")
-	@Column(name = "COMMENT")
+	@ApiModelProperty(value = "any comments from the screener")
 	private String comment;
 
-	@ApiModelProperty(value = "Time question was asked")
-	@CreationTimestamp
-	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "TIME")
-	private Date beginTime;
+	@ApiModelProperty(value = "the time at which the score was recorded")
+	private LocalDateTime beginTime;
 
-	public QuestionScore(Integer questionId, Screening screeningId, Double score, String comment, Date beginTime) {
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + questionScoreId;
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		QuestionScore other = (QuestionScore) obj;
+		if (questionScoreId != other.questionScoreId)
+			return false;
+		return true;
+	}
+
+	public QuestionScore() {
 		super();
+	}
+
+	public QuestionScore(int questionScoreId, int questionId, int categoryId, Screening screening, Double score,
+			String comment, LocalDateTime beginTime) {
+		super();
+		this.questionScoreId = questionScoreId;
 		this.questionId = questionId;
-		this.screening = screeningId;
+		this.categoryId = categoryId;
+		this.screening = screening;
 		this.score = score;
 		this.comment = comment;
 		this.beginTime = beginTime;
 	}
 
-	public QuestionScore() {
-		super();
+	@Override
+	public String toString() {
+		return "QuestionScore [questionScoreId=" + questionScoreId + ", questionId=" + questionId + ", categoryId="
+				+ categoryId + ", screening=" + screening + ", score=" + score + ", comment=" + comment + ", beginTime="
+				+ beginTime + "]";
 	}
 
 	public int getQuestionScoreId() {
@@ -76,6 +95,14 @@ public class QuestionScore {
 
 	public void setQuestionId(int questionId) {
 		this.questionId = questionId;
+	}
+
+	public int getCategoryId() {
+		return categoryId;
+	}
+
+	public void setCategoryId(int categoryId) {
+		this.categoryId = categoryId;
 	}
 
 	public Screening getScreening() {
@@ -102,51 +129,12 @@ public class QuestionScore {
 		this.comment = comment;
 	}
 
-	public Date getBeginTime() {
+	public LocalDateTime getBeginTime() {
 		return beginTime;
 	}
 
-	public void setBeginTime(Date beginTime) {
+	public void setBeginTime(LocalDateTime beginTime) {
 		this.beginTime = beginTime;
 	}
 
-	public int getBucketId() {
-		return bucketId;
-	}
-
-	public void setBucketId(int bucketId) {
-		this.bucketId = bucketId;
-	}
-
-	@Override
-	public boolean equals(Object o) {
-		if (this == o) return true;
-		if (o == null || getClass() != o.getClass()) return false;
-		QuestionScore score1 = (QuestionScore) o;
-		return getQuestionScoreId() == score1.getQuestionScoreId() &&
-				getQuestionId() == score1.getQuestionId() &&
-				getBucketId() == score1.getBucketId() &&
-				Objects.equals(getScreening(), score1.getScreening()) &&
-				Objects.equals(getScore(), score1.getScore()) &&
-				Objects.equals(getComment(), score1.getComment()) &&
-				Objects.equals(getBeginTime(), score1.getBeginTime());
-	}
-
-	@Override
-	public int hashCode() {
-		return Objects.hash(getQuestionScoreId(), getQuestionId(), getBucketId(), getScreening(), getScore(), getComment(), getBeginTime());
-	}
-
-	@Override
-	public String toString() {
-		return "SimpleQuestionScore{" +
-				"questionScoreId=" + questionScoreId +
-				", questionId=" + questionId +
-				", bucketId=" + bucketId +
-				", screening=" + screening +
-				", score=" + score +
-				", comment='" + comment + '\'' +
-				", beginTime=" + beginTime +
-				'}';
-	}
 }

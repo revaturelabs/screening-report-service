@@ -3,204 +3,110 @@ package com.revature.screenforce.beans;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
-import javax.persistence.*;
-import java.io.Serializable;
-import java.util.List;
-import java.util.Objects;
-
 /**
- * Outlines the Question POJO
- *
- * @author Ethan Conner | 1805-WVU-AUG3 | Richard Orr
- * @author Isaac Pawling | 1085-WVU | Richard Orr
- * @author Jeremy Straus | 1807-QC | Emily Higgins
+ * The POJO for the Question 
+ * 
+ * @author Zi Feng Chen | 1909-QC | Emily Higgins
+ * @author George Ingleton | 1909-QC| Emily Higgins
  */
-@ApiModel(value = "Question", description = "a question to ask a candidate, along with 5 sample answers "
-        + "of varying correctness")
-@Entity
-@Table(name = "QUESTION")
-public class Question implements Serializable {
 
-    private static final long serialVersionUID = -6987859794752419355L;
+@ApiModel(value = "Question", description = "a Question which may be asked during a Screening")
+public class Question {
 
-    @ApiModelProperty(value = "Question id")
-    @Id
-    @SequenceGenerator(name = "QUESTION_SEQUENCE", sequenceName = "QUESTION_SEQUENCE", allocationSize = 1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "QUESTION_SEQUENCE")
-    @Column(name = "QUESTION_ID")
-    private int questionId;
+	@ApiModelProperty(value = "id of the question")
+	private int questionId;
 
-    @ApiModelProperty(value = "Bucket id")
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "BUCKET_ID")
-    private Bucket bucket;
+	@ApiModelProperty(value = "Category to which the question belongs")
+	private Category category;
 
-    @ApiModelProperty(value = "Boolean as to whether or not Question is active")
-    @Column(name = "IS_ACTIVE")
-    private boolean isActive;
+	@ApiModelProperty(value = "whether the question is active")
+	private boolean isActive;
 
-    @ApiModelProperty(value = "description of the Question")
-    @Column(name = "QUESTION_TEXT")
-    private String questionText;
+	@ApiModelProperty(value = "the text of the question")
+	private String questionText;
 
-    @ApiModelProperty(value = "sample answer 1")
-    @Column(name = "SAMPLE_ANSWER_1")
-    private String sampleAnswer1;
+	@ApiModelProperty(value = "a sample of the answer to the question")
+	private String sampleAnswer;
 
-    @ApiModelProperty(value = "sample answer 2")
-    @Column(name = "SAMPLE_ANSWER_2")
-    private String sampleAnswer2;
-
-    @ApiModelProperty(value = "sample answer 3")
-    @Column(name = "SAMPLE_ANSWER_3")
-    private String sampleAnswer3;
-
-    @ApiModelProperty(value = "sample answer 4")
-    @Column(name = "SAMPLE_ANSWER_4")
-    private String sampleAnswer4;
-
-    @ApiModelProperty(value = "sample answer 5")
-    @Column(name = "SAMPLE_ANSWER_5")
-    private String sampleAnswer5;
-
-	@ApiModelProperty(value = "The Screening connected to the screening")
-	@OneToMany(fetch = FetchType.EAGER)
-	@JoinColumn(name = "QUESTION_ID")
-	private List<QuestionScore> questionScores;
-	
-    public List<QuestionScore> getQuestionScores() {
-		return questionScores;
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + questionId;
+		return result;
 	}
-	public void setQuestionScores(List<QuestionScore> questionScores) {
-		this.questionScores = questionScores;
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Question other = (Question) obj;
+		if (questionId != other.questionId)
+			return false;
+		return true;
+	}
+
+	@Override
+	public String toString() {
+		return "Question [questionId=" + questionId + ", category=" + category + ", isActive=" + isActive
+				+ ", questionText=" + questionText + ", sampleAnswer=" + sampleAnswer + "]";
+	}
+
+	public Question(int questionId, Category category, boolean isActive, String questionText, String sampleAnswer) {
+		super();
+		this.questionId = questionId;
+		this.category = category;
+		this.isActive = isActive;
+		this.questionText = questionText;
+		this.sampleAnswer = sampleAnswer;
 	}
 
 	public Question() {
-        super();
-    }
+		super();
+	}
 
-    public Question(Integer questionId, Bucket bucket, Boolean isActive, String questionText, String sampleAnswer1,
-                    String sampleAnswer2, String sampleAnswer3, String sampleAnswer4, String sampleAnswer5) {
-        super();
-        this.questionId = questionId;
-        this.bucket = bucket;
-        this.isActive = isActive;
-        this.questionText = questionText;
-        this.sampleAnswer1 = sampleAnswer1;
-        this.sampleAnswer2 = sampleAnswer2;
-        this.sampleAnswer3 = sampleAnswer3;
-        this.sampleAnswer4 = sampleAnswer4;
-        this.sampleAnswer5 = sampleAnswer5;
-    }
+	public int getQuestionId() {
+		return questionId;
+	}
 
-    /**
-     * Getters and setters
-     */
-    public int getQuestionId() {
-        return questionId;
-    }
+	public Category getCategory() {
+		return category;
+	}
 
-    public void setQuestionId(int questionId) {
-        this.questionId = questionId;
-    }
+	public void setCategory(Category category) {
+		this.category = category;
+	}
 
-    public Bucket getBucket() {
-        return bucket;
-    }
+	public void setQuestionId(int questionId) {
+		this.questionId = questionId;
+	}
 
-    public void setBucket(Bucket bucket) {
-        this.bucket = bucket;
-    }
+	public boolean isActive() {
+		return isActive;
+	}
 
-    public boolean getIsActive() {
-        return isActive;
-    }
+	public void setActive(boolean isActive) {
+		this.isActive = isActive;
+	}
 
-    public void setIsActive(boolean isActive) {
-        this.isActive = isActive;
-    }
+	public String getQuestionText() {
+		return questionText;
+	}
 
-    public String getQuestionText() {
-        return questionText;
-    }
+	public void setQuestionText(String questionText) {
+		this.questionText = questionText;
+	}
 
-    public void setQuestionText(String questionText) {
-        this.questionText = questionText;
-    }
+	public String getSampleAnswer() {
+		return sampleAnswer;
+	}
 
-    public String getSampleAnswer1() {
-        return sampleAnswer1;
-    }
+	public void setSampleAnswer(String sampleAnswer) {
+		this.sampleAnswer = sampleAnswer;
+	}
 
-    public void setSampleAnswer1(String sampleAnswer1) {
-        this.sampleAnswer1 = sampleAnswer1;
-    }
-
-    public String getSampleAnswer2() {
-        return sampleAnswer2;
-    }
-
-    public void setSampleAnswer2(String sampleAnswer2) {
-        this.sampleAnswer2 = sampleAnswer2;
-    }
-
-    public String getSampleAnswer3() {
-        return sampleAnswer3;
-    }
-
-    public void setSampleAnswer3(String sampleAnswer3) {
-        this.sampleAnswer3 = sampleAnswer3;
-    }
-
-    public String getSampleAnswer4() {
-        return sampleAnswer4;
-    }
-
-    public void setSampleAnswer4(String sampleAnswer4) {
-        this.sampleAnswer4 = sampleAnswer4;
-    }
-
-    public String getSampleAnswer5() {
-        return sampleAnswer5;
-    }
-
-    public void setSampleAnswer5(String sampleAnswer5) {
-        this.sampleAnswer5 = sampleAnswer5;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Question question = (Question) o;
-        return Objects.equals(getQuestionId(), question.getQuestionId()) &&
-                Objects.equals(getBucket(), question.getBucket()) &&
-                Objects.equals(getIsActive(), question.getIsActive()) &&
-                Objects.equals(getQuestionText(), question.getQuestionText()) &&
-                Objects.equals(getSampleAnswer1(), question.getSampleAnswer1()) &&
-                Objects.equals(getSampleAnswer2(), question.getSampleAnswer2()) &&
-                Objects.equals(getSampleAnswer3(), question.getSampleAnswer3()) &&
-                Objects.equals(getSampleAnswer4(), question.getSampleAnswer4()) &&
-                Objects.equals(getSampleAnswer5(), question.getSampleAnswer5());
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(getQuestionId(), getBucket(), getIsActive(), getQuestionText(), getSampleAnswer1(), getSampleAnswer2(), getSampleAnswer3(), getSampleAnswer4(), getSampleAnswer5());
-    }
-
-    @Override
-    public String toString() {
-        return "Question{" +
-                "questionId=" + questionId +
-                ", bucket=" + bucket +
-                ", isActive=" + isActive +
-                ", questionText='" + questionText + '\'' +
-                ", sampleAnswer1='" + sampleAnswer1 + '\'' +
-                ", sampleAnswer2='" + sampleAnswer2 + '\'' +
-                ", sampleAnswer3='" + sampleAnswer3 + '\'' +
-                ", sampleAnswer4='" + sampleAnswer4 + '\'' +
-                ", sampleAnswer5='" + sampleAnswer5 + '\'' +
-                '}';
-    }
 }

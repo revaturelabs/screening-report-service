@@ -2,48 +2,21 @@ package com.revature.screenforce.beans;
 
 import java.util.List;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-
+import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
-@Entity
-@Table(name="SCREENER")
+
+@ApiModel(value = "Screener", description = "contains the information about the screener")
 public class Screener {
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name="SCREENER_ID")
+
+	@ApiModelProperty(value = "the screener's id")
 	private int screenerId;
-	
-	@Column(name="NAME")
+
+	@ApiModelProperty(value = "the screener's name")
 	private String name;
-	
-	@Column(name="EMAIL")
+
+	@ApiModelProperty(value = "the screener's eail")
 	private String email;
-	
-	@ApiModelProperty(value = "The Screening connected to the screening")
-	@OneToMany(fetch = FetchType.EAGER)
-	@JoinColumn(name = "SCREENER_ID")
-	private List<Screening> screenings;
-
-	public List<Screening> getScreenings() {
-		return screenings;
-	}
-	
-	public boolean hasScreenings() {
-		return ((screenings == null) ? false : true);
-	}
-
-	public void setScreenings(List<Screening> screenings) {
-		this.screenings = screenings;
-	}
 
 	public int getScreenerId() {
 		return screenerId;
@@ -83,7 +56,6 @@ public class Screener {
 	@Override
 	public String toString() {
 		return "Screener [screenerId=" + screenerId + ", " + (name != null ? "name=" + name + ", " : "")
-				+ (email != null ? "email=" + email + ", " : "")
-				+ (screenings != null ? "screenings=" + screenings : "") + "]";
+				+ (email != null ? "email=" + email + ", " : "") + "]";
 	}
 }

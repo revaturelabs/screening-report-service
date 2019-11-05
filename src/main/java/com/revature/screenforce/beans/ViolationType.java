@@ -1,33 +1,25 @@
 package com.revature.screenforce.beans;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
-import javax.persistence.*;
-import java.util.Objects;
-
 /**
- * @author Jeremy Straus | 1807-QC | Emily Higgins
+ * The POJO for the ViolationType
+ * 
+ * @author Zi Feng Chen | 1909-QC | Emily Higgins
+ * @author George Ingleton | 1909-QC| Emily Higgins
  */
-@ApiModel(value = "Violation Type", description = "All of the possible types of violations")
-@Entity
-@Table(name = "VIOLATION_TYPE")
-@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+
+@ApiModel(value = "ViolationType", description = "contains information about a type of soft skill violation")
 public class ViolationType {
 
-	@ApiModelProperty(value = "Id of the violation")
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name = "VIOLATION_TYPE_ID")
+	@ApiModelProperty(value = "the violation type id")
 	private int violationTypeId;
 
-	@ApiModelProperty(value = "Name of the violation type")
-	@Column(name = "VIOLATION_TYPE")
+	@ApiModelProperty(value = "the violation type name")
 	private String violationTypeText;
 
-	@ApiModelProperty(value = "Description of the violation")
-	@Column(name = "DESCRIPTION")
+	@ApiModelProperty(value = "the description of the violation type")
 	private String description;
 
 	public ViolationType() {
@@ -40,7 +32,6 @@ public class ViolationType {
 		this.violationTypeText = violationTypeText;
 		this.description = description;
 	}
-
 
 	public int getViolationTypeId() {
 		return violationTypeId;
@@ -67,26 +58,31 @@ public class ViolationType {
 	}
 
 	@Override
-	public boolean equals(Object o) {
-		if (this == o) return true;
-		if (o == null || getClass() != o.getClass()) return false;
-		ViolationType that = (ViolationType) o;
-		return getViolationTypeId() == that.getViolationTypeId() &&
-				Objects.equals(getViolationTypeText(), that.getViolationTypeText()) &&
-				Objects.equals(getDescription(), that.getDescription());
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + violationTypeId;
+		return result;
 	}
 
 	@Override
-	public int hashCode() {
-		return Objects.hash(getViolationTypeId(), getViolationTypeText(), getDescription());
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		ViolationType other = (ViolationType) obj;
+		if (violationTypeId != other.violationTypeId)
+			return false;
+		return true;
 	}
 
 	@Override
 	public String toString() {
-		return "ViolationType{" +
-				"violationTypeId=" + violationTypeId +
-				", violationTypeText='" + violationTypeText + '\'' +
-				", description='" + description + '\'' +
-				'}';
+		return "ViolationType [violationTypeId=" + violationTypeId + ", violationTypeText=" + violationTypeText
+				+ ", description=" + description + "]";
 	}
+
 }

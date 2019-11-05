@@ -4,20 +4,19 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
 /**
- * The POJO for the ViolationType the declaration is from feign client, used in
- * the feign folder
+ * The POJO for the ViolationType
  * 
  * @author Zi Feng Chen | 1909-QC | Emily Higgins
  * @author George Ingleton | 1909-QC| Emily Higgins
  */
 
-@ApiModel(value = "ViolationType", description = "contains the information about the violation type")
+@ApiModel(value = "ViolationType", description = "contains information about a type of soft skill violation")
 public class ViolationType {
 
 	@ApiModelProperty(value = "the violation type id")
 	private int violationTypeId;
 
-	@ApiModelProperty(value = "the violation type")
+	@ApiModelProperty(value = "the violation type name")
 	private String violationTypeText;
 
 	@ApiModelProperty(value = "the description of the violation type")

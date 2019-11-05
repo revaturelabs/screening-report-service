@@ -26,10 +26,11 @@ public class ViolationModel {
 		this.violationId = s.getViolationType().getViolationTypeId();
 		this.violationDescription = s.getViolationType().getDescription();
 	}
+
 	public ViolationModel() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
+
 	public int getViolationId() {
 		return violationId;
 	}
@@ -61,5 +62,4 @@ public class ViolationModel {
 	public void setViolationComment(String violationComment) {
 		this.violationComment = violationComment;
 	}
-	
 }

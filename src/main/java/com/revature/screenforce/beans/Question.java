@@ -4,27 +4,27 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
 /**
- *  The POJO for the Question
- *  the declaration is from feign client, used in the feign folder
+ * The POJO for the Question 
+ * 
  * @author Zi Feng Chen | 1909-QC | Emily Higgins
  * @author George Ingleton | 1909-QC| Emily Higgins
  */
 
-@ApiModel(value = "Question", description = "contains the question")
+@ApiModel(value = "Question", description = "a Question which may be asked during a Screening")
 public class Question {
 
 	@ApiModelProperty(value = "id of the question")
 	private int questionId;
-	
-	@ApiModelProperty(value = "id of the category")
+
+	@ApiModelProperty(value = "Category to which the question belongs")
 	private Category category;
-	
-	@ApiModelProperty(value = "let's you know is the question is active")
+
+	@ApiModelProperty(value = "whether the question is active")
 	private boolean isActive;
-	
+
 	@ApiModelProperty(value = "the text of the question")
 	private String questionText;
-	
+
 	@ApiModelProperty(value = "a sample of the answer to the question")
 	private String sampleAnswer;
 
@@ -67,7 +67,6 @@ public class Question {
 
 	public Question() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	public int getQuestionId() {

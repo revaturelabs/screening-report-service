@@ -4,26 +4,26 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
 /**
- *  The POJO for the Weight
- *  the declaration is from feign client, used in the feign folder
+ * The POJO for the Weight
+ * 
  * @author Zi Feng Chen | 1909-QC | Emily Higgins
  * @author George Ingleton | 1909-QC| Emily Higgins
  */
 
-@ApiModel(value = "Weight", description = "contains the information about the weight of a track and category")
+@ApiModel(value = "Weight", description = "contains information about the weighted pairing of a track and category")
 public class Weight {
 
 	@ApiModelProperty(value = "the weight's id")
-    private long weightId;
+	private long weightId;
 
 	@ApiModelProperty(value = "the weight's value")
-    private int weightValue;
+	private int weightValue;
 
 	@ApiModelProperty(value = "the current track")
-    private Track track;
+	private Track track;
 
 	@ApiModelProperty(value = "the current category")
-    private Category category;
+	private Category category;
 
 	public long getWeightId() {
 		return weightId;

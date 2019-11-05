@@ -10,7 +10,7 @@ import com.revature.screenforce.beans.SoftSkillViolation;
 
 @FeignClient(name = "SoftSkillViolation", url = "http://localhost:8183/violation/all")
 public interface FeignSoftSkillViolation {
+	
 	@RequestMapping(method = RequestMethod.GET)
-	List<SoftSkillViolation> getSoftSkillViolations() ;
+	List<SoftSkillViolation> getSoftSkillViolations();
 }
-

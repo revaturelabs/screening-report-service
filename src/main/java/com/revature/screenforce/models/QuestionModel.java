@@ -8,6 +8,7 @@ import com.revature.screenforce.beans.Question;
 @ApiModel(value = "Candidate model", description = "A Full report which holds relevant screening information")
 public class QuestionModel {
 
+
 	@ApiModelProperty(value = "id of the question")
 	int questionId;
 
@@ -28,9 +29,9 @@ public class QuestionModel {
 		this.questionText = q.getQuestionText();
 		this.questionAnswer = q.getSampleAnswer();
 	}
+
 	public QuestionModel() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	public int getQuestionId() {
@@ -102,4 +103,3 @@ public class QuestionModel {
 	}
 
 }
-

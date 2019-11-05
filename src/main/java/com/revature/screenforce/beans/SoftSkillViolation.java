@@ -1,18 +1,18 @@
 package com.revature.screenforce.beans;
-import java.util.Date;
+
+import java.time.LocalDateTime;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
 /**
- * The POJO for the SoftSkillViolation the declaration is from feign client,
- * used in the feign folder
+ * The POJO for the SoftSkillViolation
  * 
  * @author Zi Feng Chen | 1909-QC | Emily Higgins
  * @author George Ingleton | 1909-QC| Emily Higgins
  */
 
-@ApiModel(value = "SoftSkillViolation", description = "contains the information about the soft skill violation")
+@ApiModel(value = "SoftSkillViolation", description = "contains information about a soft skill violation")
 public class SoftSkillViolation {
 
 	@ApiModelProperty(value = "the soft skill violation id")
@@ -28,7 +28,7 @@ public class SoftSkillViolation {
 	private String comment;
 
 	@ApiModelProperty(value = "the time of the violation")
-	private Date time;
+	private LocalDateTime time;
 
 	public int getSoftSkillViolationId() {
 		return softSkillViolationId;
@@ -62,11 +62,11 @@ public class SoftSkillViolation {
 		this.comment = comment;
 	}
 
-	public Date getTime() {
+	public LocalDateTime getTime() {
 		return time;
 	}
 
-	public void setTime(Date time) {
+	public void setTime(LocalDateTime time) {
 		this.time = time;
 	}
 
@@ -75,7 +75,7 @@ public class SoftSkillViolation {
 	}
 
 	public SoftSkillViolation(int softSkillViolationId, Screening screening, ViolationType violationType,
-			String comment, Date time) {
+			String comment, LocalDateTime time) {
 		super();
 		this.softSkillViolationId = softSkillViolationId;
 		this.screening = screening;

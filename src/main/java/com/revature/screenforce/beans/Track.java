@@ -4,14 +4,14 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
 /**
- *  The POJO for the Track
- *  the declaration is from feign client, used in the feign folder
+ * The POJO for the Track
+ * 
  * @author Zi Feng Chen | 1909-QC | Emily Higgins
  * @author George Ingleton | 1909-QC| Emily Higgins
  */
 
-@ApiModel(value = "Track", description = "contains the information about the track")
-public class Track  {
+@ApiModel(value = "Track", description = "contains the information about a Track")
+public class Track {
 
 	@ApiModelProperty(value = "the track's id")
 	private int trackId;
@@ -19,8 +19,8 @@ public class Track  {
 	@ApiModelProperty(value = "the track's title")
 	private String title;
 
-	@ApiModelProperty(value = "a variable to check if the track is active")
-    private boolean isActive;
+	@ApiModelProperty(value = "whether the track is active")
+	private boolean isActive;
 
 	public int getTrackId() {
 		return trackId;
@@ -70,7 +70,6 @@ public class Track  {
 
 	public Track() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	public Track(int trackId, String title, boolean isActive) {

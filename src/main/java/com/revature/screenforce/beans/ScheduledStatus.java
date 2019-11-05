@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 public enum ScheduledStatus {
 	@JsonProperty("PENDING")
-	PENDING,
-	@JsonProperty("SCREENED")
+	PENDING, @JsonProperty("SCREENED")
 	SCREENED
 }

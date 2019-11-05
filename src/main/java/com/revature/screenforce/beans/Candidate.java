@@ -4,17 +4,18 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
 /**
- *  The POJO for the Candidate
+ * The POJO for the Candidate
+ * 
  * @author Zi Feng Chen | 1909-QC | Emily Higgins
  * @author George Ingleton | 1909-QC| Emily Higgins
  */
-@ApiModel(value = "Candidate", description = "A Candidate which holds relevant candidate information")
+@ApiModel(value = "Candidate", description = "Candidate information, modeled after Salesforce entity format")
 public class Candidate {
-	
+
 	@ApiModelProperty(value = "id of the candidate")
 	private int candidateId;
 
-	@ApiModelProperty(value = "id of the salesforce which represents the candidate")
+	@ApiModelProperty(value = "id of the salesforce record which represents the candidate")
 	private String resourceId;
 
 	@ApiModelProperty(value = "name of the candidate")
@@ -32,7 +33,7 @@ public class Candidate {
 	@ApiModelProperty(value = "the profile url of the candidate")
 	private String profileUrl;
 
-	@ApiModelProperty(value = "the name of this candidates recruiter")
+	@ApiModelProperty(value = "the name of this candidate's recruiter")
 	private String recruiterName;
 
 	@ApiModelProperty(value = "the college that the candidate went to")
@@ -43,7 +44,7 @@ public class Candidate {
 
 	@ApiModelProperty(value = "the major of the candidate")
 	private String major;
-	
+
 	@ApiModelProperty(value = "the name of the screener for the candidate")
 	private String techScreenerName;
 
@@ -167,7 +168,6 @@ public class Candidate {
 
 	public Candidate() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	public Candidate(int candidateId, String resourceId, String name, String email, String phoneNumber, String skypeId,
@@ -195,8 +195,5 @@ public class Candidate {
 				+ ", recruiterName=" + recruiterName + ", college=" + college + ", degree=" + degree + ", major="
 				+ major + ", techScreenerName=" + techScreenerName + "]";
 	}
-	
-	
-	
 
 }

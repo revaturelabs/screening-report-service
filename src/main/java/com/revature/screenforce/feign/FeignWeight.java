@@ -12,9 +12,8 @@ import com.revature.screenforce.beans.Weight;
 public interface FeignWeight {
 
 	@RequestMapping(method = RequestMethod.GET)
-	List<Weight> getWeights() ;
-	
-	@RequestMapping(value = "/{trackId}/{categoryId}",method = RequestMethod.GET)
-    Weight getWeightFromIds(@PathVariable Integer trackId,@PathVariable Integer categoryId);
-}
+	List<Weight> getWeights();
 
+	@RequestMapping(value = "/{trackId}/{categoryId}", method = RequestMethod.GET)
+	Weight getWeightFromIds(@PathVariable Integer trackId, @PathVariable Integer categoryId);
+}

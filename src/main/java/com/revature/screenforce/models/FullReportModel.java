@@ -32,7 +32,7 @@ public class FullReportModel {
 	private boolean softSkillVerdict;
 
 	@ApiModelProperty(value = "list of categories in which the candidate was tested")
-	private List<CategoryModel> CategoryTested;
+	private List<CategoryModel> categoriesTested;
 
 	@ApiModelProperty(value = "list of violations that were observed during screening")
 	private List<ViolationModel> violationsObserved;

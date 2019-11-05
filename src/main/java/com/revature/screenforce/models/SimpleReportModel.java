@@ -1,13 +1,26 @@
 package com.revature.screenforce.models;
 
+
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import java.time.LocalDateTime;
 import com.revature.screenforce.beans.Screening;
 import com.revature.screenforce.beans.Track;
 
+@ApiModel(value = "Simple model", description = "A simplied version of the screening full report")
 public class SimpleReportModel {
+
+	@ApiModelProperty(value = "id of the simple report")
 	private int screeningId;
+
+
+	@ApiModelProperty(value = "date of the screening")
 	private LocalDateTime screenDate;
+
+	@ApiModelProperty(value = "cumulative score of the screening")
 	private double compositeScore;
+
+	@ApiModelProperty(value = "track of the screening report")
 	private Track track;
 
 	public SimpleReportModel() {
@@ -86,5 +99,4 @@ public class SimpleReportModel {
 			return false;
 		return true;
 	}
-
 }

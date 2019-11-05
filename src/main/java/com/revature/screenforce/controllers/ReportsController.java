@@ -13,6 +13,9 @@ import org.springframework.web.bind.annotation.RestController;
 import com.revature.screenforce.services.ReportsService;
 import com.revature.screenforce.models.FullReportModel;
 import com.revature.screenforce.models.SimpleReportModel;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+
 
 /**
  * The Main Controller for screening-report-service Exposed 1 main endpoint to
@@ -26,24 +29,31 @@ import com.revature.screenforce.models.SimpleReportModel;
  * @author George Ingleton | 1909-QC| Emily Higgins
  */
 @RestController
+@Api(value = "/report", description = "Report operations")
 
 public class ReportsController {
 
 	@Autowired
 	ReportsService reportsService;
 
-	@GetMapping(value = "/frmtest", produces = MediaType.APPLICATION_JSON_VALUE)
-	public @ResponseBody FullReportModel getTestFullReportModel() {
-		return this.reportsService.createFullReportModel(4321);
-	}
 
-	@GetMapping(value = "/frm/{screeningId}", produces = MediaType.APPLICATION_JSON_VALUE)
-	public @ResponseBody FullReportModel getTestFullReportModelByScreeningId(@PathVariable int screeningId) {
+  	@ApiOperation(httpMethod = "GET",
+			value = "resource to get a full report by screeningId",
+			response = FullReportModel.class,
+			nickname="getFullReportModelByScreeningId")
+	@GetMapping(value="/frm/{screeningId}", produces= MediaType.APPLICATION_JSON_VALUE)
+	public @ResponseBody FullReportModel getFullReportModelByScreeningId(@PathVariable int screeningId){
 		return this.reportsService.createFullReportModel(screeningId);
 	}
+  
+  	@ApiOperation(httpMethod = "GET",
+			value = "resource to get all simple reports",
+			response = SimpleReportModel.class,
+			responseContainer = "list",
+			nickname="getAllSimpleReportModel")
 
-	@GetMapping(value = "/srm", produces = MediaType.APPLICATION_JSON_VALUE)
-	public @ResponseBody List<SimpleReportModel> getAllSimpleReportModel() {
+  	@GetMapping(value = "/srm", produces = MediaType.APPLICATION_JSON_VALUE)
+	  public @ResponseBody List<SimpleReportModel> getAllSimpleReportModel() {
 		LocalDate currentDate = LocalDate.now();
 		LocalTime currentTime = LocalTime.now();
 		LocalDateTime end = LocalDateTime.of(currentDate, currentTime);
@@ -54,6 +64,13 @@ public class ReportsController {
 
 	}
 
+
+	@ApiOperation(httpMethod = "GET",
+			value = "resource to get all simple reports within a specified date range",
+			response = SimpleReportModel.class,
+			responseContainer = "list",
+			nickname="getSimpleReportModelByRange")
+
 	@GetMapping(value = "/srm/{dateStart}/{dateEnd}", produces = MediaType.APPLICATION_JSON_VALUE)
 	public @ResponseBody List<SimpleReportModel> getSimpleReportModelByRange(@PathVariable String dateStart,
 			@PathVariable String dateEnd) {
@@ -62,6 +79,7 @@ public class ReportsController {
 		String[] end = dateEnd.split("-");
 		LocalDateTime ss;
 		LocalDateTime se;
+
 		try {
 			ss = LocalDateTime.of(Integer.parseInt(start[0]), Integer.parseInt(start[1]), Integer.parseInt(start[2]), 0,
 					0);
@@ -70,6 +88,7 @@ public class ReportsController {
 			ss = LocalDateTime.of(1970, 1, 1, 0, 0);
 			e1.printStackTrace();
 		}
+
 		try {
 			se = LocalDateTime.of(Integer.parseInt(end[0]), Integer.parseInt(end[1]), Integer.parseInt(end[2]), 0, 0);
 		} catch (Exception e1) {

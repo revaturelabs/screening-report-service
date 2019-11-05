@@ -1,11 +1,23 @@
 package com.revature.screenforce.models;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+
 import com.revature.screenforce.beans.SoftSkillViolation;
 
+@ApiModel(value = "Violation model", description = "A violation committed during a screening")
 public class ViolationModel {
+
+	@ApiModelProperty(value = "id of the violation")
 	int violationId;
+
+	@ApiModelProperty(value = "name of the violation")
 	String violationName;
+
+	@ApiModelProperty(value = "description of the violation")
 	String violationDescription;
+
+	@ApiModelProperty(value = "comment about the violation")
 	String violationComment;
 
 	public ViolationModel(SoftSkillViolation s) {
@@ -50,5 +62,4 @@ public class ViolationModel {
 	public void setViolationComment(String violationComment) {
 		this.violationComment = violationComment;
 	}
-
 }

@@ -18,8 +18,7 @@ public class FullReportModel {
 	@ApiModelProperty(value = "candidate Object that has all information of the current Candidate")
 	private Candidate candidate;
 
-	//Overall Commentary supplied
-	@ApiModelProperty(value = "commentary on the candidates 'about me' description")
+	@ApiModelProperty(value = "commentary on the candidate's 'about me' description")
 	private String aboutMeCommentary;
 
 	@ApiModelProperty(value = "general commentary about the candidate during the screening")

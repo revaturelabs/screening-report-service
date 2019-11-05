@@ -10,17 +10,16 @@ import com.revature.screenforce.beans.Track;
 @ApiModel(value = "Simple model", description = "A simplied version of the screening full report")
 public class SimpleReportModel {
 
-	@ApiModelProperty(value = "id of the simple report")
+	@ApiModelProperty(value = "id of the screening")
 	private int screeningId;
-
 
 	@ApiModelProperty(value = "date of the screening")
 	private LocalDateTime screenDate;
 
-	@ApiModelProperty(value = "cumulative score of the screening")
+	@ApiModelProperty(value = "composite score of the screening, out of 100")
 	private double compositeScore;
 
-	@ApiModelProperty(value = "track of the screening report")
+	@ApiModelProperty(value = "track of the screening")
 	private Track track;
 
 	public SimpleReportModel() {

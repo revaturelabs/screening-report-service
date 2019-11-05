@@ -6,7 +6,7 @@ import io.swagger.annotations.ApiModelProperty;
 
 import com.revature.screenforce.beans.Category;
 
-@ApiModel(value = "Category Model", description = "A Category which holds relevant category information")
+@ApiModel(value = "Category Model", description = "Holds category-specific information for a full screening report")
 public class CategoryModel {
 
 
@@ -23,7 +23,6 @@ public class CategoryModel {
     private double averageQuestionScore;
 
 	@ApiModelProperty(value = "list of questions")
-
 	private List<QuestionModel> question;
 
 	public CategoryModel(Category c) {

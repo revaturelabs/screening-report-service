@@ -86,7 +86,6 @@ public class ReportsService {
 				in.setQuestion(qmlist);
 				cm.add(in);
 			}
-
 		}
 		for (CategoryModel c2 : cm) {
 			int counter = 0;

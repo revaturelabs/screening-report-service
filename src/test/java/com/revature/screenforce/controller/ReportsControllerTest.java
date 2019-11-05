@@ -16,7 +16,6 @@ import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.RequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import com.revature.screenforce.beans.Candidate;
@@ -72,7 +71,6 @@ public class ReportsControllerTest {
 		testWeight = new Weight(12, 12, track, testCategory);
 		testQuestion = new Question(12, testCategory, true, "What is Java?", "The answer to life.");
 		testViolation = new SoftSkillViolation(123, screening, new ViolationType(), "No Violations", screenDate);
-
 	}
 
 	@Test
@@ -81,7 +79,6 @@ public class ReportsControllerTest {
 
 		RequestBuilder requestBuilder = MockMvcRequestBuilders.get("/frm/123");
 		mockMvc.perform(requestBuilder)
-			//.andDo(MockMvcResultHandlers.print())
 			.andExpect(MockMvcResultMatchers.status().isOk())
 			.andExpect(MockMvcResultMatchers.jsonPath("srm.screeningId").value(new Integer(123)))
 			.andExpect(MockMvcResultMatchers.jsonPath("srm.track.trackId").value(new Integer(51)));
@@ -92,23 +89,20 @@ public class ReportsControllerTest {
 		List<SimpleReportModel> lsrm = new ArrayList<SimpleReportModel>();
 		lsrm.add(srm);
 		Mockito.when(reportsService.getSimpleReportModelByRange(any(), any())).thenReturn(lsrm);
-
 		RequestBuilder requestBuilder = MockMvcRequestBuilders.get("/srm");
 		mockMvc.perform(requestBuilder)
-			//.andDo(MockMvcResultHandlers.print())
 			.andExpect(MockMvcResultMatchers.status().isOk())
 			.andExpect(MockMvcResultMatchers.jsonPath("$[0].screeningId").value(new Integer(123)))
 			.andExpect(MockMvcResultMatchers.jsonPath("$[0].track.trackId").value(new Integer(51)));
 	}
+	
 	@Test
 	public void testGetSimpleReportModelByRange() throws Exception {
 		List<SimpleReportModel> lsrm = new ArrayList<SimpleReportModel>();
 		lsrm.add(srm);
 		Mockito.when(reportsService.getSimpleReportModelByRange(any(), any())).thenReturn(lsrm);
-
 		RequestBuilder requestBuilder = MockMvcRequestBuilders.get("/srm/2018-01-01/2019-01-01");
 		mockMvc.perform(requestBuilder)
-			//.andDo(MockMvcResultHandlers.print())
 			.andExpect(MockMvcResultMatchers.status().isOk())
 			.andExpect(MockMvcResultMatchers.jsonPath("$[0].screeningId").value(new Integer(123)))
 			.andExpect(MockMvcResultMatchers.jsonPath("$[0].track.trackId").value(new Integer(51)));

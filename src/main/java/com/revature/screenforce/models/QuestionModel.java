@@ -1,17 +1,27 @@
 package com.revature.screenforce.models;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+
 import com.revature.screenforce.beans.Question;
 
+@ApiModel(value = "Candidate model", description = "A Full report which holds relevant screening information")
 public class QuestionModel {
-	// The Question id
+
+
+	@ApiModelProperty(value = "id of the question")
 	int questionId;
-	// The Question
+
+	@ApiModelProperty(value = "id of the question")
 	String questionText;
-	// The Answer
+
+	@ApiModelProperty(value = "answer of the question")
 	String questionAnswer;
-	// The Score Received
+
+	@ApiModelProperty(value = "score received for the question")
 	Double score;
-	// Commentary from Screener
+
+	@ApiModelProperty(value = "screener comment for question")
 	String questionComment;
 
 	public QuestionModel(Question q) {

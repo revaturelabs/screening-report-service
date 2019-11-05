@@ -1,26 +1,42 @@
 package com.revature.screenforce.models;
 
 import java.util.List;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+
 import com.revature.screenforce.beans.Candidate;
 
+@ApiModel(value = "Full report model", description = "A Full report which holds relevant screening information")
 public class FullReportModel {
 
-	// SimpleReport with Screening id, Track, date, and composite score
+	@ApiModelProperty(value = "simple report model contained in full report model")
 	private SimpleReportModel srm;
-	// The id of the screener
+
+	@ApiModelProperty(value = "id of the screener who conducted the screening")
 	private int screener_id;
-	// A Candidate Object that has all information of the current Candidate
+
+	@ApiModelProperty(value = "candidate Object that has all information of the current Candidate")
 	private Candidate candidate;
-	// Overall Commentary supplied
+
+	//Overall Commentary supplied
+	@ApiModelProperty(value = "commentary on the candidates 'about me' description")
 	private String aboutMeCommentary;
+
+	@ApiModelProperty(value = "general commentary about the candidate during the screening")
 	private String generalCommentary;
+
+	@ApiModelProperty(value = "commentary about the candidate's soft skills during the screening")
 	private String softSkillCommentary;
-	// pass or not
+
+	@ApiModelProperty(value = "verdict as to whether the candidate passed the screening or not")
 	private boolean softSkillVerdict;
-	// A list of Category-specific results
-	private List<CategoryModel> categoriesTested;
-	// A list of SoftSkillViolations which were observed
+
+	@ApiModelProperty(value = "list of categories in which the candidate was tested")
+	private List<CategoryModel> CategoryTested;
+
+	@ApiModelProperty(value = "list of violations that were observed during screening")
 	private List<ViolationModel> violationsObserved;
+
 
 	public FullReportModel(SimpleReportModel srm) {
 		this.srm = srm;
@@ -45,6 +61,7 @@ public class FullReportModel {
 	public void setScreener_id(int screener_id) {
 		this.screener_id = screener_id;
 	}
+
 
 	public Candidate getCandidate() {
 		return candidate;
@@ -168,6 +185,7 @@ public class FullReportModel {
 			return false;
 		return true;
 	}
+
 
 	@Override
 	public String toString() {

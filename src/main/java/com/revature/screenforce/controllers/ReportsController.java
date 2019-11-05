@@ -32,13 +32,13 @@ public class ReportsController {
 	@Autowired
 	ReportsService reportsService;
 
-	@GetMapping(value = "/frmtest", produces = MediaType.APPLICATION_JSON_VALUE)
-	public @ResponseBody FullReportModel getTestFullReportModel() {
-		return this.reportsService.createFullReportModel(4321);
-	}
+//	@GetMapping(value = "/frmtest", produces = MediaType.APPLICATION_JSON_VALUE)
+//	public @ResponseBody FullReportModel getTestFullReportModel() {
+//		return this.reportsService.createFullReportModel(4321);
+//	}
 
 	@GetMapping(value = "/frm/{screeningId}", produces = MediaType.APPLICATION_JSON_VALUE)
-	public @ResponseBody FullReportModel getTestFullReportModelByScreeningId(@PathVariable int screeningId) {
+	public @ResponseBody FullReportModel getFullReportModelByScreeningId(@PathVariable int screeningId) {
 		return this.reportsService.createFullReportModel(screeningId);
 	}
 

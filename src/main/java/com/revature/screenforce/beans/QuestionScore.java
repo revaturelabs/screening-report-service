@@ -12,7 +12,7 @@ import io.swagger.annotations.ApiModelProperty;
  * @author George Ingleton | 1909-QC| Emily Higgins
  */
 
-@ApiModel(value = "QuestionScore", description = "records a Candidates's score on a Question")
+@ApiModel(value = "QuestionScore", description = "records a Candidate's score on a Question")
 public class QuestionScore {
 
 	@ApiModelProperty(value = "question score id")

@@ -45,7 +45,7 @@ public class Screening {
 	@ApiModelProperty(value = "the end time for the screening")
 	private LocalDateTime endDateTime;
 
-	@ApiModelProperty(value = "true meaning they passed, false meaning the failed")
+	@ApiModelProperty(value = "true meaning they passed, false meaning they failed")
 	private Boolean softSkillsVerdict;
 
 	@ApiModelProperty(value = "the screening's status")

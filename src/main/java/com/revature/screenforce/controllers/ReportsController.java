@@ -13,10 +13,9 @@ import org.springframework.web.bind.annotation.RestController;
 import com.revature.screenforce.services.ReportsService;
 import com.revature.screenforce.models.FullReportModel;
 import com.revature.screenforce.models.SimpleReportModel;
-
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiResponse;
+
 
 /**
  * The Main Controller for screening-report-service Exposed 1 main endpoint to

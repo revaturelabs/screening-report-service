@@ -38,7 +38,7 @@ import com.revature.screenforce.feign.FeignTrack;
 import com.revature.screenforce.feign.FeignWeight;
 import com.revature.screenforce.models.SimpleReportModel;
 import com.revature.screenforce.services.ReportsService;
-@EnableFeignClients
+
 @SpringBootTest
 @RunWith(SpringRunner.class)
 //@MockBean

@@ -105,7 +105,7 @@ public class ReportsService {
 		SimpleReportModel srm = createSimpleModel(scr);
 		FullReportModel frm = new FullReportModel(srm);
 		frm.setAboutMeCommentary(scr.getAboutMeCommentary());
-		frm.setGeneralCommentary(scr.getSoftSkillCommentary());
+		frm.setGeneralCommentary(scr.getGeneralCommentary());
 		frm.setSoftSkillCommentary(scr.getSoftSkillCommentary());
 		frm.setCandidate(scr.getScheduledScreening().getCandidate());
 		frm.setScreener_id(scr.getScreenerId());
